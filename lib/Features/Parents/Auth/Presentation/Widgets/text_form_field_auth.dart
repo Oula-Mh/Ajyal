@@ -1,3 +1,4 @@
+import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -44,7 +45,7 @@ class _TextFormFieldAuthState extends State<TextFormFieldAuth> {
               widget.passToggle! || widget.passToggle == true ? true : false,
           decoration: InputDecoration(
             filled: true,
-            fillColor: Color(0xFFF3F8FF),
+            fillColor: AppColor.fillTextField,
             hintText: widget.hintText,
             hintStyle: TextStyle(fontSize: 12, color: Colors.grey),
             floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -79,7 +80,7 @@ class _TextFormFieldAuthState extends State<TextFormFieldAuth> {
             ),
           ),
         ),
-        SizedBox(height: 25),
+        SizedBox(height: 31),
       ],
     );
   }

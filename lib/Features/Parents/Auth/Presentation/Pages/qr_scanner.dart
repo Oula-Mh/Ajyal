@@ -3,7 +3,6 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../../../../Custom/Custom_ui.dart/gradient_background_widget.dart';
 
-
 class QrScanner extends StatefulWidget {
   const QrScanner({super.key});
 
@@ -44,9 +43,9 @@ class _QRScanPageState extends State<QrScanner> {
               ),
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+              padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
@@ -74,7 +73,6 @@ class _QRScanPageState extends State<QrScanner> {
                       ),
                     ),
                   ),
-                  SizedBox(height:30)
                   // ),
                 ],
               ),
