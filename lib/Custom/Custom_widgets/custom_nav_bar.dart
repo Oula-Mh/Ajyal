@@ -32,16 +32,31 @@ class CustomNavigationBar extends StatelessWidget {
         onTap: onTap,
         items: [
           BottomNavigationBarItem(
-            icon: IconBottomNavigation(Iconsax.profile_2user),
+            icon: iconBottomNavigation(Iconsax.profile_2user, "ملفي"),
           ),
-          BottomNavigationBarItem(icon: IconBottomNavigation(Iconsax.home)),
-          BottomNavigationBarItem(icon: IconBottomNavigation(Iconsax.book)),
+          BottomNavigationBarItem(
+            icon: iconBottomNavigation(Iconsax.home, "الرئيسية"),
+          ),
+          BottomNavigationBarItem(
+            icon: iconBottomNavigation(Iconsax.book_1, "موادي"),
+          ),
+          BottomNavigationBarItem(
+            icon: iconBottomNavigation(Icons.chat_outlined, "تواصل"),
+          ),
+          BottomNavigationBarItem(
+            icon: iconBottomNavigation(Icons.assignment_outlined, "اختبارات"),
+          ),
         ],
       ),
     );
   }
 }
 
-Widget IconBottomNavigation(IconData iconData) {
-  return Icon(iconData, size: 26);
+Widget iconBottomNavigation(IconData iconData, String text) {
+  return Column(
+    children: [
+      Icon(iconData, size: 24),
+      Text(text, style: TextStyle(fontSize: 12)),
+    ],
+  );
 }

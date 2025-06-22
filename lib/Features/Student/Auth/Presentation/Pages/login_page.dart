@@ -1,6 +1,8 @@
 import 'package:ajyal/Core/routes/app_router.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/styles/app_text_style.dart';
+import 'package:ajyal/Core/utils/Function/functions.dart';
+import 'package:ajyal/Core/utils/Function/validation.dart';
 import 'package:ajyal/Custom/Custom_widgets/custom_auth_bttn.dart';
 import 'package:ajyal/Custom/Custom_widgets/custom_text_field.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Bloc/login/login_cubit.dart';
@@ -45,11 +47,28 @@ class LoginPage extends StatelessWidget {
                       top: 50,
                       bottom: 10,
                     ),
-                    child: BlocBuilder<LoginCubit, LoginState>(
+                    child: BlocConsumer<LoginCubit, LoginState>(
+                      listener: (context, state) {
+                        if (state is LoginFail) {
+                          customAlert(context, state.errMessage, () {
+                            Navigator.of(context).pop();
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(state.errMessage)),
+                          );
+                        } else if (state is LoginSuccess) {
+                          // تأجيل التنقل إلى ما بعد نهاية الـ build
+                          Future.microtask(() {
+                            GoRouter.of(
+                              context,
+                            ).pushReplacement(AppRouter.homePage);
+                          });
+                        }
+                      },
                       builder: (context, state) {
                         final cubit = LoginCubit.get(context);
                         return SingleChildScrollView(
-                          child: LoginForm(cubit: cubit),
+                          child: LoginForm(cubit: cubit, state: state),
                         );
                       },
                     ),
@@ -66,50 +85,69 @@ class LoginPage extends StatelessWidget {
 
 class LoginForm extends StatelessWidget {
   final LoginCubit cubit;
-  const LoginForm({super.key, required this.cubit});
+  final LoginState state;
+  const LoginForm({super.key, required this.cubit, required this.state});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("كلمة المرور : ", style: Styles.meduimBlack),
-        SizedBox(height: 8),
-        CustomTextField(
-          isPassword: true,
-          passToggle: true,
-          controller: cubit.codeController,
-          keyboardType: TextInputType.number,
-          icon: Icons.lock_outline,
-        ),
-        SizedBox(height: 31),
-        Text(" الكود الخاص بك : ", style: Styles.meduimBlack),
-        SizedBox(height: 8),
-        CustomTextField(
-          isPassword: false,
-          controller: cubit.passWordController,
-          keyboardType: TextInputType.text,
-        ),
-        SizedBox(height: 50),
-        CustomAuthBttn(onPressed: () {}, bttnText: "تسجيل الدخول"),
-        SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("ليس لديك حساب ؟"),
-            TextButton(
-              style: TextButton.styleFrom(padding: EdgeInsets.zero),
-              onPressed: () {
-                GoRouter.of(context).pushReplacement(AppRouter.registerPage);
-              },
-              child: Text(
-                "  إنشاء حساب",
-                style: TextStyle(color: AppColor.primaryColor),
+    return Form(
+      key: cubit.formKeyLogin,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("كلمة المرور : ", style: Styles.meduimBlack),
+          SizedBox(height: 8),
+          CustomTextField(
+            isPassword: true,
+            passToggle: true,
+            controller: cubit.passWordController,
+            keyboardType: TextInputType.text,
+            icon: Icons.lock_outline,
+            validator: (val) {
+              return validInput(val!, 8, 100, "password");
+            },
+          ),
+          SizedBox(height: 31),
+          Text(" الكود الخاص بك : ", style: Styles.meduimBlack),
+          SizedBox(height: 8),
+          CustomTextField(
+            isPassword: false,
+            controller: cubit.codeController,
+            keyboardType: TextInputType.text,
+            validator: (val) {
+              return validInput(val!, 8, 8, "password");
+            },
+          ),
+          SizedBox(height: 50),
+          state is LoginLoading
+              ? Center(child: CircularProgressIndicator())
+              : CustomAuthBttn(
+                onPressed: () {
+                  cubit.login();
+                },
+                bttnText: "تسجيل الدخول",
               ),
-            ),
-          ],
-        ),
-      ],
+          SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("ليس لديك حساب ؟"),
+              TextButton(
+                style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                onPressed: () {
+                  GoRouter.of(
+                    context,
+                  ).pushReplacement(AppRouter.checkStudentPage);
+                },
+                child: Text(
+                  "  إنشاء حساب",
+                  style: TextStyle(color: AppColor.primaryColor),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

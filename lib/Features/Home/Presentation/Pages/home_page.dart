@@ -1,10 +1,19 @@
 import 'package:ajyal/Core/routes/app_router.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/styles/app_text_style.dart';
+import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
 import 'package:ajyal/Custom/Custom_widgets/custom_nav_bar.dart';
-import 'package:ajyal/Features/Student/Profile/Presentation/Pages/profile_page.dart';
+import 'package:ajyal/Features/Community/Presentation/Pages/chat_page.dart';
+import 'package:ajyal/Features/Exam/Presentation/Pages/exam_page.dart';
+import 'package:ajyal/Features/Student/Auth/Data/repos/student_auth_repoImp.dart';
+import 'package:ajyal/Features/Student/Auth/Presentation/Bloc/profile/profile_cubit.dart';
+import 'package:ajyal/Features/Student/Auth/Presentation/Pages/profile_page.dart';
+import 'package:ajyal/Features/Subjects/Data/global.dart';
+import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_cubit.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Pages/subject_page.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,7 +25,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 1;
-  final List<Widget> _children = [ProfilePage(), AdPage(), SubjectPage()];
+  final List<Widget> _children = [
+    BlocProvider(
+      create:
+          (context) =>
+              ProfileCubit(StudentAuthRepoimp(DioConsumer(Dio())))
+                ..getProfile(),
+      child: ProfilePage(),
+    ),
+    AdPage(),
+    BlocProvider(
+      create: (context) => SubjectCubit()..fetchSubjects(courses[0]),
+      child: SubjectPage(),
+    ),
+    ChatPage(),
+    ExamPage(),
+  ];
 
   void onTabTapped(int index) {
     setState(() {
