@@ -1,8 +1,8 @@
 import 'package:ajyal/Core/routes/app_router.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/styles/app_text_style.dart';
-import 'package:ajyal/Custom/Custom_widgets/custom_auth_bttn.dart';
-import 'package:ajyal/Custom/Custom_widgets/custom_text_field.dart';
+import 'package:ajyal/Custom/Custom_widgets/auth/custom_auth_bttn.dart';
+import 'package:ajyal/Custom/Custom_widgets/auth/custom_text_field.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Bloc/register/register_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

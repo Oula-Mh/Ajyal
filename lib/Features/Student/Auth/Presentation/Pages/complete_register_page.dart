@@ -3,7 +3,7 @@ import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/styles/app_text_style.dart';
 import 'package:ajyal/Core/utils/Function/functions.dart';
 import 'package:ajyal/Custom/Custom_ui.dart/gradient_background_widget.dart';
-import 'package:ajyal/Custom/Custom_widgets/custom_auth_bttn.dart';
+import 'package:ajyal/Custom/Custom_widgets/auth/custom_auth_bttn.dart';
 import 'package:ajyal/Features/Student/Auth/Data/models/check_student_info_model.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Bloc/register/register_cubit.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/widgets/check_student_info.dart';

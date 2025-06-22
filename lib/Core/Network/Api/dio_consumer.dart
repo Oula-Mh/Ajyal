@@ -1,3 +1,4 @@
+import 'package:ajyal/Core/Network/Api/dio_logger_interceptors.dart';
 import 'package:ajyal/Core/Network/token_handle.dart';
 import 'package:ajyal/Core/Network/Api/api_consumer.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
@@ -26,6 +27,8 @@ class DioConsumer implements Api {
         },
       ),
     );
+
+    _dio.interceptors.add(DioLoggerInterceptor());
   }
 
   @override

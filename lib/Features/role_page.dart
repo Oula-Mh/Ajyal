@@ -78,7 +78,7 @@ class RolePage extends StatelessWidget {
                     onTap: () {
                       GoRouter.of(
                         context,
-                      ).pushReplacement(AppRouter.parentRgister);
+                      ).pushReplacement(AppRouter.parentLogin);
                     },
                     child: Container(
                       alignment: Alignment.center,
