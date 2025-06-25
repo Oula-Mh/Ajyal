@@ -1,3 +1,5 @@
+import 'package:ajyal/Core/utils/Function/functions.dart';
+import 'package:ajyal/Core/utils/constants/app_images.dart';
 import 'package:ajyal/Features/Subjects/Data/global.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_state.dart';
 import 'package:flutter/material.dart';
@@ -60,29 +62,31 @@ class SubjectCubit extends Cubit<SubjectState> {
   }
 }
 
-IconData getIconForSubject(String name) {
+Widget getIconForSubject(String name) {
   switch (name) {
     case 'اللغة العربية':
-      return Icons.language;
+      return getSvg(AppImages.arabic);
     case 'اللغة الإنكليزية':
     case 'إنكليزي':
-      return Icons.translate;
+      return getSvg(AppImages.english);
     case 'اللغة الفرنسية':
-      return Icons.school;
+      return getSvg(AppImages.paris);
     case 'رياضيات':
-      return Icons.calculate;
+      return getSvg(AppImages.math);
     case 'علم الأحياء':
-      return Icons.biotech;
+      return getSvg(AppImages.sience);
     case 'الفيزياء':
-      return Icons.bolt;
+      return getSvg(AppImages.physics);
     case 'الكيمياء':
-      return Icons.science;
+      return getSvg(AppImages.chemistry);
     case 'الجغرافيا':
-      return Icons.public;
+      return getSvg(AppImages.geo);
     case 'الفلسفة':
-      return Icons.psychology;
+      return getSvg(AppImages.philosophy);
+    case 'التاريخ':
+      return getSvg(AppImages.history);
     default:
-      return Icons.book; // أيقونة افتراضية
+      return getSvg(AppImages.default1);
   }
 }
 

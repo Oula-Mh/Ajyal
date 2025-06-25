@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 class SubjectItem {
   final String title;
-  final IconData icon;
+  final Widget icon;
   final String subtitle;
 
   SubjectItem(this.title, this.icon, this.subtitle);
@@ -13,7 +13,7 @@ class SubjectItem {
 
 class SubjectCard extends StatelessWidget {
   final String subject;
-  final IconData icon;
+  final Widget icon;
 
   const SubjectCard({super.key, required this.subject, required this.icon});
 
@@ -29,12 +29,13 @@ class SubjectCard extends StatelessWidget {
           children: [
             Container(
               width: double.maxFinite,
+              padding: EdgeInsets.all(10),
               height: 65,
               decoration: BoxDecoration(
                 color: AppColor.secondaryColor.withAlpha(90),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(icon, size: 35, color: AppColor.primaryColor),
+              child: icon,
             ),
             Text(
               subject,

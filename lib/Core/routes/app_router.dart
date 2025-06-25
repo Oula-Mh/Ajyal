@@ -15,6 +15,9 @@ import 'package:ajyal/Features/Student/Auth/Presentation/Pages/check_student_pag
 import 'package:ajyal/Features/Student/Auth/Presentation/Pages/complete_register_page.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Pages/login_page.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Pages/student_info_page.dart';
+import 'package:ajyal/Features/Subjects/Data/repo/pdf_file_repimp.dart';
+import 'package:ajyal/Features/Subjects/Presentation/Bloc/pdf_file/pdf_file_cubit.dart';
+import 'package:ajyal/Features/Subjects/Presentation/Bloc/search/search_cubit.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Pages/pdf_page.dart';
 import 'package:ajyal/Features/role_page.dart';
 import 'package:ajyal/Features/splash/splash_view.dart';
@@ -48,7 +51,22 @@ abstract class AppRouter {
       GoRoute(path: advPage, builder: (context, state) => const AdPage()),
       GoRoute(path: rolePage, builder: (context, state) => const RolePage()),
       //    GoRoute(path: qrScannerPage, builder: (context, state) => QrScanner()),
-      GoRoute(path: pdfPage, builder: (context, state) => PdfPage()),
+      GoRoute(
+        path: pdfPage,
+        builder:
+            (context, state) => MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create:
+                      (context) =>
+                          PdfFileCubit(PdfFileRepoImpl(DioConsumer(Dio())))
+                            ..getPdfFile(),
+                ),
+                BlocProvider(create: (context) => SearchCubit([])),
+              ],
+              child: PdfPage(),
+            ),
+      ),
       GoRoute(
         path: qrScannerPage,
         builder:

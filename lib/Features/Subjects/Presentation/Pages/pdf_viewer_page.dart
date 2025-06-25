@@ -1,12 +1,14 @@
 import 'dart:typed_data';
+import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show NetworkAssetBundle;
+import 'package:go_router/go_router.dart';
 import 'package:pdfx/pdfx.dart';
 
 class PdfViewerPage extends StatefulWidget {
   final String url;
-
-  const PdfViewerPage({super.key, required this.url});
+  final String title;
+  const PdfViewerPage({super.key, required this.url, required this.title});
 
   @override
   State<PdfViewerPage> createState() => _PdfViewerPageState();
@@ -50,7 +52,16 @@ class _PdfViewerPageState extends State<PdfViewerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('عرض ملف PDF')),
+      appBar: AppBar(
+        backgroundColor: AppColor.primaryColor,
+        leading: IconButton(
+          onPressed: () {
+            GoRouter.of(context).pop();
+          },
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+        ),
+        title: Text(widget.title, style: TextStyle(color: Colors.white)),
+      ),
       body:
           _isLoading
               ? Center(child: CircularProgressIndicator())

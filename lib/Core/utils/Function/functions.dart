@@ -1,6 +1,6 @@
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_svg/svg.dart';
 
 void customAlert(BuildContext context, String mssg, Function()? onPressed) {
   showDialog(
@@ -49,5 +49,13 @@ void showLogoutDialog(BuildContext context, Function()? onPressed) {
         ],
       );
     },
+  );
+}
+
+Widget getSvg(String svg) {
+  return SvgPicture.asset(
+    svg,
+    width: 70,
+    height: 70, // optional tint
   );
 }
