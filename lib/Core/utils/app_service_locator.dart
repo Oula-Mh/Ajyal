@@ -1,6 +1,5 @@
 import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/Network/token_handle.dart';
-import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -16,11 +15,6 @@ void setUpAppService() async {
   getit.registerLazySingleton<TokenHandler>(
     () => TokenHandler(getit<CacheHelper>()),
   );
-  Dio dio =
-      Dio()
-        ..interceptors.add(
-          LogInterceptor(requestBody: true, responseBody: true, error: true),
-        );
   // await DioConsumer(dio).init();
   final token = getit<TokenHandler>().getToken();
   print("=========$token");

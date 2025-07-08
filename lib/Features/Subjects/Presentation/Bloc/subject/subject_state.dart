@@ -1,26 +1,24 @@
+import 'package:ajyal/Features/Subjects/Data/model/subject_model.dart';
+
 abstract class SubjectState {}
 
 class SubjectInitial extends SubjectState {}
 
-class SubjectLoadingClasses extends SubjectState {}
+// class SubjectLoadingClasses extends SubjectState {}
 
-class SubjectClassesLoaded extends SubjectState {
-  final List<String> classes;
-  final String? selectedClass;
+// class SubjectClassesLoaded extends SubjectState {
+//   final List<String> classes;
+//   final String? selectedClass;
 
-  SubjectClassesLoaded({required this.classes, this.selectedClass});
-}
+//   SubjectClassesLoaded({required this.classes, this.selectedClass});
+// }
 
-class SubjectLoadingSubjects extends SubjectState {
-  final String selectedClass;
-  SubjectLoadingSubjects(this.selectedClass);
-}
+class SubjectLoading extends SubjectState {}
 
-class SubjectSubjectsLoaded extends SubjectState {
-  final String selectedClass;
-  final List<String> subjects;
+class SubjectLoadedSuccess extends SubjectState {
+  final List<SubjectModel> subjects;
 
-  SubjectSubjectsLoaded({required this.selectedClass, required this.subjects});
+  SubjectLoadedSuccess({required this.subjects});
 }
 
 class SubjectError extends SubjectState {

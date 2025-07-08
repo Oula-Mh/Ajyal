@@ -1,4 +1,11 @@
 import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
+import 'package:ajyal/Features/Advertisements/Data/model/ad_pagination_model.dart';
+import 'package:ajyal/Features/Advertisements/Data/model/course_adv_model.dart';
+import 'package:ajyal/Features/Advertisements/Data/repos/adv_repo_imp.dart';
+import 'package:ajyal/Features/Advertisements/Presentation/Bloc/adv/adv_cubit.dart';
+import 'package:ajyal/Features/Advertisements/Presentation/Pages/home_adv_page.dart';
+import 'package:ajyal/Features/Course/Presentation/Pages/all_course_page.dart';
+import 'package:ajyal/Features/Course/Presentation/Pages/course_details.dart';
 import 'package:ajyal/Features/Home/Presentation/Pages/home_page.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Bloc/login/login_cubit.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Bloc/register/register_cubit.dart';
@@ -22,6 +29,7 @@ import 'package:ajyal/Features/Subjects/Presentation/Pages/pdf_page.dart';
 import 'package:ajyal/Features/role_page.dart';
 import 'package:ajyal/Features/splash/splash_view.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Pages/register_view.dart';
+import 'package:ajyal/test.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -39,6 +47,8 @@ abstract class AppRouter {
   static const qrScannerPage = "/qrScannerPage";
   static const studentPersonalInfo = "/studentPersonalInfo";
   static const pdfPage = "/pdfPage";
+  static const allCoursePage = "/allCoursePage";
+  static const courseDetailsPage = "/courseDetailsPage";
 
   static final router = GoRouter(
     routes: [
@@ -48,24 +58,47 @@ abstract class AppRouter {
       // ),
       GoRoute(path: "/", builder: (context, state) => const SplashView()),
       GoRoute(path: homePage, builder: (context, state) => const HomePage()),
-      GoRoute(path: advPage, builder: (context, state) => const AdPage()),
+      GoRoute(path: advPage, builder: (context, state) => const HomeAdvPage()),
       GoRoute(path: rolePage, builder: (context, state) => const RolePage()),
+      GoRoute(
+        path: courseDetailsPage,
+        builder: (context, state) => const CourseDetailsPage(),
+      ),
+      GoRoute(
+        path: allCoursePage,
+        builder: (context, state) {
+          final args = state.extra as Map<String, dynamic>;
+          final List<CourseAdvModel> resultsList = args['resultsList'];
+          final AdvPaginationModel paginationModel = args['paginationModel'];
+          return BlocProvider(
+            create:
+                (context) =>
+                    AdvCubit(AdvRepoImpl(DioConsumer(Dio())))..getCourseAdv(),
+            child: AllCoursePage(
+              resultsList: resultsList,
+              paginationModel: paginationModel,
+            ),
+          );
+        },
+      ),
       //    GoRoute(path: qrScannerPage, builder: (context, state) => QrScanner()),
       GoRoute(
         path: pdfPage,
-        builder:
-            (context, state) => MultiBlocProvider(
-              providers: [
-                BlocProvider(
-                  create:
-                      (context) =>
-                          PdfFileCubit(PdfFileRepoImpl(DioConsumer(Dio())))
-                            ..getPdfFile(),
-                ),
-                BlocProvider(create: (context) => SearchCubit([])),
-              ],
-              child: PdfPage(),
-            ),
+        builder: (context, state) {
+          final curriculaId = state.extra as int;
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create:
+                    (context) =>
+                        PdfFileCubit(PdfFileRepoImpl(DioConsumer(Dio())))
+                          ..getPdfFile(curriculaId),
+              ),
+              BlocProvider(create: (context) => SearchCubit([])),
+            ],
+            child: PdfPage(curriculaId: curriculaId),
+          );
+        },
       ),
       GoRoute(
         path: qrScannerPage,

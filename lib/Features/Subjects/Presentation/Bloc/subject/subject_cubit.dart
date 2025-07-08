@@ -1,64 +1,64 @@
 import 'package:ajyal/Core/utils/Function/functions.dart';
 import 'package:ajyal/Core/utils/constants/app_images.dart';
-import 'package:ajyal/Features/Subjects/Data/global.dart';
+import 'package:ajyal/Features/Subjects/Data/repo/subject_repo.dart';
+import 'package:ajyal/Features/Subjects/Data/repo/subject_repoimp.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SubjectCubit extends Cubit<SubjectState> {
-  SubjectCubit() : super(SubjectInitial());
-
-  String selectedCourse = courses[0];
-
-  void changeValue(String value) {
-    selectedCourse = value;
-  }
+  final SubjectRepo subjectRepo;
+  SubjectCubit(this.subjectRepo) : super(SubjectInitial());
 
   // محاكاة "API" لجلب الصفوف
-  Future<void> fetchClasses() async {
-    emit(SubjectLoadingClasses());
-    await Future.delayed(Duration(seconds: 1)); // تمثيل التأخير من الشبكة
-    emit(
-      SubjectClassesLoaded(
-        classes: [
-          'البكالوريا العلمي',
-          'البكالوريا الأدبي',
-          'مكثفة علم الأحياء',
-          'المكثفة الشاملة',
-        ],
-      ),
+  // Future<void> fetchClasses() async {
+  //   emit(SubjectLoadingClasses());
+  //   await Future.delayed(Duration(seconds: 1)); // تمثيل التأخير من الشبكة
+  //   emit(
+  //     SubjectClassesLoaded(
+  //       classes: [
+  //         'البكالوريا العلمي',
+  //         'البكالوريا الأدبي',
+  //         'مكثفة علم الأحياء',
+  //         'المكثفة الشاملة',
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  Future<void> fetchSubjects(int courseId) async {
+    emit(SubjectLoading());
+    // final Map<String, List<String>> fakeData = {
+    //   'البكالوريا العلمي': [
+    //     'اللغة العربية',
+    //     'رياضيات',
+    //     'علم الأحياء',
+    //     'اللغة الإنكليزية',
+    //     'الفيزياء',
+    //     'الكيمياء',
+    //   ],
+    //   'البكالوريا الأدبي': [
+    //     'اللغة العربية',
+    //     'الفلسفة',
+    //     'الجغرافيا',
+    //     'اللغة الإنكليزية',
+    //     'اللغة الفرنسية',
+    //     'الكيمياء',
+    //   ],
+    //   'مكثفة علم الأحياء': ["علم الأحياء"],
+    //   'المكثفة الشاملة': ['فيزياء', 'كيمياء', 'إنكليزي'],
+    // };
+    var response = await subjectRepo.getSubjects(courseId);
+
+    response.fold(
+      (err) => emit(SubjectError(err.errorMessage)),
+      (subjects) => emit(SubjectLoadedSuccess(subjects: subjects)),
     );
-  }
 
-  Future<void> fetchSubjects(String selectedClass) async {
-    emit(SubjectLoadingSubjects(selectedClass));
-    await Future.delayed(Duration(seconds: 1));
-
-    final Map<String, List<String>> fakeData = {
-      'البكالوريا العلمي': [
-        'اللغة العربية',
-        'رياضيات',
-        'علم الأحياء',
-        'اللغة الإنكليزية',
-        'الفيزياء',
-        'الكيمياء',
-      ],
-      'البكالوريا الأدبي': [
-        'اللغة العربية',
-        'الفلسفة',
-        'الجغرافيا',
-        'اللغة الإنكليزية',
-        'اللغة الفرنسية',
-        'الكيمياء',
-      ],
-      'مكثفة علم الأحياء': ["علم الأحياء"],
-      'المكثفة الشاملة': ['فيزياء', 'كيمياء', 'إنكليزي'],
-    };
-
-    final subjects = fakeData[selectedClass] ?? [];
-    emit(
-      SubjectSubjectsLoaded(selectedClass: selectedClass, subjects: subjects),
-    );
+    // final subjects = fakeData[selectedClass] ?? [];
+    // emit(
+    //   SubjectSubjectsLoaded(selectedClass: selectedClass, subjects: subjects),
+    // );
   }
 }
 

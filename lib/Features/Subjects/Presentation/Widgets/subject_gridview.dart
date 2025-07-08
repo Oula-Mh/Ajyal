@@ -4,7 +4,7 @@ import 'package:ajyal/Features/Subjects/Presentation/Widgets/subject_item.dart';
 import 'package:flutter/material.dart';
 
 class SubjectGridView extends StatelessWidget {
-  final SubjectSubjectsLoaded state;
+  final SubjectLoadedSuccess state;
   const SubjectGridView({super.key, required this.state});
 
   @override
@@ -20,7 +20,7 @@ class SubjectGridView extends StatelessWidget {
         ),
         itemBuilder: (context, index) {
           final subject = state.subjects[index];
-          final icon = getIconForSubject(subject);
+          final icon = getIconForSubject(subject.name!);
           return SubjectCard(subject: subject, icon: icon);
         },
       ),

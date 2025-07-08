@@ -71,7 +71,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             fillColor: AppColor.fillTextField,
             prefixIcon:
                 widget.icon != null
-                    ? Icon(widget.icon, color: Color(0xFFA38097))
+                    ? Icon(widget.icon, color: AppColor.purple)
                     : null,
             suffixIcon:
                 widget.isPassword == true
@@ -86,7 +86,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                         widget.passToggle!
                             ? Icons.visibility_off
                             : Icons.visibility,
-                        color: Color(0xFFA38097),
+                        color: AppColor.purple,
                       ),
                     )
                     : null,

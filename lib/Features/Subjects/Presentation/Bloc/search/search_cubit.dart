@@ -12,7 +12,7 @@ class SearchCubit extends Cubit<List<PdfFileModel>> {
     } else {
       final filtered =
           originalList.where((item) {
-            return item.title.toLowerCase().contains(query.toLowerCase());
+            return item.title!.toLowerCase().contains(query.toLowerCase());
           }).toList();
       emit(filtered);
     }

@@ -44,7 +44,7 @@ class ListProfileField extends StatelessWidget {
         SizedBox(height: 10),
         ProfileField(
           onTap: () {},
-          text: "المدفوعات",
+          text: "كورساتي",
           iconData: Icons.request_page_outlined,
           color: AppColor.primaryColor,
           isNeedArrow: true,

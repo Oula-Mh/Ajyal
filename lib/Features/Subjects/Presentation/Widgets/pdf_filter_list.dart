@@ -1,4 +1,5 @@
 import 'package:ajyal/Core/styles/app_color.dart';
+import 'package:ajyal/Core/utils/constants/end_pointS.dart';
 import 'package:ajyal/Features/Subjects/Data/model/pdf_file_model.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Pages/pdf_viewer_page.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class PdfFilteredList extends StatelessWidget {
 
               child: ListTile(
                 title: Text(
-                  file.title,
+                  file.title!,
                   style: TextStyle(
                     fontSize: 16.5,
                     fontWeight: FontWeight.w500,
@@ -54,8 +55,8 @@ class PdfFilteredList extends StatelessWidget {
                     MaterialPageRoute(
                       builder:
                           (_) => PdfViewerPage(
-                            url: file.filePath,
-                            title: file.title,
+                            url: "http://192.168.1.104:8000/${file.filePath!}",
+                            title: file.title!,
                           ),
                     ),
                   );

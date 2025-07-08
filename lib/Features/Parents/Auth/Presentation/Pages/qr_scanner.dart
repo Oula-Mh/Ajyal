@@ -1,3 +1,4 @@
+import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Bloc/register/register_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,10 +75,7 @@ class _QRScanPageState extends State<QrScanner> {
                         width: double.infinity,
                         height: 450,
                         decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xFFA38097),
-                            width: 5,
-                          ),
+                          border: Border.all(color: AppColor.purple, width: 5),
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: ClipRRect(

@@ -82,7 +82,7 @@ class StudentAuthRepoimp implements StudentAuthRepo {
   @override
   Future<Either<Failure, String>> logout() async {
     try {
-      final response = await api.post("/student/logout", {});
+      final response = await api.post(EndPoints.logout, {});
       final mssg = response["message"];
       print(mssg);
       return Right(mssg);

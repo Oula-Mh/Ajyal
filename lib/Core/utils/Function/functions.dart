@@ -1,6 +1,7 @@
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 void customAlert(BuildContext context, String mssg, Function()? onPressed) {
   showDialog(
@@ -58,4 +59,24 @@ Widget getSvg(String svg) {
     width: 70,
     height: 70, // optional tint
   );
+}
+
+String formatDate(String inputDate) {
+  DateTime dateTime = DateTime.parse(inputDate);
+  return DateFormat('dd-MM-yyyy').format(dateTime);
+}
+
+Widget paginationHelper({
+  required bool condition,
+  required void fun,
+  required IconData mainIcon,
+}) {
+  return condition
+      ? IconButton(
+        onPressed: () {
+          fun;
+        },
+        icon: Icon(mainIcon),
+      )
+      : Icon(mainIcon, color: Colors.grey);
 }

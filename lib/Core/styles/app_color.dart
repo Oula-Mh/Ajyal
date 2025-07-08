@@ -8,4 +8,5 @@ abstract class AppColor {
   static const borderTextField = Color(0xFF491B6D);
   static const fillTextField = Color(0xFFEAF1FC);
   static const error = Colors.redAccent;
+  static const purple = Color(0xFFA38097);
 }

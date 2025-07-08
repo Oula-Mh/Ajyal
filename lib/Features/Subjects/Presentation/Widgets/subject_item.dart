@@ -1,5 +1,6 @@
 import 'package:ajyal/Core/routes/app_router.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
+import 'package:ajyal/Features/Subjects/Data/model/subject_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,7 +13,7 @@ class SubjectItem {
 }
 
 class SubjectCard extends StatelessWidget {
-  final String subject;
+  final SubjectModel subject;
   final Widget icon;
 
   const SubjectCard({super.key, required this.subject, required this.icon});
@@ -38,16 +39,16 @@ class SubjectCard extends StatelessWidget {
               child: icon,
             ),
             Text(
-              subject,
+              subject.name!,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             Text(
-              "10 ملفات",
+              subject.description!,
               style: TextStyle(fontSize: 12, color: Colors.grey[600]),
             ),
             ElevatedButton(
               onPressed: () {
-                GoRouter.of(context).push(AppRouter.pdfPage);
+                GoRouter.of(context).push(AppRouter.pdfPage, extra: subject.id);
               },
 
               style: ElevatedButton.styleFrom(
