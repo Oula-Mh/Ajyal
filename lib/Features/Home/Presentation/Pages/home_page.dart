@@ -1,7 +1,8 @@
 import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
 import 'package:ajyal/Custom/Custom_widgets/custom_nav_bar.dart';
 import 'package:ajyal/Features/Advertisements/Data/repos/adv_repo_imp.dart';
-import 'package:ajyal/Features/Advertisements/Presentation/Bloc/adv/adv_cubit.dart';
+import 'package:ajyal/Features/Advertisements/Presentation/Bloc/course_Adv/course_adv_cubit.dart';
+import 'package:ajyal/Features/Advertisements/Presentation/Bloc/general_adv/general_adv_cubit.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/home_adv_page.dart';
 import 'package:ajyal/Features/Community/Presentation/Pages/chat_page.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
@@ -27,17 +28,21 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 1;
   final List<Widget> _children = [
-    BlocProvider(
-      create:
-          (context) =>
-              ProfileCubit(StudentAuthRepoimp(DioConsumer(Dio())))
-                ..getProfile(),
-      child: ProfilePage(),
-    ),
-    BlocProvider(
-      create:
-          (context) =>
-              AdvCubit(AdvRepoImpl(DioConsumer(Dio())))..getCourseAdv(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create:
+              (context) =>
+                  CourseAdvCubit(AdvRepoImpl(DioConsumer(Dio())))
+                    ..getCourseAdv(),
+        ),
+        BlocProvider(
+          create:
+              (context) =>
+                  GeneralAdvCubit(AdvRepoImpl(DioConsumer(Dio())))
+                    ..getGeneralAdv(),
+        ),
+      ],
       child: HomeAdvPage(),
     ),
 

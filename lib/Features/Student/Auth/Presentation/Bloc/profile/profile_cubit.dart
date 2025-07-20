@@ -1,4 +1,5 @@
 import 'package:ajyal/Features/Student/Auth/Data/models/student_profile_model.dart';
+import 'package:ajyal/Features/Student/Auth/Data/models/teacher_profile_model.dart';
 import 'package:ajyal/Features/Student/Auth/Data/repos/student_auth_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,12 +11,21 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   ProfileCubit get(BuildContext context) => BlocProvider.of(context);
 
-  Future<void> getProfile() async {
+  Future<void> getStudentProfile() async {
     emit(ProfileLoading());
-    var response = await studentRepo.getProfile();
+    var response = await studentRepo.getStudentProfile();
     response.fold(
       (err) => emit(ProfileFail(errorMessage: err.errorMessage)),
-      (model) => emit(ProfileSuccess(model: model)),
+      (model) => emit(StudentProfileSuccess(model: model)),
+    );
+  }
+
+  Future<void> getTeacherProfile(int id) async {
+    emit(ProfileLoading());
+    var response = await studentRepo.getTeacherProfile(id);
+    response.fold(
+      (err) => emit(ProfileFail(errorMessage: err.errorMessage)),
+      (model) => emit(TeacherProfileSuccess(model: model)),
     );
   }
 

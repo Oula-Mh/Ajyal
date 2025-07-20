@@ -1,7 +1,6 @@
 import 'package:ajyal/Core/styles/app_text_style.dart';
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class CustomTextHeaderAuth extends StatelessWidget {
   CustomTextHeaderAuth({required this.text, super.key});
   String text;

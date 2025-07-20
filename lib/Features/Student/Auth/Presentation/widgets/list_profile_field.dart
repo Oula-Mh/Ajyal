@@ -20,8 +20,8 @@ class ListProfileField extends StatelessWidget {
       children: [
         ProfileField(
           onTap: () {
-            if (state is ProfileSuccess) {
-              final model = (state as ProfileSuccess).model;
+            if (state is StudentProfileSuccess) {
+              final model = (state as StudentProfileSuccess).model;
               GoRouter.of(
                 context,
               ).push(AppRouter.studentPersonalInfo, extra: model);

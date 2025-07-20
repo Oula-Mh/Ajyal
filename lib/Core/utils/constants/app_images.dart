@@ -3,6 +3,8 @@ class AppImages {
   static const backgroundCircule = "$basePath/Frame.png";
   static const logo = "$basePath/logo.png";
   static const adv = '$basePath/adv.jpg';
+  static const notFound = '$basePath/not_found.png';
+  static const withoutText = '$basePath/without_text.png';
 
   //===== SVG ======
   static const math = "assets/images/svg/math.svg";

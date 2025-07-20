@@ -17,3 +17,8 @@ final class PdfFileFail extends PdfFileState {
 
   PdfFileFail({required this.errMessage});
 }
+
+final class PdfViewSuccess extends PdfFileState {
+  final PdfControllerPinch controller;
+  PdfViewSuccess(this.controller);
+}

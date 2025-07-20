@@ -1,5 +1,6 @@
 import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
+import 'package:ajyal/Features/Course/Data/Model/course_details_model.dart';
 import 'package:ajyal/Features/Course/Data/Model/course_model.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repo.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_cubit.dart';
@@ -31,6 +32,16 @@ class CourseCubit extends Cubit<CourseState> {
       selectedCourse = foundCourse;
       // selectedCourse = courses.first.id;
       emit(CourseSuccess(allcourses: courses));
+    });
+  }
+
+  Future<void> getCourseDetails(int courseId) async {
+    emit(CourseLoading());
+    var response = await courseRepo.getCourseDetails(courseId);
+    response.fold((err) => emit(CourseFail(errMsg: err.errorMessage)), (
+      details,
+    ) {
+      emit(GetDetailsSuccess(model: details));
     });
   }
 

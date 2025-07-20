@@ -66,6 +66,16 @@ String formatDate(String inputDate) {
   return DateFormat('dd-MM-yyyy').format(dateTime);
 }
 
+String formatTime(String inputTime) {
+  // Parse the string into a DateTime object
+  final parsedDate =
+      DateTime.parse(inputTime).toLocal(); // toLocal() for local timezone
+
+  // Format to 12-hour time with AM/PM
+  final formattedTime = DateFormat('hh:mm a').format(parsedDate);
+  return formattedTime;
+}
+
 Widget paginationHelper({
   required bool condition,
   required void fun,

@@ -10,26 +10,26 @@ class ImageAdv extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(13),
+      padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 10),
 
       child: Container(
         decoration: BoxDecoration(
           //  border: Border.all(),
           borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: AppColor.primaryColor.withAlpha(150),
-              offset: Offset(0, 1), // ظل باتجاه أسفل يمين
-              blurRadius: 5,
-              spreadRadius: 1,
-            ),
-          ],
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: AppColor.primaryColor.withAlpha(150),
+          //     offset: Offset(0, 1), // ظل باتجاه أسفل يمين
+          //     blurRadius: 5,
+          //     spreadRadius: 1,
+          //   ),
+          //],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(9),
           child: CacheImage(
             imageUrl: EndPoints.fileBaseUrl + imageUrl,
-            height: 130,
+            height: 120,
             width: double.infinity,
             isStringExist: true,
           ),

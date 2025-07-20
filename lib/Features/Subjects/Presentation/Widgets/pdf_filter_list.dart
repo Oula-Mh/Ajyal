@@ -55,7 +55,7 @@ class PdfFilteredList extends StatelessWidget {
                     MaterialPageRoute(
                       builder:
                           (_) => PdfViewerPage(
-                            url: "http://192.168.1.104:8000/${file.filePath!}",
+                            url: EndPoints.fileBaseUrl + file.filePath!,
                             title: file.title!,
                           ),
                     ),

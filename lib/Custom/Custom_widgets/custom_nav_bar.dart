@@ -31,9 +31,9 @@ class CustomNavigationBar extends StatelessWidget {
         currentIndex: currentIndex,
         onTap: onTap,
         items: [
-          BottomNavigationBarItem(
-            icon: iconBottomNavigation(Iconsax.profile_2user, "ملفي"),
-          ),
+          // BottomNavigationBarItem(
+          //   icon: iconBottomNavigation(Iconsax.profile_2user, "ملفي"),
+          // ),
           BottomNavigationBarItem(
             icon: iconBottomNavigation(Iconsax.home, "الرئيسية"),
           ),

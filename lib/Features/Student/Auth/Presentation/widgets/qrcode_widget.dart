@@ -62,7 +62,7 @@ class QrCodeWidget extends StatelessWidget {
   }
 
   Widget _buildQRCodeContent(ProfileState state) {
-    if (state is ProfileSuccess) {
+    if (state is StudentProfileSuccess) {
       return QrImageView(
         data: state.model.data!.studentId!,
         version: QrVersions.auto,

@@ -1,11 +1,11 @@
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Features/Advertisements/Data/model/ad_pagination_model.dart';
 import 'package:ajyal/Features/Advertisements/Data/model/course_adv_model.dart';
+import 'package:ajyal/Features/Advertisements/Presentation/Bloc/course_Adv/course_adv_cubit.dart';
 import 'package:ajyal/Features/Course/Presentation/Widget/all_course_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ajyal/Custom/Custom_widgets/custom_app_bar.dart';
-import 'package:ajyal/Features/Advertisements/Presentation/Bloc/adv/adv_cubit.dart';
 import 'package:ajyal/Features/Course/Presentation/Widget/top_pagenation_widget.dart';
 
 class AllCoursePage extends StatelessWidget {
@@ -19,19 +19,19 @@ class AllCoursePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AdvCubit, AdvState>(
+    return BlocBuilder<CourseAdvCubit, CourseAdvState>(
       builder: (context, state) {
         return Scaffold(
           backgroundColor: AppColor.white1,
           appBar: customAppBar(context, "الدورات المتاحة"),
-          bottomNavigationBar: BlocListener<AdvCubit, AdvState>(
+          bottomNavigationBar: BlocListener<CourseAdvCubit, CourseAdvState>(
             listener: (context, state) {
               if (state is CourseAdvSuccess) {}
             },
             child: ResponsivePaginationBar(
               paginationModel: paginationModel,
               onPageChanged: (int page) {
-                context.read<AdvCubit>().getCourseAdv(page: page);
+                context.read<CourseAdvCubit>().getCourseAdv(page: page);
               },
             ),
           ),

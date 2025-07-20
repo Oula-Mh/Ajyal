@@ -2,8 +2,12 @@ import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
 import 'package:ajyal/Features/Advertisements/Data/model/ad_pagination_model.dart';
 import 'package:ajyal/Features/Advertisements/Data/model/course_adv_model.dart';
 import 'package:ajyal/Features/Advertisements/Data/repos/adv_repo_imp.dart';
-import 'package:ajyal/Features/Advertisements/Presentation/Bloc/adv/adv_cubit.dart';
+import 'package:ajyal/Features/Advertisements/Presentation/Bloc/course_adv/course_adv_cubit.dart';
+import 'package:ajyal/Features/Advertisements/Presentation/Pages/all_generaladv_page.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/home_adv_page.dart';
+import 'package:ajyal/Features/Advertisements/Presentation/Pages/teacher_adv_page.dart';
+import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
+import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
 import 'package:ajyal/Features/Course/Presentation/Pages/all_course_page.dart';
 import 'package:ajyal/Features/Course/Presentation/Pages/course_details.dart';
 import 'package:ajyal/Features/Home/Presentation/Pages/home_page.dart';
@@ -17,10 +21,12 @@ import 'package:ajyal/Features/Student/Auth/Data/models/check_student_info_model
 import 'package:ajyal/Features/Student/Auth/Data/models/student_profile_model.dart';
 import 'package:ajyal/Features/Student/Auth/Data/repos/student_auth_repoImp.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Bloc/login/login_cubit.dart';
+import 'package:ajyal/Features/Student/Auth/Presentation/Bloc/profile/profile_cubit.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Bloc/register/register_cubit.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Pages/check_student_page.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Pages/complete_register_page.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Pages/login_page.dart';
+import 'package:ajyal/Features/Student/Auth/Presentation/Pages/profile_page.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Pages/student_info_page.dart';
 import 'package:ajyal/Features/Subjects/Data/repo/pdf_file_repimp.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/pdf_file/pdf_file_cubit.dart';
@@ -29,7 +35,6 @@ import 'package:ajyal/Features/Subjects/Presentation/Pages/pdf_page.dart';
 import 'package:ajyal/Features/role_page.dart';
 import 'package:ajyal/Features/splash/splash_view.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Pages/register_view.dart';
-import 'package:ajyal/test.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -48,7 +53,10 @@ abstract class AppRouter {
   static const studentPersonalInfo = "/studentPersonalInfo";
   static const pdfPage = "/pdfPage";
   static const allCoursePage = "/allCoursePage";
+  static const allGeneralPage = "/allGeneralPage";
   static const courseDetailsPage = "/courseDetailsPage";
+  static const teacherInfoPage = "/teacherInfoPage";
+  static const studentProfilePage = "/studentProfilePage";
 
   static final router = GoRouter(
     routes: [
@@ -62,7 +70,43 @@ abstract class AppRouter {
       GoRoute(path: rolePage, builder: (context, state) => const RolePage()),
       GoRoute(
         path: courseDetailsPage,
-        builder: (context, state) => const CourseDetailsPage(),
+        builder: (context, state) {
+          final data = state.extra as Map<String, dynamic>;
+          final courseId = data['id'];
+          final images = data['images'];
+          return BlocProvider(
+            create:
+                (context) =>
+                    CourseCubit(CourseRepoimp(DioConsumer(Dio())))
+                      ..getCourseDetails(courseId),
+            child: CourseDetailsPage(images: images),
+          );
+        },
+      ),
+      GoRoute(
+        path: studentProfilePage,
+        builder: (context, state) {
+          return BlocProvider(
+            create:
+                (context) =>
+                    ProfileCubit(StudentAuthRepoimp(DioConsumer(Dio())))
+                      ..getStudentProfile(),
+            child: ProfilePage(),
+          );
+        },
+      ),
+      GoRoute(
+        path: teacherInfoPage,
+        builder: (context, state) {
+          var teacherId = state.extra as int;
+          return BlocProvider(
+            create:
+                (context) =>
+                    ProfileCubit(StudentAuthRepoimp(DioConsumer(Dio())))
+                      ..getTeacherProfile(teacherId),
+            child: TeacherInfoPage(),
+          );
+        },
       ),
       GoRoute(
         path: allCoursePage,
@@ -70,18 +114,18 @@ abstract class AppRouter {
           final args = state.extra as Map<String, dynamic>;
           final List<CourseAdvModel> resultsList = args['resultsList'];
           final AdvPaginationModel paginationModel = args['paginationModel'];
-          return BlocProvider(
-            create:
-                (context) =>
-                    AdvCubit(AdvRepoImpl(DioConsumer(Dio())))..getCourseAdv(),
-            child: AllCoursePage(
-              resultsList: resultsList,
-              paginationModel: paginationModel,
-            ),
+          return AllCoursePage(
+            resultsList: resultsList,
+            paginationModel: paginationModel,
           );
         },
       ),
-      //    GoRoute(path: qrScannerPage, builder: (context, state) => QrScanner()),
+      GoRoute(
+        path: allGeneralPage,
+        builder: (context, state) {
+          return AllGeneraladvPage();
+        },
+      ),
       GoRoute(
         path: pdfPage,
         builder: (context, state) {
@@ -92,7 +136,7 @@ abstract class AppRouter {
                 create:
                     (context) =>
                         PdfFileCubit(PdfFileRepoImpl(DioConsumer(Dio())))
-                          ..getPdfFile(curriculaId),
+                          ..getSubjectPdfFile(curriculaId),
               ),
               BlocProvider(create: (context) => SearchCubit([])),
             ],

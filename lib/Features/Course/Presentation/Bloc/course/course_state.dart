@@ -17,3 +17,9 @@ final class CourseFail extends CourseState {
 
   CourseFail({required this.errMsg});
 }
+
+final class GetDetailsSuccess extends CourseState {
+  final CourseDetailsModel model;
+
+  GetDetailsSuccess({required this.model});
+}

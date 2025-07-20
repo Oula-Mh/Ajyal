@@ -1,5 +1,3 @@
-import 'package:ajyal/Core/styles/app_color.dart';
-import 'package:ajyal/Core/utils/Function/functions.dart';
 import 'package:flutter/material.dart';
 
 class AllCourseTitle extends StatelessWidget {
@@ -19,20 +17,16 @@ class AllCourseTitle extends StatelessWidget {
             fontWeight: FontWeight.w700,
             fontSize: 16,
           ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
         ),
         SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Icon(Icons.date_range, color: AppColor.primaryColor),
-            SizedBox(width: 4),
-            Text(
-              formatDate(date),
-              style: TextStyle(color: Colors.grey.shade800, fontSize: 15),
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+          child: Text(
+            date,
+            style: TextStyle(color: Colors.black, fontSize: 15),
+            maxLines: null,
+            overflow: TextOverflow.visible,
+          ),
         ),
       ],
     );

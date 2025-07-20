@@ -1,28 +1,31 @@
 import 'package:ajyal/Core/routes/app_router.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
+import 'package:ajyal/Features/Advertisements/Data/model/course_adv_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AdvDetailsBttn extends StatelessWidget {
-  const AdvDetailsBttn({super.key});
+  final int courseId;
+  final List<Images> images;
+  const AdvDetailsBttn({
+    super.key,
+    required this.courseId,
+    required this.images,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).push(AppRouter.courseDetailsPage);
+        GoRouter.of(context).push(
+          AppRouter.courseDetailsPage,
+          extra: {'id': courseId, 'images': images},
+        );
       },
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColor.secondaryColor,
-          shape: BoxShape.circle,
-        ),
-        padding: const EdgeInsets.all(8),
-        child: const Icon(
-          Icons.arrow_forward_ios,
-          size: 16,
-          color: AppColor.primaryColor,
-        ),
+      child: const Icon(
+        Icons.arrow_forward_ios,
+        size: 16,
+        color: AppColor.primaryColor,
       ),
     );
     // Padding(
