@@ -4,15 +4,6 @@ abstract class SubjectState {}
 
 class SubjectInitial extends SubjectState {}
 
-// class SubjectLoadingClasses extends SubjectState {}
-
-// class SubjectClassesLoaded extends SubjectState {
-//   final List<String> classes;
-//   final String? selectedClass;
-
-//   SubjectClassesLoaded({required this.classes, this.selectedClass});
-// }
-
 class SubjectLoading extends SubjectState {}
 
 class SubjectLoadedSuccess extends SubjectState {

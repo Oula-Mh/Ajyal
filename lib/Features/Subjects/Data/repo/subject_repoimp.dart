@@ -16,12 +16,35 @@ class SubjectRepoimp implements SubjectRepo {
       final response = await api.get(
         EndPoints.courseSubjects + courseId.toString(),
       );
-      final subjects = response['data']['subjects'];
-      final List<SubjectModel> subjectList =
-          (subjects as List)
-              .map((json) => SubjectModel.fromJson(json))
+      final subjectsList = response['data']['curriculums'];
+      List<SubjectModel> subjects =
+          (subjectsList as List)
+              .map((curriculum) => SubjectModel.fromJson(curriculum['subject']))
               .toList();
-      return Right(subjectList);
+
+      return Right(subjects);
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<SubjectModel>>> getSubjectForTeacher(
+    int id,
+  ) async {
+    try {
+      var response = await api.get(EndPoints.subjectForTeacher + id.toString());
+      final data = response['data'];
+      final List subjectsJson = data['subjects'];
+
+      final subjects =
+          subjectsJson.map((json) => SubjectModel.fromJson(json)).toList();
+      print(subjects);
+      print("=====================");
+      return Right(subjects);
     } on Exception catch (e) {
       if (e is DioException) {
         return left(ServerFailure.fromDioError(e));

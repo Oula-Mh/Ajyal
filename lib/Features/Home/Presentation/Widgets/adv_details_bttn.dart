@@ -22,11 +22,23 @@ class AdvDetailsBttn extends StatelessWidget {
           extra: {'id': courseId, 'images': images},
         );
       },
-      child: const Icon(
-        Icons.arrow_forward_ios,
-        size: 16,
-        color: AppColor.primaryColor,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          shape: BoxShape.circle,
+        ),
+        padding: const EdgeInsets.all(8),
+        child: const Icon(
+          Icons.arrow_forward_ios,
+          size: 16,
+          color: AppColor.primaryColor,
+        ),
       ),
+      // child: const Icon(
+      //   Icons.arrow_forward_ios,
+      //   size: 16,
+      //   color: AppColor.primaryColor,
+      // ),
     );
     // Padding(
     //   padding: const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 12),
@@ -51,18 +63,18 @@ class AdvDetailsBttn extends StatelessWidget {
     //             ),
     //           ),
     //           SizedBox(width: 17),
-    //           Container(
-    //             decoration: BoxDecoration(
-    //               color: AppColor.secondaryColor,
-    //               shape: BoxShape.circle,
-    //             ),
-    //             padding: const EdgeInsets.all(8),
-    //             child: const Icon(
-    //               Icons.arrow_forward_ios,
-    //               size: 16,
-    //               color: AppColor.primaryColor,
-    //             ),
-    //           ),
+    // Container(
+    //   decoration: BoxDecoration(
+    //     color: AppColor.secondaryColor,
+    //     shape: BoxShape.circle,
+    //   ),
+    //   padding: const EdgeInsets.all(8),
+    //   child: const Icon(
+    //     Icons.arrow_forward_ios,
+    //     size: 16,
+    //     color: AppColor.primaryColor,
+    //   ),
+    // ),
     //         ],
     //       ),
     //     ),

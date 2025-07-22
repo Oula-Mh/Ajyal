@@ -1,20 +1,28 @@
-import 'package:ajyal/Features/Advertisements/Presentation/Bloc/course_Adv/course_adv_cubit.dart';
+import 'package:ajyal/Features/Advertisements/Data/model/course_adv_model.dart';
 import 'package:ajyal/Features/Course/Presentation/Widget/all_course_title_widget.dart';
 import 'package:ajyal/Features/Course/Presentation/Widget/show_course_button.dart';
 import 'package:flutter/material.dart';
 
 class AllCourseItem extends StatelessWidget {
-  final CourseAdvSuccess state;
-  const AllCourseItem({super.key, required this.state});
+  //final CourseAdvSuccess state;
+  final int itemCount;
+  final List<CourseAdvModel> courses;
+  const AllCourseItem({
+    super.key,
+    required this.itemCount,
+    required this.courses,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 13),
       child: ListView.builder(
-        itemCount: state.model.data!.length,
+        // itemCount: state.model.data!.length,
+        itemCount: itemCount,
         itemBuilder: (context, item) {
-          final course = state.model.data![item];
+          //final course = state.model.data![item];
+          final course = courses[item];
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Container(

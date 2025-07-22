@@ -33,8 +33,9 @@ import 'package:ajyal/Features/Subjects/Presentation/Bloc/pdf_file/pdf_file_cubi
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/search/search_cubit.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Pages/pdf_page.dart';
 import 'package:ajyal/Features/role_page.dart';
-import 'package:ajyal/Features/splash/splash_view.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Pages/register_view.dart';
+import 'package:ajyal/Features/splash/splash_view.dart';
+import 'package:ajyal/test.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -57,6 +58,7 @@ abstract class AppRouter {
   static const courseDetailsPage = "/courseDetailsPage";
   static const teacherInfoPage = "/teacherInfoPage";
   static const studentProfilePage = "/studentProfilePage";
+  static const test = "/test";
 
   static final router = GoRouter(
     routes: [
@@ -109,14 +111,20 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-        path: allCoursePage,
+        path: test,
         builder: (context, state) {
           final args = state.extra as Map<String, dynamic>;
           final List<CourseAdvModel> resultsList = args['resultsList'];
           final AdvPaginationModel paginationModel = args['paginationModel'];
-          return AllCoursePage(
-            resultsList: resultsList,
-            paginationModel: paginationModel,
+          return BlocProvider(
+            create:
+                (context) =>
+                    CourseAdvCubit(AdvRepoImpl(DioConsumer(Dio())))
+                      ..getCourseAdv(),
+            child: TestPage(
+              resultsList: resultsList,
+              paginationModel: paginationModel,
+            ),
           );
         },
       ),

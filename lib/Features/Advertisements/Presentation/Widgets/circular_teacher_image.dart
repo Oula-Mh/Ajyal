@@ -11,8 +11,8 @@ class CircularTeacherImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: containerHeight - 150,
-      left: 25,
+      top: containerHeight - 205,
+      left: 28,
       child: Container(
         padding: const EdgeInsets.all(6), // الإطار الأول
         decoration: const BoxDecoration(

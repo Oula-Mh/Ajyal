@@ -9,9 +9,8 @@ class TeacherMainInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double myWidth = MediaQuery.of(context).size.width;
     return Positioned(
-      top: 70,
+      top: 90,
       right: 20,
       child: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
@@ -35,42 +34,26 @@ class TeacherMainInfo extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 10),
-                Container(
-                  height: 200, // ارتفاع صغير
-                  width: myWidth / 2,
-
-                  child: SingleChildScrollView(
-                    child: Text(
-                      state.model.bio!,
+                Row(
+                  children: [
+                    Icon(Icons.phone, color: AppColor.white1),
+                    SizedBox(width: 10),
+                    Text(
+                      state.model.phoneNumber!,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
                         shadows: [
                           Shadow(
-                            offset: Offset(1, 5),
+                            offset: Offset(1, 3),
                             blurRadius: 6,
                             color: AppColor.primaryColor,
                           ),
                         ],
                       ),
                     ),
-                  ),
+                  ],
                 ),
-
-                // Text(
-                //   state.model.bio!,
-                // style: TextStyle(
-                //   color: Colors.white,
-                //   fontSize: 18,
-                //   shadows: [
-                //     Shadow(
-                //       offset: Offset(1, 5),
-                //       blurRadius: 6,
-                //       color: AppColor.primaryColor,
-                //     ),
-                //     ],
-                //   ),
-                // ),
               ],
             );
           } else {

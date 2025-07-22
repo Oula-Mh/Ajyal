@@ -30,6 +30,8 @@ class EndPoints {
   static const String allTeacherAdv = "advertisement/teacherAdvertisements";
   static const String allGeneralAdv = "advertisement/generalAdvertisements";
   static const String courseDetails = "/course/show/";
+  static const String subjectForTeacher =
+      "/teacher/get-all-subjects-for-teacher/";
 
   // Parent
   static const String loginParent = 'parent/login';

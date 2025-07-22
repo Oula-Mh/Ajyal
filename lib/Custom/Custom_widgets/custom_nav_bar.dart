@@ -54,9 +54,10 @@ class CustomNavigationBar extends StatelessWidget {
 
 Widget iconBottomNavigation(IconData iconData, String text) {
   return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Icon(iconData, size: 24),
-      Text(text, style: TextStyle(fontSize: 12)),
+      // Text(text, style: TextStyle(fontSize: 12)),
     ],
   );
 }

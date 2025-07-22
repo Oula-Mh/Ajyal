@@ -1,6 +1,11 @@
+import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/teacher_adv_page.dart';
+import 'package:ajyal/Features/Advertisements/Presentation/Widgets/teache_subject_widget.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Bloc/profile/profile_cubit.dart';
+import 'package:ajyal/Features/Subjects/Data/repo/subject_repoimp.dart';
+import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_cubit.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Widgets/custom_info_row.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +22,7 @@ class BottonTeacherPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: containerHeight - 110,
+      top: containerHeight - 160,
       child: ClipPath(
         clipper: SlantedClipper(),
         child: Container(
@@ -64,25 +69,40 @@ class BottonTeacherPart extends StatelessWidget {
 
                         const SizedBox(height: 20),
 
-                        // Text(
-                        //   "fs",
-                        //   style: TextStyle(
-                        //     fontSize: 18,
-                        //     color: Colors.white60,
-                        //     height: 1.7,
-                        //   ),
-                        // ),
-                        CustomRowInfo(
-                          title: "الايميل للتواصل : ",
-                          info: "${state.model.email}",
+                        Text(
+                          state.model.bio!,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white60,
+                            height: 1.4,
+                          ),
                         ),
-                        CustomRowInfo(
-                          title: "رقم الهاتف : ",
-                          info: "${state.model.phoneNumber}",
+                        SizedBox(height: 25),
+                        Text(
+                          "المواد التي يدرسها : ",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            height: 1.5,
+                          ),
                         ),
-                        CustomRowInfo(
-                          title: "تاريخ الانضمام إلى المعهد : ",
-                          info: "${state.model.dateOfContract}",
+                        SizedBox(height: 13),
+                        BlocProvider(
+                          create:
+                              (context) => SubjectCubit(
+                                SubjectRepoimp(DioConsumer(Dio())),
+                              ),
+                          child: Builder(
+                            builder: (context) {
+                              // في شوية تأخير هون لسبب انو بدي استعدي ال cubit كامل بعدها استخدمه
+                              final cubit = BlocProvider.of<SubjectCubit>(
+                                context,
+                              );
+                              cubit.subjectForTeacher(state.model.id!);
+                              return TeacherSubject();
+                            },
+                          ),
                         ),
                       ],
                     )

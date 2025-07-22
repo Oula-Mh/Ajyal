@@ -4,4 +4,5 @@ import 'package:dartz/dartz.dart';
 
 abstract class SubjectRepo {
   Future<Either<Failure, List<SubjectModel>>> getSubjects(int courseId);
+  Future<Either<Failure, List<SubjectModel>>> getSubjectForTeacher(int id);
 }

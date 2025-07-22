@@ -68,7 +68,7 @@ class HomeAdvPage extends StatelessWidget {
                                         ),
                                         if (state is CourseAdvSuccess)
                                           ViewAllAdv(
-                                            router: AppRouter.allCoursePage,
+                                            router: AppRouter.test,
                                             params: {
                                               'resultsList': state.model.data,
                                               'paginationModel': state.model,
@@ -82,7 +82,7 @@ class HomeAdvPage extends StatelessWidget {
                                           mylist: state.model.data!,
                                         )
                                         : SizedBox(
-                                          height: 275,
+                                          height: 260,
                                           child: ListView.builder(
                                             scrollDirection: Axis.horizontal,
                                             itemCount: 2,

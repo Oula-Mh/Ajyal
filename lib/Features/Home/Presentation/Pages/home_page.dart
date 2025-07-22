@@ -8,9 +8,6 @@ import 'package:ajyal/Features/Community/Presentation/Pages/chat_page.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
 import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
 import 'package:ajyal/Features/Exam/Presentation/Pages/exam_page.dart';
-import 'package:ajyal/Features/Student/Auth/Data/repos/student_auth_repoImp.dart';
-import 'package:ajyal/Features/Student/Auth/Presentation/Bloc/profile/profile_cubit.dart';
-import 'package:ajyal/Features/Student/Auth/Presentation/Pages/profile_page.dart';
 import 'package:ajyal/Features/Subjects/Data/repo/subject_repoimp.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_cubit.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Pages/subject_page.dart';
@@ -26,7 +23,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 1;
+  int _currentIndex = 0;
   final List<Widget> _children = [
     MultiBlocProvider(
       providers: [

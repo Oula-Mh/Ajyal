@@ -1,3 +1,4 @@
+import 'package:ajyal/Core/utils/constants/app_images.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Widgets/bottom_teacher_part.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Widgets/circular_teacher_image.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Widgets/teacher_main_info.dart';
@@ -32,6 +33,16 @@ class TeacherInfoPage extends StatelessWidget {
                     height: containerHeight,
                     color: Colors.blue.withOpacity(0.5),
                   ),
+                  Container(
+                    height: containerHeight,
+                    decoration: BoxDecoration(
+                      image: const DecorationImage(
+                        fit: BoxFit.fill,
+                        image: AssetImage(AppImages.frame),
+                      ),
+                    ),
+                  ),
+
                   TeacherMainInfo(),
                 ],
               ),

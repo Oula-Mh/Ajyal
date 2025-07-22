@@ -8,6 +8,7 @@ abstract class StudentAuthRepo {
   Future<Either<Failure, String>> login(Map data);
   Future<Either<Failure, StudentProfileModel>> getStudentProfile();
   Future<Either<Failure, TeacherProfileModel>> getTeacherProfile(int id);
+
   Future<Either<Failure, CheckStudentInfoModel>> checkStudent(Map data);
   Future<Either<Failure, String>> register(Map data);
   Future<Either<Failure, String>> logout();

@@ -9,21 +9,14 @@ class SubjectCubit extends Cubit<SubjectState> {
   final SubjectRepo subjectRepo;
   SubjectCubit(this.subjectRepo) : super(SubjectInitial());
 
-  // محاكاة "API" لجلب الصفوف
-  // Future<void> fetchClasses() async {
-  //   emit(SubjectLoadingClasses());
-  //   await Future.delayed(Duration(seconds: 1)); // تمثيل التأخير من الشبكة
-  //   emit(
-  //     SubjectClassesLoaded(
-  //       classes: [
-  //         'البكالوريا العلمي',
-  //         'البكالوريا الأدبي',
-  //         'مكثفة علم الأحياء',
-  //         'المكثفة الشاملة',
-  //       ],
-  //     ),
-  //   );
-  // }
+  Future<void> subjectForTeacher(int id) async {
+    emit(SubjectLoading());
+    var response = await subjectRepo.getSubjectForTeacher(id);
+    response.fold(
+      (err) => emit(SubjectError(err.errorMessage)),
+      (subjects) => emit(SubjectLoadedSuccess(subjects: subjects)),
+    );
+  }
 
   Future<void> fetchSubjects(int courseId) async {
     emit(SubjectLoading());
@@ -48,7 +41,7 @@ class SubjectCubit extends Cubit<SubjectState> {
     //   'المكثفة الشاملة': ['فيزياء', 'كيمياء', 'إنكليزي'],
     // };
     var response = await subjectRepo.getSubjects(courseId);
-
+    print("second loading=======");
     response.fold(
       (err) => emit(SubjectError(err.errorMessage)),
       (subjects) => emit(SubjectLoadedSuccess(subjects: subjects)),
@@ -88,12 +81,6 @@ Widget getIconForSubject(String name) {
       return getSvg(AppImages.default1);
   }
 }
-
-
-
-
-
-
 
 
 
