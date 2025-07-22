@@ -1,4 +1,4 @@
-class CourseAdvModel {
+class AdvModel {
   int? id;
   String? title;
   String? body;
@@ -8,7 +8,7 @@ class CourseAdvModel {
   String? updatedAt;
   List<Images>? images;
 
-  CourseAdvModel({
+  AdvModel({
     this.id,
     this.title,
     this.body,
@@ -19,7 +19,7 @@ class CourseAdvModel {
     this.images,
   });
 
-  CourseAdvModel.fromJson(Map<String, dynamic> json) {
+  AdvModel.fromJson(Map<String, dynamic> json) {
     id = json["id"];
     title = json["title"];
     body = json["body"];
@@ -33,8 +33,8 @@ class CourseAdvModel {
             : (json["images"] as List).map((e) => Images.fromJson(e)).toList();
   }
 
-  static List<CourseAdvModel> fromList(List<Map<String, dynamic>> list) {
-    return list.map(CourseAdvModel.fromJson).toList();
+  static List<AdvModel> fromList(List<Map<String, dynamic>> list) {
+    return list.map(AdvModel.fromJson).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -52,7 +52,7 @@ class CourseAdvModel {
     return _data;
   }
 
-  CourseAdvModel copyWith({
+  AdvModel copyWith({
     int? id,
     String? title,
     String? body,
@@ -61,7 +61,7 @@ class CourseAdvModel {
     String? createdAt,
     String? updatedAt,
     List<Images>? images,
-  }) => CourseAdvModel(
+  }) => AdvModel(
     id: id ?? this.id,
     title: title ?? this.title,
     body: body ?? this.body,

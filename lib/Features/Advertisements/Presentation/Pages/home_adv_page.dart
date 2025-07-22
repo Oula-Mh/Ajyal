@@ -72,6 +72,15 @@ class HomeAdvPage extends StatelessWidget {
                                             params: {
                                               'resultsList': state.model.data,
                                               'paginationModel': state.model,
+                                              // 'onPageChanged': (int page) {
+                                              //   context
+                                              //       .read<CourseAdvCubit>()
+                                              //       .getCourseAdv(page: page);
+                                              //   // final cubit = BlocProvider.of<
+                                              //   //   CourseAdvCubit
+                                              //   // >(context, listen: false);
+                                              //   // cubit.getCourseAdv(page: page);
+                                              // },
                                             },
                                             viewText: "عرض الكل",
                                           ),

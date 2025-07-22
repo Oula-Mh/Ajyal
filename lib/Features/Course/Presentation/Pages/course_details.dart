@@ -21,58 +21,56 @@ class CourseDetailsPage extends StatelessWidget {
       appBar: customAppBar(context, "تفاصيل الكورس"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        child: Center(
-          child: SingleChildScrollView(
-            child: BlocBuilder<CourseCubit, CourseState>(
-              builder: (context, state) {
-                return state is GetDetailsSuccess
-                    ? Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ImageSlider(imageUrls: images!),
-                        SizedBox(height: 15),
-                        Text(
-                          "اسم الكورس : ${state.model.name!}",
-                          style: TextStyle(
-                            fontSize: 21,
-                            color: AppColor.primaryColor,
-                            fontWeight: FontWeight.bold,
-                          ),
+        child: SingleChildScrollView(
+          child: BlocBuilder<CourseCubit, CourseState>(
+            builder: (context, state) {
+              return state is GetDetailsSuccess
+                  ? Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //ImageSlider(imageUrls: images!),
+                      SizedBox(height: 15),
+                      Text(
+                        "اسم الكورس : ${state.model.name!}",
+                        style: TextStyle(
+                          fontSize: 21,
+                          color: AppColor.primaryColor,
+                          fontWeight: FontWeight.bold,
                         ),
-                        SizedBox(height: 10),
-                        SubCourseDetails(
-                          type: state.model.type!,
-                          cost: state.model.cost!,
+                      ),
+                      SizedBox(height: 10),
+                      SubCourseDetails(
+                        type: state.model.type!,
+                        cost: state.model.cost!,
+                      ),
+                      SizedBox(height: 10),
+                      SubcourseDetails2(
+                        start: state.model.startDate!,
+                        end: state.model.endDate!,
+                        capacity: state.model.capacity.toString(),
+                      ),
+                      SizedBox(height: 15),
+                      Text(
+                        "المواد ضمن الكورس :",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.primaryColor,
+                          fontSize: 16,
                         ),
-                        SizedBox(height: 10),
-                        SubcourseDetails2(
-                          start: state.model.startDate!,
-                          end: state.model.endDate!,
-                          capacity: state.model.capacity.toString(),
+                      ),
+                      ...List.generate(
+                        state.model.curriculums!.length,
+                        (index) => CustomSubjectList(
+                          model: state.model.curriculums![index],
                         ),
-                        SizedBox(height: 15),
-                        Text(
-                          "المواد ضمن الكورس :",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: AppColor.primaryColor,
-                            fontSize: 16,
-                          ),
-                        ),
-                        ...List.generate(
-                          state.model.curriculums!.length,
-                          (index) => CustomSubjectList(
-                            model: state.model.curriculums![index],
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        EnrollBttn(),
-                      ],
-                    )
-                    : Center(child: CircularProgressIndicator());
-              },
-            ),
+                      ),
+                      SizedBox(height: 100),
+                      EnrollBttn(),
+                    ],
+                  )
+                  : Center(child: CircularProgressIndicator());
+            },
           ),
         ),
       ),

@@ -2,7 +2,7 @@ import 'package:ajyal/Features/Advertisements/Data/model/course_adv_model.dart';
 
 class AdvPaginationModel {
   int? currentPage;
-  List<CourseAdvModel>? data;
+  List<AdvModel>? data;
   String? firstPageUrl;
   int? from;
   int? lastPage;
@@ -36,9 +36,7 @@ class AdvPaginationModel {
     data =
         json["data"] == null
             ? null
-            : (json["data"] as List)
-                .map((e) => CourseAdvModel.fromJson(e))
-                .toList();
+            : (json["data"] as List).map((e) => AdvModel.fromJson(e)).toList();
     firstPageUrl = json["first_page_url"];
     from = json["from"];
     lastPage = json["last_page"];
@@ -83,7 +81,7 @@ class AdvPaginationModel {
 
   AdvPaginationModel copyWith({
     int? currentPage,
-    List<CourseAdvModel>? data,
+    List<AdvModel>? data,
     String? firstPageUrl,
     int? from,
     int? lastPage,

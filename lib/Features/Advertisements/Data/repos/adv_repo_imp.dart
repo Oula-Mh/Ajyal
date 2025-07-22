@@ -17,10 +17,6 @@ class AdvRepoImpl implements AdvRepo {
     try {
       final response = await api.get(EndPoints.allCourseAdv);
       final advResoponse = AdvPaginationModel.fromJson(response['data']);
-      // final List<CourseAdvModel> coursesList =
-      //     (courses as List)
-      //         .map((json) => CourseAdvModel.fromJson(json))
-      //         .toList();
       return Right(advResoponse);
     } on Exception catch (e) {
       if (e is DioException) {
@@ -45,8 +41,16 @@ class AdvRepoImpl implements AdvRepo {
   }
 
   @override
-  Future<Either<Failure, List<TeacherAdvModel>>> getAllTeacherAdv() {
-    // TODO: implement getAllTeacherAdv
-    throw UnimplementedError();
+  Future<Either<Failure, AdvPaginationModel>> getAllTeacherAdv() async {
+    try {
+      final response = await api.get(EndPoints.allTeacherAdv);
+      final advResoponse = AdvPaginationModel.fromJson(response['data']);
+      return Right(advResoponse);
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
   }
 }

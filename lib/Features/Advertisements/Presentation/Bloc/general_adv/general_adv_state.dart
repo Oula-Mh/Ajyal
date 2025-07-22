@@ -9,10 +9,10 @@ final class GeneralAdvSuccess extends GeneralAdvState {
   GeneralAdvSuccess({required this.model});
 }
 
-final class AdvLoading extends GeneralAdvState {}
+final class GeneralAdvLoading extends GeneralAdvState {}
 
-final class AdvFailure extends GeneralAdvState {
+final class GeneralAdvFailure extends GeneralAdvState {
   final String errMssg;
 
-  AdvFailure({required this.errMssg});
+  GeneralAdvFailure({required this.errMssg});
 }

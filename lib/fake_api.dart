@@ -13,14 +13,14 @@ class FakeApi {
     final totalItems = 30; // 10 pages * 3 items
     final totalPages = 10;
 
-    List<CourseAdvModel> items = [];
+    List<AdvModel> items = [];
 
     for (int i = 0; i < perPage; i++) {
       final itemNumber = (page - 1) * perPage + i + 1;
       if (itemNumber > totalItems) break;
 
       items.add(
-        CourseAdvModel(
+        AdvModel(
           id: itemNumber,
           title: 'الدورة رقم $itemNumber',
           body: 'وصف الدورة التدريبية رقم $itemNumber',

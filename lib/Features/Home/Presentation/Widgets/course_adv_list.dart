@@ -6,7 +6,7 @@ import 'package:ajyal/Features/Home/Presentation/Widgets/adv_image.dart';
 import 'package:flutter/material.dart';
 
 class CourseAdvListView extends StatelessWidget {
-  final List<CourseAdvModel> mylist;
+  final List<AdvModel> mylist;
   const CourseAdvListView({super.key, required this.mylist});
 
   @override

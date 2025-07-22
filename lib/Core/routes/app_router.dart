@@ -3,7 +3,11 @@ import 'package:ajyal/Features/Advertisements/Data/model/ad_pagination_model.dar
 import 'package:ajyal/Features/Advertisements/Data/model/course_adv_model.dart';
 import 'package:ajyal/Features/Advertisements/Data/repos/adv_repo_imp.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Bloc/course_adv/course_adv_cubit.dart';
+import 'package:ajyal/Features/Advertisements/Presentation/Bloc/general_adv/general_adv_cubit.dart';
+import 'package:ajyal/Features/Advertisements/Presentation/Bloc/teacher_adv/teacher_adv_cubit.dart';
+import 'package:ajyal/Features/Advertisements/Presentation/Pages/about_insitute_page.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/all_generaladv_page.dart';
+import 'package:ajyal/Features/Advertisements/Presentation/Pages/all_teacheradv_page.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/home_adv_page.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/teacher_adv_page.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
@@ -55,10 +59,12 @@ abstract class AppRouter {
   static const pdfPage = "/pdfPage";
   static const allCoursePage = "/allCoursePage";
   static const allGeneralPage = "/allGeneralPage";
+  static const allTeacherPage = "/allTeacherPage";
   static const courseDetailsPage = "/courseDetailsPage";
   static const teacherInfoPage = "/teacherInfoPage";
   static const studentProfilePage = "/studentProfilePage";
   static const test = "/test";
+  static const aboutInstitutePage = "/aboutInstitutePage";
 
   static final router = GoRouter(
     routes: [
@@ -114,7 +120,7 @@ abstract class AppRouter {
         path: test,
         builder: (context, state) {
           final args = state.extra as Map<String, dynamic>;
-          final List<CourseAdvModel> resultsList = args['resultsList'];
+          final List<AdvModel> resultsList = args['resultsList'];
           final AdvPaginationModel paginationModel = args['paginationModel'];
           return BlocProvider(
             create:
@@ -129,9 +135,29 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
+        path: allTeacherPage,
+        builder: (context, state) {
+          final args = state.extra as Map<String, dynamic>;
+          final List<AdvModel> resultsList = args['resultsList'];
+          return AllTeacherPage(resultsList: resultsList);
+        },
+      ),
+      GoRoute(
         path: allGeneralPage,
         builder: (context, state) {
-          return AllGeneraladvPage();
+          final args = state.extra as Map<String, dynamic>;
+          final List<AdvModel> resultsList = args['resultsList'];
+          final AdvPaginationModel paginationModel = args['paginationModel'];
+          return BlocProvider(
+            create:
+                (context) =>
+                    GeneralAdvCubit(AdvRepoImpl(DioConsumer(Dio())))
+                      ..getGeneralAdv(),
+            child: AllGeneraladvPage(
+              resultsList: resultsList,
+              paginationModel: paginationModel,
+            ),
+          );
         },
       ),
       GoRoute(
@@ -215,6 +241,23 @@ abstract class AppRouter {
                 (context) =>
                     RegisterCubit(StudentAuthRepoimp(DioConsumer(Dio()))),
             child: CompleteRegisterPage(model: model),
+          );
+        },
+      ),
+      GoRoute(
+        path: aboutInstitutePage,
+        builder: (context, state) {
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create:
+                    (context) =>
+                        TeacherAdvCubit(AdvRepoImpl(DioConsumer(Dio())))
+                          ..getTeacherAdv(),
+              ),
+              //BlocProvider(create: (context) => SubjectBloc()),
+            ],
+            child: AboutInstitutePage(),
           );
         },
       ),

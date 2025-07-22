@@ -1,3 +1,4 @@
+import 'package:ajyal/Features/Advertisements/Presentation/Widgets/text_skelton.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_cubit.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_state.dart';
 import 'package:flutter/material.dart';
@@ -21,14 +22,14 @@ class TeacherSubject extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.white60,
-                    height: 1.5,
+                    height: 1.8,
                   ),
                 );
               }),
             ],
           );
         } else if (state is SubjectLoading) {
-          return Center(child: CircularProgressIndicator());
+          return Center(child: TextSkeleton());
         } else {
           return Center(child: Text("لا توجد بيانات للعرض"));
         }

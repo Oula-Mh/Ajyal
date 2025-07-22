@@ -9,10 +9,10 @@ class GeneralAdvCubit extends Cubit<GeneralAdvState> {
   GeneralAdvCubit(this.advRepo) : super(GeneralAdvInitial());
 
   Future<void> getGeneralAdv({int page = 1}) async {
-    emit(AdvLoading());
+    emit(GeneralAdvLoading());
     final response = await advRepo.getAllGeneralAdv();
     response.fold(
-      (err) => emit(AdvFailure(errMssg: err.errorMessage)),
+      (err) => emit(GeneralAdvFailure(errMssg: err.errorMessage)),
       (advs) => emit(GeneralAdvSuccess(model: advs)),
     );
   }

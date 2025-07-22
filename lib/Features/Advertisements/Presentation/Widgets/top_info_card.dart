@@ -64,7 +64,9 @@ class TopInfoCard extends StatelessWidget {
                       margin: EdgeInsets.symmetric(horizontal: 8),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        GoRouter.of(context).push(AppRouter.aboutInstitutePage);
+                      },
                       child: Text(
                         "عن المعهد",
                         style: TextStyle(color: AppColor.primaryColor),
