@@ -73,6 +73,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  circular_countdown_timer:
+    dependency: "direct main"
+    description:
+      name: circular_countdown_timer
+      sha256: "608d166c8c659af5740ffec8859e1429a4849b706675a529dc381ef40784697b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.4"
   clock:
     dependency: transitive
     description:
@@ -437,6 +445,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.9.2"
+  percent_indicator:
+    dependency: "direct main"
+    description:
+      name: percent_indicator
+      sha256: "157d29133bbc6ecb11f923d36e7960a96a3f28837549a20b65e5135729f0f9fd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.5"
   petitparser:
     dependency: transitive
     description:

@@ -15,6 +15,7 @@ import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart
 import 'package:ajyal/Features/Course/Presentation/Pages/all_course_page.dart';
 import 'package:ajyal/Features/Course/Presentation/Pages/course_details.dart';
 import 'package:ajyal/Features/Home/Presentation/Pages/home_page.dart';
+import 'package:ajyal/Features/Home/Presentation/Pages/teacher_info_page.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Bloc/login/login_cubit.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Bloc/register/register_cubit.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Pages/login_view.dart';
@@ -48,6 +49,7 @@ abstract class AppRouter {
   static const homePage = '/homePage';
   //static const registerPage = '/registerPage';
   static const loginPage = '/loginPage';
+  static const profilePage = '/ProfilePage';
   static const checkStudentPage = '/checkStudentPage';
   static const completeRegisterPage = '/completeRegisterPage';
   static const advPage = '/AdvertisementsPage';
@@ -277,6 +279,28 @@ abstract class AppRouter {
                       LoginCubit(StudentAuthRepoimp(DioConsumer(Dio()))),
               child: const LoginPage(),
             ),
+      ),
+
+      GoRoute(
+        path: teacherInfoPage,
+        builder: (context, state) => const TeacherInfoPage(),
+      ),
+
+      //*******************exam************************** */
+      GoRoute(
+        path: examCurrentPage,
+        builder: (context, state) {
+          final data = state.extra as Map<String, dynamic>;
+          return ExamCurrentPage(
+            initialTime: data['initialTime'] as int,
+            totalTime: data['totalTime'] as int,
+          );
+        },
+      ),
+
+      GoRoute(
+        path: previousExamPage,
+        builder: (context, state) => PreviousExamPage(),
       ),
     ],
   );
