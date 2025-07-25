@@ -1,15 +1,14 @@
 class EndPoints {
   //with emulator
-  // static const String baseUrlStudent = 'http://10.0.2.2:8000/api/student';
-  // static const String baseUrlParent = 'http://10.0.2.2:8000/api/parent';
+
+  // static const String baseUrl = 'http://10.0.2.2:8000/api/';
 
   // with mobile sarah
   static const String baseUrl = 'http://192.168.1.107:8000/api/';
   static const String fileBaseUrl = 'http://192.168.1.107:8000/';
 
   //with mobile oula
-  //static const String baseUrlStudent = 'http://192.168.123.223:8000/api/';
-  //static const String baseUrlParent = 'http://192.168.123.223:8000/api/';
+  // static const String baseUrl = 'http://192.168.64.129:8000/api/';
 
   //ngrok
   // static const String baseUrl =
