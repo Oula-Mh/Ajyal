@@ -4,7 +4,6 @@ import 'package:ajyal/Features/Advertisements/Data/model/course_adv_model.dart';
 import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
 import 'package:ajyal/Features/Course/Presentation/Widget/custom_subject_list.dart';
 import 'package:ajyal/Features/Course/Presentation/Widget/enroll_widget.dart';
-import 'package:ajyal/Features/Course/Presentation/Widget/image_slider.dart';
 import 'package:ajyal/Features/Course/Presentation/Widget/subcourse_details2.dart';
 import 'package:ajyal/Features/Course/Presentation/Widget/subcourse_details_widget.dart';
 import 'package:flutter/material.dart';
@@ -31,12 +30,23 @@ class CourseDetailsPage extends StatelessWidget {
                     children: [
                       //ImageSlider(imageUrls: images!),
                       SizedBox(height: 15),
-                      Text(
-                        "اسم الكورس : ${state.model.name!}",
-                        style: TextStyle(
-                          fontSize: 21,
-                          color: AppColor.primaryColor,
-                          fontWeight: FontWeight.bold,
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: AppColor.secondaryColor.withAlpha(130),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          vertical: 20,
+                          horizontal: 10,
+                        ),
+                        child: Text(
+                          "اسم الكورس : \n${state.model.name!}",
+                          style: TextStyle(
+                            fontSize: 21,
+                            color: AppColor.primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       SizedBox(height: 10),
@@ -50,7 +60,7 @@ class CourseDetailsPage extends StatelessWidget {
                         end: state.model.endDate!,
                         capacity: state.model.capacity.toString(),
                       ),
-                      SizedBox(height: 15),
+                      SizedBox(height: 28),
                       Text(
                         "المواد ضمن الكورس :",
                         style: TextStyle(
@@ -65,7 +75,7 @@ class CourseDetailsPage extends StatelessWidget {
                           model: state.model.curriculums![index],
                         ),
                       ),
-                      SizedBox(height: 100),
+                      SizedBox(height: 70),
                       EnrollBttn(),
                     ],
                   )

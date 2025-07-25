@@ -70,7 +70,7 @@ class ShowCourseBttn extends StatelessWidget {
               child:
                   isGeneral
                       ? Text(
-                        "عرض \n الصور",
+                        " عرض\n الصور",
                         style: TextStyle(
                           color: AppColor.primaryColor,
                           fontWeight: FontWeight.bold,

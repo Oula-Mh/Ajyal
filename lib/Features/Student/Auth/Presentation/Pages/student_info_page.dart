@@ -3,6 +3,7 @@ import 'package:ajyal/Core/styles/app_text_style.dart';
 import 'package:ajyal/Features/Student/Auth/Data/models/student_profile_model.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/widgets/profile_line_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class StudentInfoPage extends StatelessWidget {
   final StudentProfileModel model;
@@ -29,7 +30,7 @@ class StudentInfoPage extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
               width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.85,
+              height: MediaQuery.of(context).size.height * 0.9,
               decoration: BoxDecoration(
                 color: AppColor.fillTextField,
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(200)),
@@ -38,14 +39,24 @@ class StudentInfoPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 30),
-                  Text(
-                    "أنا أتعلم\n أطور نفسي\n وأصنع مستقبلي\n مع مركز أجيال ",
-                    style: Styles.largeBlack.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22,
-                      height: 1.7,
-                      color: AppColor.primaryColor,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 18),
+                          child: Text(
+                            "معلومات الطالب\n الشخصية ضمن\n معهد أجيال",
+                            style: Styles.largeBlack.copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                              height: 1.7,
+                              color: AppColor.primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 50),
                   Row(
@@ -93,12 +104,12 @@ class StudentInfoPage extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.001,
-            left: 10,
-            child: Image(
-              height: 180,
-              width: 180,
-              image: AssetImage("assets/images/student.png"),
+            top: 30,
+            left: 20,
+            child: Icon(
+              FontAwesomeIcons.graduationCap,
+              color: AppColor.purple,
+              size: 120,
             ),
           ),
         ],

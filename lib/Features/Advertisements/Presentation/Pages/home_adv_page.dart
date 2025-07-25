@@ -47,9 +47,9 @@ class HomeAdvPage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 50),
+                            SizedBox(height: 35),
                             GeneralAdvList(),
-                            SizedBox(height: 10),
+                            SizedBox(height: 5),
                             BlocBuilder<CourseAdvCubit, CourseAdvState>(
                               builder: (context, state) {
                                 return Column(
@@ -72,15 +72,6 @@ class HomeAdvPage extends StatelessWidget {
                                             params: {
                                               'resultsList': state.model.data,
                                               'paginationModel': state.model,
-                                              // 'onPageChanged': (int page) {
-                                              //   context
-                                              //       .read<CourseAdvCubit>()
-                                              //       .getCourseAdv(page: page);
-                                              //   // final cubit = BlocProvider.of<
-                                              //   //   CourseAdvCubit
-                                              //   // >(context, listen: false);
-                                              //   // cubit.getCourseAdv(page: page);
-                                              // },
                                             },
                                             viewText: "عرض الكل",
                                           ),
@@ -115,7 +106,7 @@ class HomeAdvPage extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: 78,
+          top: 74,
           left: 0,
           right: 0,
           child: Padding(

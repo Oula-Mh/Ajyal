@@ -24,7 +24,7 @@ class CheckStudentForm extends StatelessWidget {
           controller: cubit.firstNameController,
           keyboardType: TextInputType.text,
         ),
-        SizedBox(height: 31),
+        SizedBox(height: 10),
         Text("الاسم الثاني : ", style: Styles.meduimBlack),
         SizedBox(height: 8),
         CustomTextField(
@@ -32,7 +32,7 @@ class CheckStudentForm extends StatelessWidget {
           controller: cubit.lastNameController,
           keyboardType: TextInputType.text,
         ),
-        SizedBox(height: 31),
+        SizedBox(height: 10),
         Text("الكود الخاص بالطالب : ", style: Styles.meduimBlack),
         Text(
           " * لا تشارك الكود الخاص بك مع الآخرين  ",
@@ -43,12 +43,13 @@ class CheckStudentForm extends StatelessWidget {
           controller: cubit.codeController,
           keyboardType: TextInputType.text,
         ),
-        SizedBox(height: 50),
+        SizedBox(height: 35),
         state is RegisterCheckLoading
             ? Center(child: CircularProgressIndicator())
             : CustomAuthBttn(
               onPressed: () {
                 cubit.checkStudent();
+                //GoRouter.of(context).push(AppRouter.completeRegisterPage);
                 // cubit.printregister();
               },
               bttnText: "التسجيل",

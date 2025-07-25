@@ -70,7 +70,7 @@ class GeneralAdvList extends StatelessWidget {
                                         state.model.data![index].title!,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 16,
+                                          fontSize: 15,
                                         ),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
@@ -78,11 +78,12 @@ class GeneralAdvList extends StatelessWidget {
                                     ),
                                   ],
                                 ),
+                                SizedBox(height: 5),
                                 Text(
                                   state.model.data![index].body!,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(height: 2),
+                                  style: TextStyle(height: 2, fontSize: 14),
                                 ),
                                 SizedBox(height: 3),
                                 Spacer(),

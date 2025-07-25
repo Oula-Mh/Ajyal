@@ -56,9 +56,9 @@ class _ResponsivePaginationBarState extends State<ResponsivePaginationBar> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (widget.paginationModel.data!.isNotEmpty)
-          Text("الصفحة $currentPage من $totalPages"),
-        const SizedBox(height: 5),
+        // if (widget.paginationModel.data!.isNotEmpty)
+        //   Text("الصفحة $currentPage من $totalPages"),
+        // const SizedBox(height: 5),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

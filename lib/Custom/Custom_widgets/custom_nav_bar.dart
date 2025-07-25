@@ -1,7 +1,6 @@
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class CustomNavigationBar extends StatelessWidget {
   final void Function(int) onTap;
@@ -15,49 +14,40 @@ class CustomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: AppColor.primaryColor,
-        border: const Border(top: BorderSide(width: 0.01)),
+        border: Border(
+          top: BorderSide(color: AppColor.primaryColor, width: 0.5),
+        ),
       ),
-      child: SnakeNavigationBar.color(
-        backgroundColor: AppColor.white1,
-        behaviour: SnakeBarBehaviour.floating,
-        snakeShape: SnakeShape.circle,
-        padding: const EdgeInsets.symmetric(vertical: 3),
-        snakeViewColor: AppColor.primaryColor,
-        unselectedItemColor: AppColor.primaryColor,
-        selectedItemColor: Colors.white,
-        showSelectedLabels: true,
-        currentIndex: currentIndex,
-        onTap: onTap,
-        items: [
-          // BottomNavigationBarItem(
-          //   icon: iconBottomNavigation(Iconsax.profile_2user, "ملفي"),
-          // ),
-          BottomNavigationBarItem(
-            icon: iconBottomNavigation(Iconsax.home, "الرئيسية"),
-          ),
-          BottomNavigationBarItem(
-            icon: iconBottomNavigation(Iconsax.book_1, "موادي"),
-          ),
-          BottomNavigationBarItem(
-            icon: iconBottomNavigation(Icons.chat_outlined, "تواصل"),
-          ),
-          BottomNavigationBarItem(
-            icon: iconBottomNavigation(Icons.assignment_outlined, "اختبارات"),
-          ),
+      child: GNav(
+        gap: 8,
+        backgroundColor: Colors.transparent,
+        color: AppColor.primaryColor,
+        activeColor: Colors.white,
+        tabBackgroundColor: const Color.fromRGBO(200, 220, 228, 1),
+        onTabChange: onTap,
+        tabBorderRadius: 30,
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        selectedIndex: currentIndex,
+        tabs: [
+          iconBottomNavigation(Icons.home, "الرئيسية"),
+          iconBottomNavigation(Icons.menu_book_rounded, "موادي"),
+          iconBottomNavigation(Icons.assignment_outlined, "اختبارت"),
+          iconBottomNavigation(Icons.chat_outlined, "تواصل"),
         ],
       ),
     );
   }
 }
 
-Widget iconBottomNavigation(IconData iconData, String text) {
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Icon(iconData, size: 24),
-      // Text(text, style: TextStyle(fontSize: 12)),
-    ],
+GButton iconBottomNavigation(IconData icon, String text) {
+  return GButton(
+    icon: icon,
+    text: text,
+    iconSize: 27,
+    iconActiveColor: AppColor.primaryColor,
+    textColor: AppColor.primaryColor,
+    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
   );
 }

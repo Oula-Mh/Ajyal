@@ -12,7 +12,7 @@ class CourseAdvListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 260,
+      height: 250,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: mylist.length,
@@ -47,13 +47,14 @@ class CourseAdvListView extends StatelessWidget {
                       child: Text(
                         mylist[index].title!,
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
+                    Spacer(),
                     // التاريخ
                     Padding(
                       padding: EdgeInsets.symmetric(
@@ -68,6 +69,7 @@ class CourseAdvListView extends StatelessWidget {
                               Icon(
                                 Icons.date_range,
                                 color: AppColor.primaryColor,
+                                size: 21,
                               ),
                               SizedBox(width: 4),
                               Text(

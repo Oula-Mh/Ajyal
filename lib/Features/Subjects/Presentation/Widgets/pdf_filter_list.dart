@@ -3,6 +3,7 @@ import 'package:ajyal/Core/utils/constants/end_pointS.dart';
 import 'package:ajyal/Features/Subjects/Data/model/pdf_file_model.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Pages/pdf_viewer_page.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 class PdfFilteredList extends StatelessWidget {
   final List<PdfFileModel> filteredList;
@@ -26,6 +27,10 @@ class PdfFilteredList extends StatelessWidget {
               ),
 
               child: ListTile(
+                trailing: Icon(
+                  Iconsax.arrow_left_24,
+                  color: AppColor.primaryColor,
+                ),
                 title: Text(
                   file.title!,
                   style: TextStyle(
@@ -34,7 +39,7 @@ class PdfFilteredList extends StatelessWidget {
                     color: AppColor.primaryColor,
                   ),
                 ),
-                subtitle: Text("34 MB", style: TextStyle(color: Colors.grey)),
+                //subtitle: Text("34 MB", style: TextStyle(color: Colors.grey)),
                 leading: Container(
                   padding: EdgeInsets.only(left: 10),
                   height: double.maxFinite,
@@ -45,8 +50,8 @@ class PdfFilteredList extends StatelessWidget {
                   ),
                   child: Icon(
                     Icons.picture_as_pdf,
-                    color: Colors.red,
-                    size: 27,
+                    color: Colors.red.shade300,
+                    size: 30,
                   ),
                 ),
                 onTap: () {

@@ -45,7 +45,7 @@ class ListProfileField extends StatelessWidget {
         ProfileField(
           onTap: () {},
           text: "كورساتي",
-          iconData: Icons.request_page_outlined,
+          iconData: Icons.book,
           color: AppColor.primaryColor,
           isNeedArrow: true,
         ),

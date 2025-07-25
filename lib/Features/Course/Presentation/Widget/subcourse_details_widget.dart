@@ -28,7 +28,7 @@ class SubCourseDetails extends StatelessWidget {
             children: [
               Icon(Icons.circle, size: 10, color: AppColor.purple),
               SizedBox(width: 5),
-              Text("التكلفة : $cost"),
+              Text("التكلفة : $cost ل.س"),
             ],
           ),
         ),
