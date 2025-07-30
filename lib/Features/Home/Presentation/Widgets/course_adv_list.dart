@@ -13,88 +13,97 @@ class CourseAdvListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 250,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: mylist.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-            child: Card(
-              elevation: 1,
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.54,
-                decoration: BoxDecoration(
-                  color: AppColor.fillTextField,
-                  border: Border.all(color: Colors.grey.shade300),
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.15),
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
+      child:
+          mylist.isEmpty
+              ? Center(child: Text("لا يوجد إعلانات"))
+              : ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: mylist.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                      vertical: 4.0,
                     ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // صورة داخل كارد
-                    ImageAdv(imageUrl: mylist[index].images![0].path!),
-                    // العنوان
-                    SizedBox(height: 4),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Text(
-                        mylist[index].title!,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
+                    child: Card(
+                      elevation: 1,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.54,
+                        decoration: BoxDecoration(
+                          color: AppColor.fillTextField,
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.15),
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
                         ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    Spacer(),
-                    // التاريخ
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 12.0,
-                        vertical: 4,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.date_range,
-                                color: AppColor.primaryColor,
-                                size: 21,
-                              ),
-                              SizedBox(width: 4),
-                              Text(
-                                formatDate(mylist[index].createdAt.toString()),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // صورة داخل كارد
+                            ImageAdv(imageUrl: mylist[index].images![0].path!),
+                            // العنوان
+                            SizedBox(height: 4),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 12.0),
+                              child: Text(
+                                mylist[index].title!,
                                 style: TextStyle(
-                                  color: Colors.grey.shade800,
-                                  fontSize: 15,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
                                 ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                            ],
-                          ),
-                          AdvDetailsBttn(
-                            courseId: mylist[index].advertisableId!,
-                            images: mylist[index].images!,
-                          ),
-                        ],
+                            ),
+                            Spacer(),
+                            // التاريخ
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 12.0,
+                                vertical: 4,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.date_range,
+                                        color: AppColor.primaryColor,
+                                        size: 21,
+                                      ),
+                                      SizedBox(width: 4),
+                                      Text(
+                                        formatDate(
+                                          mylist[index].createdAt.toString(),
+                                        ),
+                                        style: TextStyle(
+                                          color: Colors.grey.shade800,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  AdvDetailsBttn(
+                                    courseId: mylist[index].advertisableId!,
+                                    images: mylist[index].images!,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
-            ),
-          );
-        },
-      ),
     );
   }
 }

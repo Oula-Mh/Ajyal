@@ -1,8 +1,18 @@
+import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
 import 'package:ajyal/Core/routes/app_router.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
+import 'package:ajyal/Features/Course/Data/Model/course_model.dart';
+import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
+import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
 import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_page/exam_type_tab_bar.dart';
 import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_page/previous_exam_card.dart';
+import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_page/subject_skelton.dart';
+import 'package:ajyal/Features/Subjects/Data/repo/subject_repoimp.dart';
+import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_cubit.dart';
+import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_state.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../widgets/Exam_page/course_selector_widget.dart';
 import '../widgets/Exam_page/subject_selector_bar.dart';
@@ -17,75 +27,76 @@ class ExamPage extends StatefulWidget {
 class _ExamPageState extends State<ExamPage> {
   int selectedGradeIndex = 0;
   int selectedTabIndex = 0;
+  int selectedSubjectIndex = 0;
+  List<Map<String, dynamic>> results = [];
+  bool isLoadingResults = false;
 
-  List<Map<String, dynamic>> subjectsFromBackend = [
-    {
-      "subject": "رياضيات",
-      "results": [
-        {"date": "28/03/2024 - 12:33", "score": 90},
-        {"date": "26/03/2024 - 16:58", "score": 70},
-        {"date": "28/03/2024 - 12:33", "score": 40},
-        {"date": "26/03/2024 - 16:58", "score": 65},
-        {"date": "28/03/2024 - 12:33", "score": 100},
-        {"date": "26/03/2024 - 16:58", "score": 20},
-      ],
-    },
-    {
-      "subject": "فيزياء",
-      "results": [
-        {"date": "24/03/2024 10:10", "score": 40},
-        {"date": "24/03/2024 09:40", "score": 90},
-      ],
-    },
-    {
-      "subject": "كيمياء",
-      "results": [
-        {"date": "20/03/2024 11:15", "score": 60},
-      ],
-    },
-    {
-      "subject": "علوم",
-      "results": [
-        {"date": "20/03/2024 11:15", "score": 60},
-        {"date": "20/03/2024 11:15", "score": 100},
-        {"date": "20/03/2024 11:15", "score": 40},
-      ],
-    },
-    {
-      "subject": "عربي",
-      "results": [
-        {"date": "20/03/2024 11:15", "score": 60},
-      ],
-    },
-    {"subject": "إنكليزي", "results": []},
-  ];
+  Future<List<ExamModel>> fetchFakeExamsBySubject(int subjectId) async {
+    await Future.delayed(const Duration(seconds: 1)); // simulate loading
 
-  final Map<String, IconData> subjectIcons = {
-    "رياضيات": Icons.calculate,
-    "فيزياء": Icons.science,
-    "كيمياء": Icons.bubble_chart,
-    "علوم": Icons.biotech,
-    "عربي": Icons.menu_book,
-    "إنكليزي": Icons.language,
-    "فلسفة": Icons.psychology,
-    "ديانة": Icons.mosque,
-  };
+    final mockData = {
+      1: [
+        {
+          "id": 1,
+          "name": "اختبار الوحدة 1",
+          "type": "Timed",
+          "available": 1,
+          "start_time": "2025-07-30",
+          "duration": "30.00",
+        },
+        {
+          "id": 2,
+          "name": "اختبار منتصف الفصل",
+          "type": "Practice",
+          "available": 1,
+          "start_time": "2025-08-05",
+          "duration": "45.00",
+        },
+      ],
+      2: [
+        {
+          "id": 3,
+          "name": "اختبار فيزياء 1",
+          "type": "Timed",
+          "available": 1,
+          "start_time": "2025-08-01",
+          "duration": "40.00",
+        },
+      ],
+      3: [], // مادة لا تحتوي اختبارات
+    };
 
-  late List<Map<String, dynamic>> subjects;
+    final data = mockData[subjectId] ?? [];
 
-  @override
-  void initState() {
-    super.initState();
-    subjects =
-        subjectsFromBackend.map((item) {
-          final name = item["subject"];
-          return {
-            "name": name,
-            "results": item["results"],
-            "icon": subjectIcons[name] ?? Icons.help_outline,
-          };
-        }).toList();
+    return data.map((e) => ExamModel.fromJson(e)).toList();
   }
+
+  void loadExams(int subjectId) async {
+    setState(() {
+      isLoadingResults = true;
+    });
+
+    final exams = await fetchFakeExamsBySubject(subjectId);
+
+    setState(() {
+      results = exams.map((e) => e.toResult()).toList();
+      isLoadingResults = false;
+    });
+  }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   subjects =
+  //       subjectsFromBackend.map((item) {
+  //         final name = item["subject"];
+  //         return {
+  //           "name": name,
+  //           "results": item["results"],
+  //           "icon": subjectIcons[name] ?? Icons.help_outline,
+  //         };
+  //       }).toList();
+  // }
 
   Color getColor(int score) {
     if (score >= 90) return Colors.green;
@@ -95,11 +106,10 @@ class _ExamPageState extends State<ExamPage> {
 
   @override
   Widget build(BuildContext context) {
-    final selectedSubject = subjects[selectedGradeIndex];
-    final results = List<Map<String, dynamic>>.from(
-      selectedSubject["results"] ?? [],
-    );
-
+    // final results = List<Map<String, dynamic>>.from(
+    //   selectedSubject["results"] ?? [],
+    // );
+    final cubit = CourseCubit.get(context);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 229, 238, 246),
       appBar: AppBar(
@@ -113,10 +123,42 @@ class _ExamPageState extends State<ExamPage> {
               showModalBottomSheet(
                 context: context,
                 builder:
-                    (_) =>
-                        CourseSelectorWidget(onCourseSelected: (String _) {}),
+                    (_) => MultiBlocProvider(
+                      providers: [
+                        BlocProvider(
+                          create:
+                              (context) => CourseCubit(
+                                CourseRepoimp(DioConsumer(Dio())),
+                              ),
+                        ),
+                        BlocProvider(
+                          create:
+                              (context) => SubjectCubit(
+                                SubjectRepoimp(DioConsumer(Dio())),
+                              ),
+                        ),
+                      ],
+                      child: CourseSelectorWidget(
+                        onCourseSelected: (String selectedCourseId) {
+                          context.read<SubjectCubit>().fetchSubjects(
+                            int.parse(selectedCourseId),
+                          );
+                        },
+                      ),
+                    ),
               );
             },
+
+            // onPressed: () {
+            //   showModalBottomSheet(
+            //     context: context,
+            //     builder:
+            //         (_) => CourseSelectorWidget(
+            //           cubit: cubit,
+            //           onCourseSelected: (String _) {},
+            //         ),
+            //   );
+            // },
           ),
         ],
       ),
@@ -126,12 +168,43 @@ class _ExamPageState extends State<ExamPage> {
             selectedTabIndex: selectedTabIndex,
             onTabSelected: (index) => setState(() => selectedTabIndex = index),
           ),
-          SubjectSelectorBar(
-            subjects: subjects,
-            selectedIndex: selectedGradeIndex,
-            onSubjectSelected:
-                (index) => setState(() => selectedGradeIndex = index),
+          BlocBuilder<SubjectCubit, SubjectState>(
+            builder: (context, subjectState) {
+              if (subjectState is SubjectLoading) {
+                return SkeletonSubjectSelectorBar();
+              } else if (subjectState is SubjectLoadedSuccess) {
+                //  selectedSubjectId = state.subjects[0].id!;
+                // جلب الاختبارات أول مرة
+                // final selectedSubject = subjects[selectedSubjectIndex];
+                // context.read<ExamCubit>().getExamsForSubject(selectedSubject.id!);
+                if (results.isEmpty) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    loadExams(subjectState.subjects[selectedSubjectIndex].id!);
+                  });
+                }
+                return SubjectSelectorBar(
+                  subjects: subjectState.subjects,
+                  selectedIndex: selectedGradeIndex,
+                  onSubjectSelected: (index) {
+                    setState(() {
+                      selectedSubjectIndex = index;
+                      selectedGradeIndex = index;
+                      isLoadingResults = true;
+                      results = [];
+                    });
+                    loadExams(subjectState.subjects[index].id!);
+                  },
+                );
+              } else if (subjectState is SubjectError) {
+                return Center(
+                  child: Text("فشل تحميل المواد\n تحقق من الاتصال بالإنترنت"),
+                );
+              } else {
+                return Center(child: Text("انتظر تحميل المواد..."));
+              }
+            },
           ),
+
           Expanded(
             child: Container(
               width: double.infinity,
@@ -142,7 +215,9 @@ class _ExamPageState extends State<ExamPage> {
                 borderRadius: BorderRadius.circular(16),
               ),
               child:
-                  selectedTabIndex == 0
+                  isLoadingResults
+                      ? const Center(child: CircularProgressIndicator())
+                      : selectedTabIndex == 0
                       ? buildResults(results)
                       : buildCurrentExamButton(),
             ),
@@ -225,5 +300,43 @@ class _ExamPageState extends State<ExamPage> {
     if (results.isEmpty) return 0;
     int total = results.fold(0, (sum, item) => sum + (item['score'] as int));
     return (total / results.length).round();
+  }
+}
+
+class ExamModel {
+  final int id;
+  final String name;
+  final String type;
+  final bool available;
+  final String startTime;
+  final String duration;
+
+  ExamModel({
+    required this.id,
+    required this.name,
+    required this.type,
+    required this.available,
+    required this.startTime,
+    required this.duration,
+  });
+
+  factory ExamModel.fromJson(Map<String, dynamic> json) {
+    return ExamModel(
+      id: json['id'],
+      name: json['name'],
+      type: json['type'],
+      available: json['available'] == 1,
+      startTime: json['start_time'],
+      duration: json['duration'],
+    );
+  }
+
+  Map<String, dynamic> toResult() {
+    return {
+      'id': id,
+      'name': name,
+      'score': 80 + (id * 2) % 20, // Score وهمي متغير
+      'date': startTime,
+    };
   }
 }

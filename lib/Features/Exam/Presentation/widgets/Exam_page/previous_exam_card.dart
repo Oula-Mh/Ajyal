@@ -42,7 +42,7 @@ class PreviousExamCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          result['date'],
+                          result['name'],
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -51,25 +51,22 @@ class PreviousExamCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    Text(
-                      "         ${(result['score'] / 10).round()} من أصل 10 صح",
-                      style: const TextStyle(color: Colors.black45),
-                    ),
+                    Text("10", style: const TextStyle(color: Colors.black45)),
                   ],
                 ),
                 CircularPercentIndicator(
                   radius: 30.0,
                   lineWidth: 8.0,
-                  percent: result['score'] / 100,
+                  percent: 0.1,
                   center: Text(
-                    "${result['score']}%",
+                    "${10}%",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
-                      color: getColor(result['score']),
+                      color: getColor(10),
                     ),
                   ),
-                  progressColor: getColor(result['score']),
+                  progressColor: getColor(10),
                   backgroundColor: Colors.grey.shade200,
                   circularStrokeCap: CircularStrokeCap.round,
                   animation: true,

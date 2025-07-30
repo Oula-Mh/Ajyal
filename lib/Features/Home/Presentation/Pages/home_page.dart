@@ -1,4 +1,6 @@
+import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Custom/Custom_widgets/custom_nav_bar.dart';
 import 'package:ajyal/Features/Advertisements/Data/repos/adv_repo_imp.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Bloc/course_Adv/course_adv_cubit.dart';
@@ -55,7 +57,21 @@ class _HomePageState extends State<HomePage> {
       child: SubjectPage(),
     ),
     ChatPage(),
-    ExamPage(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create:
+              (context) => SubjectCubit(SubjectRepoimp(DioConsumer(Dio())))
+                ..fetchSubjects(
+                  getit<CacheHelper>().getData(key: "selectedCourseId"),
+                ),
+        ),
+        BlocProvider(
+          create: (context) => CourseCubit(CourseRepoimp(DioConsumer(Dio()))),
+        ),
+      ],
+      child: ExamPage(),
+    ),
   ];
 
   void onTabTapped(int index) {

@@ -1,4 +1,5 @@
 import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
+import 'package:ajyal/Features/Academic-Performance/Presentation/Pages/analysis_perf_page.dart';
 import 'package:ajyal/Features/Advertisements/Data/model/ad_pagination_model.dart';
 import 'package:ajyal/Features/Advertisements/Data/model/course_adv_model.dart';
 import 'package:ajyal/Features/Advertisements/Data/repos/adv_repo_imp.dart';
@@ -12,12 +13,10 @@ import 'package:ajyal/Features/Advertisements/Presentation/Pages/home_adv_page.d
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/teacher_adv_page.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
 import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
-import 'package:ajyal/Features/Course/Presentation/Pages/all_course_page.dart';
 import 'package:ajyal/Features/Course/Presentation/Pages/course_details.dart';
 import 'package:ajyal/Features/Exam/Presentation/Pages/exam_current_page.dart';
 import 'package:ajyal/Features/Exam/Presentation/Pages/previous_exam_page.dart';
 import 'package:ajyal/Features/Home/Presentation/Pages/home_page.dart';
-import 'package:ajyal/Features/Home/Presentation/Pages/teacher_info_page.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Bloc/login/login_cubit.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Bloc/register/register_cubit.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Pages/login_view.dart';
@@ -49,7 +48,7 @@ import 'package:go_router/go_router.dart';
 
 abstract class AppRouter {
   static const homePage = '/homePage';
-  //static const registerPage = '/registerPage';
+  static const registerPage = '/registerPage';
   static const loginPage = '/loginPage';
   static const profilePage = '/ProfilePage';
   static const checkStudentPage = '/checkStudentPage';
@@ -71,13 +70,10 @@ abstract class AppRouter {
   static const aboutInstitutePage = "/aboutInstitutePage";
   static const examCurrentPage = "/examCurrentPage";
   static const previousExamPage = "/previousExamPage";
+  static const analaysPerfPage = "/analaysPerfPage";
 
   static final router = GoRouter(
     routes: [
-      // GoRoute(
-      //   path: '/',
-      //   builder: (context, state) => const SplashView(),
-      // ),
       GoRoute(path: "/", builder: (context, state) => const SplashView()),
       GoRoute(path: homePage, builder: (context, state) => const HomePage()),
       GoRoute(path: advPage, builder: (context, state) => const HomeAdvPage()),
@@ -305,6 +301,13 @@ abstract class AppRouter {
       GoRoute(
         path: previousExamPage,
         builder: (context, state) => PreviousExamPage(),
+      ),
+
+      //======= Analayse Performence ========
+      GoRoute(
+        // path: "/",
+        path: analaysPerfPage,
+        builder: (context, state) => AnalysPerfPage(),
       ),
     ],
   );
