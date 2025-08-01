@@ -35,7 +35,9 @@ class ListProfileField extends StatelessWidget {
         ),
         SizedBox(height: 10),
         ProfileField(
-          onTap: () {},
+          onTap: () {
+            GoRouter.of(context).push(AppRouter.analaysPerfPage);
+          },
           text: "التقدم الأكاديمي",
           iconData: Icons.insights,
           color: AppColor.borderTextField,

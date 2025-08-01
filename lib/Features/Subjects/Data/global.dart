@@ -1,6 +1,3 @@
-import 'package:ajyal/Cache/cache_helper.dart';
-import 'package:ajyal/Core/utils/app_service_locator.dart';
-
 final List<String> courses = [
   'البكالوريا العلمي',
   'البكالوريا الأدبي',

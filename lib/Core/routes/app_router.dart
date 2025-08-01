@@ -305,7 +305,7 @@ abstract class AppRouter {
 
       //======= Analayse Performence ========
       GoRoute(
-        // path: "/",
+        //path: "/",
         path: analaysPerfPage,
         builder: (context, state) => AnalysPerfPage(),
       ),
