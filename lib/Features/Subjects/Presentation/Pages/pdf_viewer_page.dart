@@ -19,22 +19,6 @@ class PdfViewerPage extends StatefulWidget {
 }
 
 class _PdfViewerPageState extends State<PdfViewerPage> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _secureScreen();
-  // }
-
-  // Future<void> _secureScreen() async {
-  //   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
-  // }
-
-  // @override
-  // void dispose() {
-  //   FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

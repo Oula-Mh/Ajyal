@@ -1,7 +1,5 @@
-import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/styles/app_text_style.dart';
-import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_cubit.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_state.dart';
@@ -21,7 +19,6 @@ class _SubjectPageState extends State<SubjectPage> {
   @override
   void initState() {
     super.initState();
-    print("😎 ===== ${getit<CacheHelper>().getData(key: "selectedCourseId")}");
     Future.microtask(() async {
       final courseCubit = context.read<CourseCubit>();
       await courseCubit.getAllCourse();

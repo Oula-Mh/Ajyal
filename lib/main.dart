@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       debugShowCheckedModeBanner: false,
-      routerConfig: AppRouter.router,
+      routerConfig: Routing.router,
       theme: appTheme,
     );
   }

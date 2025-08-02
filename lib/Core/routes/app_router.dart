@@ -1,4 +1,5 @@
 import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
+import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Features/Academic-Performance/Presentation/Pages/analysis_perf_page.dart';
 import 'package:ajyal/Features/Advertisements/Data/model/ad_pagination_model.dart';
 import 'package:ajyal/Features/Advertisements/Data/model/course_adv_model.dart';
@@ -46,40 +47,24 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-abstract class AppRouter {
-  static const homePage = '/homePage';
-  static const registerPage = '/registerPage';
-  static const loginPage = '/loginPage';
-  static const profilePage = '/ProfilePage';
-  static const checkStudentPage = '/checkStudentPage';
-  static const completeRegisterPage = '/completeRegisterPage';
-  static const advPage = '/AdvertisementsPage';
-  static const rolePage = '/rolePage';
-  static const parentRgister = "/parent_register";
-  static const parentLogin = "/parent_login";
-  static const qrScannerPage = "/qrScannerPage";
-  static const studentPersonalInfo = "/studentPersonalInfo";
-  static const pdfPage = "/pdfPage";
-  static const allCoursePage = "/allCoursePage";
-  static const allGeneralPage = "/allGeneralPage";
-  static const allTeacherPage = "/allTeacherPage";
-  static const courseDetailsPage = "/courseDetailsPage";
-  static const teacherInfoPage = "/teacherInfoPage";
-  static const studentProfilePage = "/studentProfilePage";
-  static const test = "/test";
-  static const aboutInstitutePage = "/aboutInstitutePage";
-  static const examCurrentPage = "/examCurrentPage";
-  static const previousExamPage = "/previousExamPage";
-  static const analaysPerfPage = "/analaysPerfPage";
-
+abstract class Routing {
   static final router = GoRouter(
     routes: [
       GoRoute(path: "/", builder: (context, state) => const SplashView()),
-      GoRoute(path: homePage, builder: (context, state) => const HomePage()),
-      GoRoute(path: advPage, builder: (context, state) => const HomeAdvPage()),
-      GoRoute(path: rolePage, builder: (context, state) => const RolePage()),
       GoRoute(
-        path: courseDetailsPage,
+        path: AppRouter.homePage,
+        builder: (context, state) => const HomePage(),
+      ),
+      GoRoute(
+        path: AppRouter.advPage,
+        builder: (context, state) => const HomeAdvPage(),
+      ),
+      GoRoute(
+        path: AppRouter.rolePage,
+        builder: (context, state) => const RolePage(),
+      ),
+      GoRoute(
+        path: AppRouter.courseDetailsPage,
         builder: (context, state) {
           final data = state.extra as Map<String, dynamic>;
           final courseId = data['id'];
@@ -94,7 +79,7 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-        path: studentProfilePage,
+        path: AppRouter.studentProfilePage,
         builder: (context, state) {
           return BlocProvider(
             create:
@@ -106,7 +91,7 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-        path: teacherInfoPage,
+        path: AppRouter.teacherInfoPage,
         builder: (context, state) {
           var teacherId = state.extra as int;
           return BlocProvider(
@@ -119,7 +104,7 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-        path: test,
+        path: AppRouter.test,
         builder: (context, state) {
           final args = state.extra as Map<String, dynamic>;
           final List<AdvModel> resultsList = args['resultsList'];
@@ -137,7 +122,7 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-        path: allTeacherPage,
+        path: AppRouter.allTeacherPage,
         builder: (context, state) {
           final args = state.extra as Map<String, dynamic>;
           final List<AdvModel> resultsList = args['resultsList'];
@@ -145,7 +130,7 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-        path: allGeneralPage,
+        path: AppRouter.allGeneralPage,
         builder: (context, state) {
           final args = state.extra as Map<String, dynamic>;
           final List<AdvModel> resultsList = args['resultsList'];
@@ -163,7 +148,7 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-        path: pdfPage,
+        path: AppRouter.pdfPage,
         builder: (context, state) {
           final curriculaId = state.extra as int;
           return MultiBlocProvider(
@@ -181,7 +166,7 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-        path: qrScannerPage,
+        path: AppRouter.qrScannerPage,
         builder:
             (context, state) => BlocProvider(
               create:
@@ -193,7 +178,7 @@ abstract class AppRouter {
       ),
 
       GoRoute(
-        path: parentLogin,
+        path: AppRouter.parentLogin,
         builder:
             (context, state) => BlocProvider(
               create:
@@ -204,7 +189,7 @@ abstract class AppRouter {
       ),
 
       GoRoute(
-        path: parentRgister,
+        path: AppRouter.parentRgister,
         builder:
             (context, state) => BlocProvider(
               create:
@@ -225,7 +210,7 @@ abstract class AppRouter {
       //       ),
       // ),
       GoRoute(
-        path: checkStudentPage,
+        path: AppRouter.checkStudentPage,
         builder:
             (context, state) => BlocProvider(
               create:
@@ -235,7 +220,7 @@ abstract class AppRouter {
             ),
       ),
       GoRoute(
-        path: completeRegisterPage,
+        path: AppRouter.completeRegisterPage,
         builder: (context, state) {
           final model = state.extra as CheckStudentInfoModel;
           return BlocProvider(
@@ -247,7 +232,7 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-        path: aboutInstitutePage,
+        path: AppRouter.aboutInstitutePage,
         builder: (context, state) {
           return MultiBlocProvider(
             providers: [
@@ -264,14 +249,14 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-        path: studentPersonalInfo,
+        path: AppRouter.studentPersonalInfo,
         builder: (context, state) {
           final model = state.extra as StudentProfileModel;
           return StudentInfoPage(model: model);
         },
       ),
       GoRoute(
-        path: loginPage,
+        path: AppRouter.loginPage,
         builder:
             (context, state) => BlocProvider(
               create:
@@ -282,13 +267,13 @@ abstract class AppRouter {
       ),
 
       GoRoute(
-        path: teacherInfoPage,
+        path: AppRouter.teacherInfoPage,
         builder: (context, state) => const TeacherInfoPage(),
       ),
 
       //*******************exam************************** */
       GoRoute(
-        path: examCurrentPage,
+        path: AppRouter.examCurrentPage,
         builder: (context, state) {
           final data = state.extra as Map<String, dynamic>;
           return ExamCurrentPage(
@@ -299,14 +284,14 @@ abstract class AppRouter {
       ),
 
       GoRoute(
-        path: previousExamPage,
+        path: AppRouter.previousExamPage,
         builder: (context, state) => PreviousExamPage(),
       ),
 
       //======= Analayse Performence ========
       GoRoute(
         //path: "/",
-        path: analaysPerfPage,
+        path: AppRouter.analaysPerfPage,
         builder: (context, state) => AnalysPerfPage(),
       ),
     ],

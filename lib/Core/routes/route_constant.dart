@@ -1,0 +1,26 @@
+class AppRouter {
+  static const homePage = '/homePage';
+  static const registerPage = '/registerPage';
+  static const loginPage = '/loginPage';
+  static const profilePage = '/ProfilePage';
+  static const checkStudentPage = '/checkStudentPage';
+  static const completeRegisterPage = '/completeRegisterPage';
+  static const advPage = '/AdvertisementsPage';
+  static const rolePage = '/rolePage';
+  static const parentRgister = "/parent_register";
+  static const parentLogin = "/parent_login";
+  static const qrScannerPage = "/qrScannerPage";
+  static const studentPersonalInfo = "/studentPersonalInfo";
+  static const pdfPage = "/pdfPage";
+  static const allCoursePage = "/allCoursePage";
+  static const allGeneralPage = "/allGeneralPage";
+  static const allTeacherPage = "/allTeacherPage";
+  static const courseDetailsPage = "/courseDetailsPage";
+  static const teacherInfoPage = "/teacherInfoPage";
+  static const studentProfilePage = "/studentProfilePage";
+  static const test = "/test";
+  static const aboutInstitutePage = "/aboutInstitutePage";
+  static const examCurrentPage = "/examCurrentPage";
+  static const previousExamPage = "/previousExamPage";
+  static const analaysPerfPage = "/analaysPerfPage";
+}

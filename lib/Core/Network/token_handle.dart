@@ -1,28 +1,3 @@
-// import 'package:ajyal/Cache/cache_helper.dart';
-// import 'package:ajyal/Core/utils/app_service_locator.dart';
-
-// class TokenHandle {
-//   final cacheHelper = getit<CacheHelper>();
-//   static const String tokenKey = 'token';
-//   // final CacheHelper _cacheHelper = CacheHelper();
-
-//   // static const String tokenKey = 'token';
-
-//   // حفظ التوكن
-//   Future<void> setToken(String token) async {
-//     await cacheHelper.saveData(key: tokenKey, value: token);
-//   }
-
-//   // حذف التوكن
-//   Future<void> clearToken() async {
-//     await cacheHelper.removeData(key: tokenKey);
-//   }
-
-//   // جلب التوكن
-//   dynamic getToken() async {
-//     return cacheHelper.getDataString(key: tokenKey);
-//   }
-// }
 import 'package:ajyal/Cache/cache_helper.dart';
 
 class TokenHandler {
@@ -48,3 +23,17 @@ class TokenHandler {
     return cacheHelper.getDataString(key: _tokenKey) != null;
   }
 }
+
+//===================
+// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+// final storage = FlutterSecureStorage();
+
+// // Save token
+// await storage.write(key: 'auth_token', value: 'your_jwt_token');
+
+// // Read token
+// String? token = await storage.read(key: 'auth_token');
+
+// // Delete token (on logout)
+// await storage.delete(key: 'auth_token');
