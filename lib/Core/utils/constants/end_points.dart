@@ -4,8 +4,8 @@ class EndPoints {
   // static const String baseUrl = 'http://10.0.2.2:8000/api/';
 
   // with mobile sarah
-  static const String baseUrl = 'http://192.168.1.107:8000/api/';
-  static const String fileBaseUrl = 'http://192.168.1.107:8000/';
+  static const String baseUrl = 'http://192.168.1.104:8000/api/';
+  static const String fileBaseUrl = 'http://192.168.1.104:8000/';
 
   //with mobile oula
   // static const String baseUrl = 'http://192.168.64.129:8000/api/';
@@ -31,6 +31,10 @@ class EndPoints {
   static const String courseDetails = "/course/show/";
   static const String subjectForTeacher =
       "/teacher/get-all-subjects-for-teacher/";
+  static const String totalmean = "analysis/total-mean/";
+  static const String meanForSubject = "analysis/mean/";
+  static const String stddevForSubject = "analysis/stddev/";
+  static const String quizzes = "analysis/quizzes/";
 
   // Parent
   static const String loginParent = 'parent/login';

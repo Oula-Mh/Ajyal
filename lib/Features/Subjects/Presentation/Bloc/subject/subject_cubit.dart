@@ -20,37 +20,12 @@ class SubjectCubit extends Cubit<SubjectState> {
 
   Future<void> fetchSubjects(int courseId) async {
     emit(SubjectLoading());
-    // final Map<String, List<String>> fakeData = {
-    //   'البكالوريا العلمي': [
-    //     'اللغة العربية',
-    //     'رياضيات',
-    //     'علم الأحياء',
-    //     'اللغة الإنكليزية',
-    //     'الفيزياء',
-    //     'الكيمياء',
-    //   ],
-    //   'البكالوريا الأدبي': [
-    //     'اللغة العربية',
-    //     'الفلسفة',
-    //     'الجغرافيا',
-    //     'اللغة الإنكليزية',
-    //     'اللغة الفرنسية',
-    //     'الكيمياء',
-    //   ],
-    //   'مكثفة علم الأحياء': ["علم الأحياء"],
-    //   'المكثفة الشاملة': ['فيزياء', 'كيمياء', 'إنكليزي'],
-    // };
     var response = await subjectRepo.getSubjects(courseId);
     print("second loading=======");
     response.fold(
       (err) => emit(SubjectError(err.errorMessage)),
       (subjects) => emit(SubjectLoadedSuccess(subjects: subjects)),
     );
-
-    // final subjects = fakeData[selectedClass] ?? [];
-    // emit(
-    //   SubjectSubjectsLoaded(selectedClass: selectedClass, subjects: subjects),
-    // );
   }
 }
 
@@ -81,33 +56,3 @@ Widget getIconForSubject(String name) {
       return getSvg(AppImages.default1);
   }
 }
-
-
-
-
-  // final Map<String, List<String>> _subjectsByClass = {
-  //   'البكالوريا العلمي': ['عربي', 'رياضيات', 'علم الأحياء'],
-  //   'البكالوريا الأدبي': ['فيزياء', 'كيمياء', 'إنكليزي'],
-  //   'مكثفة علم الأحياء': ["علم الأحياء"],
-  //   'المكثفة الشاملة': ['فيزياء', 'كيمياء', 'إنكليزي'],
-  // };
-
-  // SubjectCubit()
-  //   : super(
-  //       SubjectState(
-  //         classes: ['الصف السابع', 'الصف الثامن', 'الصف التاسع'],
-  //         selectedClass: 'الصف السابع',
-  //         subjects: ['عربي', 'رياضيات', 'علوم'],
-  //       ),
-  //     );
-
-  // void changeClass(String selectedClass) {
-  //   emit(
-  //     state.copyWith(
-  //       selectedClass: selectedClass,
-  //       subjects: _subjectsByClass[selectedClass] ?? [],
-  //     ),
-  //   );
-  // }
-
-  // 

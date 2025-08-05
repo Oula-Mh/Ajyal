@@ -7,6 +7,7 @@ class AppRouter {
   static const completeRegisterPage = '/completeRegisterPage';
   static const advPage = '/AdvertisementsPage';
   static const rolePage = '/rolePage';
+  static const configPage = '/configPage';
   static const parentRgister = "/parent_register";
   static const parentLogin = "/parent_login";
   static const qrScannerPage = "/qrScannerPage";

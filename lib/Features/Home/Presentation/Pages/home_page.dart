@@ -7,6 +7,7 @@ import 'package:ajyal/Features/Advertisements/Presentation/Bloc/course_Adv/cours
 import 'package:ajyal/Features/Advertisements/Presentation/Bloc/general_adv/general_adv_cubit.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/home_adv_page.dart';
 import 'package:ajyal/Features/Community/Presentation/Pages/chat_page.dart';
+import 'package:ajyal/Features/Course/Data/Model/course_model.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
 import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
 import 'package:ajyal/Features/Exam/Presentation/Pages/exam_page.dart';
@@ -60,11 +61,13 @@ class _HomePageState extends State<HomePage> {
     MultiBlocProvider(
       providers: [
         BlocProvider(
-          create:
-              (context) => SubjectCubit(SubjectRepoimp(DioConsumer(Dio())))
-                ..fetchSubjects(
-                  getit<CacheHelper>().getData(key: "selectedCourseId"),
-                ),
+          create: (context) {
+            final selectedId = getit<CacheHelper>().getData(
+              key: "selectedCourseId",
+            );
+            return SubjectCubit(SubjectRepoimp(DioConsumer(Dio())))
+              ..fetchSubjects(selectedId.id);
+          },
         ),
         BlocProvider(
           create: (context) => CourseCubit(CourseRepoimp(DioConsumer(Dio()))),

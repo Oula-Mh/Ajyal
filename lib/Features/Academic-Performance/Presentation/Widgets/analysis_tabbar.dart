@@ -9,6 +9,7 @@ class AnalysisTabbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        color: AppColor.white1,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(width: 0.2),
       ),
@@ -40,11 +41,9 @@ class AnalysisTabbar extends StatelessWidget {
             labelColor: AppColor.primaryColor,
             unselectedLabelColor: AppColor.primaryColor,
             indicatorColor: AppColor.primaryColor,
-            // indicator: BoxDecoration(
-            //   color: const Color.fromARGB(255, 51, 67, 95),
-            //   borderRadius: BorderRadius.circular(10),
-            //   // border: Border.all(color: Colors.blue),
-            // ),
+            indicator: UnderlineTabIndicator(
+              borderSide: BorderSide(color: AppColor.primaryColor, width: 2),
+            ),
             tabs: const [
               Tab(text: "كتابية"),
               Tab(text: "إلكترونية"),

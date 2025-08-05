@@ -1,4 +1,6 @@
+import 'package:ajyal/Core/Network/Errors/failure_handle.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -89,4 +91,103 @@ Widget paginationHelper({
         icon: Icon(mainIcon),
       )
       : Icon(mainIcon, color: Colors.grey);
+}
+
+ServerFailure handleException(Exception e) {
+  if (e is DioException) {
+    return ServerFailure.fromDioError(e);
+  }
+  return ServerFailure(e.toString());
+}
+
+void showVarianceDialog(BuildContext context, double variancePercentage) {
+  String level = '';
+  String advice = '';
+  Color levelColor = Colors.green;
+
+  if (variancePercentage < 15) {
+    level = 'ثابت ومستقر ✅';
+    advice = 'أداءك ممتاز، حافظ على نفس أسلوب الدراسة.';
+    levelColor = Colors.green;
+  } else if (variancePercentage < 30) {
+    level = 'متوسط ⚠️';
+    advice = 'حاول تحلل أسباب انخفاض بعض الدرجات وتركّز على المراجعة.';
+    levelColor = Colors.orange;
+  } else {
+    level = 'متفاوت ❌';
+    advice = 'درجاتك غير مستقرة. نظم وقتك وراجع بانتظام.';
+    levelColor = Colors.red;
+  }
+
+  showDialog(
+    context: context,
+    builder:
+        (context) => AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: const Text(
+            'تحليل نسبة التباين',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                ' نسبة التباين بتوضح مدى استقرار أدائك عبر الامتحانات.',
+                style: TextStyle(fontSize: 14),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                '📊 التصنيفات:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 4),
+              Text('• أقل من 15%: ثابت ومستقر  ✅'),
+              Text('• بين 15% و 30%: متوسط  ⚠️'),
+              Text('• أكثر من 30%: متفاوت  ❌'),
+              const Divider(height: 24),
+              Text(
+                '📈 نسبتك الحالية: ${variancePercentage.toStringAsFixed(1)}%',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  const Text(' التقييم: '),
+                  Text(
+                    level,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: levelColor,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Container(
+                color: AppColor.white1,
+                padding: EdgeInsets.all(12),
+                child: Text(
+                  advice,
+                  style: TextStyle(
+                    color: AppColor.primaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              child: const Text('إغلاق'),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        ),
+  );
 }

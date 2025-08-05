@@ -1,4 +1,5 @@
 import 'package:ajyal/Core/routes/app_router.dart';
+import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Custom/Custom_ui.dart/gradient_background_widget.dart';
 import 'package:ajyal/Custom/Custom_widgets/auth/custom_auth_bttn.dart';
 import 'package:ajyal/Custom/Custom_widgets/auth/custom_container_auth.dart';

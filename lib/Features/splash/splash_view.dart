@@ -1,4 +1,3 @@
-import 'package:ajyal/Core/routes/app_router.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Features/splash/splash_animation_widget.dart';
 import 'package:flutter/material.dart';
@@ -9,25 +8,6 @@ class SplashView extends StatelessWidget {
 
   void _navigateWithTransition(BuildContext context) {
     GoRouter.of(context).pushReplacement(AppRouter.homePage);
-    // Navigator.of(context).pushReplacement(
-    //   PageRouteBuilder(
-    //     transitionDuration: Duration(milliseconds: 700),
-    //     pageBuilder:
-    //         (context, animation, secondaryAnimation) => const HomePage(),
-    //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-    //       return FadeTransition(
-    //         opacity: animation,
-    //         child: ScaleTransition(
-    //           scale: CurvedAnimation(
-    //             parent: animation,
-    //             curve: Curves.easeInCubic,
-    //           ),
-    //           child: child,
-    //         ),
-    //       );
-    //     },
-    //   ),
-    // );
   }
 
   @override

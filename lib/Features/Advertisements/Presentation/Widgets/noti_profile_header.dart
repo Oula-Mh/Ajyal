@@ -1,4 +1,6 @@
-import 'package:ajyal/Core/routes/app_router.dart';
+import 'package:ajyal/Core/Network/token_handle.dart';
+import 'package:ajyal/Core/routes/route_constant.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
@@ -24,16 +26,18 @@ class HeaderRow extends StatelessWidget {
               child: Icon(Icons.notifications, size: 30, color: Colors.white),
             ),
           ),
-          IconButton(
-            onPressed: () {
-              GoRouter.of(context).push(AppRouter.studentProfilePage);
-            },
-            icon: const Icon(
-              Iconsax.profile_circle,
-              size: 30,
-              color: Colors.white,
-            ),
-          ),
+          getit<TokenHandler>().hasToken()
+              ? IconButton(
+                onPressed: () {
+                  GoRouter.of(context).push(AppRouter.studentProfilePage);
+                },
+                icon: const Icon(
+                  Iconsax.profile_circle,
+                  size: 30,
+                  color: Colors.white,
+                ),
+              )
+              : Container(),
         ],
       ),
     );

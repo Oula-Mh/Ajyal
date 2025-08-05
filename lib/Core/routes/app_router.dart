@@ -1,5 +1,10 @@
 import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
+import 'package:ajyal/Features/Academic-Performance/Data/Repo/analysis_repoimp.dart';
+import 'package:ajyal/Features/Academic-Performance/Presentation/Bloc/AllQuizzesCubit/all_quizz_cubit_cubit.dart';
+import 'package:ajyal/Features/Academic-Performance/Presentation/Bloc/StudentAllMean/student_all_mean_cubit.dart';
+import 'package:ajyal/Features/Academic-Performance/Presentation/Bloc/StudentAllStddev/student_all_stddev_cubit.dart';
 import 'package:ajyal/Features/Academic-Performance/Presentation/Pages/analysis_perf_page.dart';
 import 'package:ajyal/Features/Advertisements/Data/model/ad_pagination_model.dart';
 import 'package:ajyal/Features/Advertisements/Data/model/course_adv_model.dart';
@@ -18,6 +23,7 @@ import 'package:ajyal/Features/Course/Presentation/Pages/course_details.dart';
 import 'package:ajyal/Features/Exam/Presentation/Pages/exam_current_page.dart';
 import 'package:ajyal/Features/Exam/Presentation/Pages/previous_exam_page.dart';
 import 'package:ajyal/Features/Home/Presentation/Pages/home_page.dart';
+import 'package:ajyal/Features/Home/transition_config_page.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Bloc/login/login_cubit.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Bloc/register/register_cubit.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Pages/login_view.dart';
@@ -62,6 +68,10 @@ abstract class Routing {
       GoRoute(
         path: AppRouter.rolePage,
         builder: (context, state) => const RolePage(),
+      ),
+      GoRoute(
+        path: AppRouter.configPage,
+        builder: (context, state) => const TransitionConfigPage(),
       ),
       GoRoute(
         path: AppRouter.courseDetailsPage,
@@ -292,7 +302,26 @@ abstract class Routing {
       GoRoute(
         //path: "/",
         path: AppRouter.analaysPerfPage,
-        builder: (context, state) => AnalysPerfPage(),
+        builder:
+            (context, state) => MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create:
+                      (context) =>
+                          StudentAllMeanCubit(getit<AnalysisRepoimp>()),
+                ),
+                BlocProvider(
+                  create:
+                      (context) =>
+                          StudentAllStddevCubit(getit<AnalysisRepoimp>()),
+                ),
+                BlocProvider(
+                  create:
+                      (context) => AllQuizzCubitCubit(getit<AnalysisRepoimp>()),
+                ),
+              ],
+              child: AnalysPerfPage(),
+            ),
       ),
     ],
   );

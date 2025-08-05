@@ -2,8 +2,6 @@ import 'package:ajyal/Core/Network/Api/api_consumer.dart';
 import 'package:ajyal/Core/Network/Errors/failure_handle.dart';
 import 'package:ajyal/Core/utils/constants/end_points.dart';
 import 'package:ajyal/Features/Advertisements/Data/model/ad_pagination_model.dart';
-import 'package:ajyal/Features/Advertisements/Data/model/public_adv_model.dart';
-import 'package:ajyal/Features/Advertisements/Data/model/teacher_adv_model.dart';
 import 'package:ajyal/Features/Advertisements/Data/repos/adv_repo.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';

@@ -1,5 +1,11 @@
 import 'package:ajyal/Cache/cache_helper.dart';
+import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
 import 'package:ajyal/Core/Network/token_handle.dart';
+import 'package:ajyal/Features/Academic-Performance/Data/Repo/analysis_repoimp.dart';
+import 'package:ajyal/Features/Course/Data/Model/course_model.dart';
+import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
+import 'package:ajyal/Features/Subjects/Data/repo/subject_repoimp.dart';
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
 final getit = GetIt.instance;
@@ -14,15 +20,14 @@ void setUpAppService() async {
   getit.registerLazySingleton<TokenHandler>(
     () => TokenHandler(getit<CacheHelper>()),
   );
-  // await DioConsumer(dio).init();
-  final token = getit<TokenHandler>().getToken();
-  print("=========$token");
 
-  // Register DioConsumer
-  // getit.registerSingleton<DioConsumer>(DioConsumer(dio: Dio()));
+  getit.registerLazySingleton<Dio>(() => Dio());
+  getit.registerLazySingleton<DioConsumer>(() => DioConsumer(getit.get<Dio>()));
+  getit.registerLazySingleton(() => CourseRepoimp(getit.get<DioConsumer>()));
+  getit.registerLazySingleton(() => AnalysisRepoimp(getit.get<DioConsumer>()));
+  getit.registerLazySingleton(() => SubjectRepoimp(getit.get<DioConsumer>()));
 
-  // // Register StudentAuthRepoimp with dependency injection
-  // getit.registerSingleton<StudentAuthRepoimp>(
-  //   StudentAuthRepoimp(getit<DioConsumer>()),
-  // );
+  //getit<CacheHelper>().clearData(key: "selectedCourseId");
+  // CourseModel mode = getit<CacheHelper>().getData(key: "selectedCourseId");
+  // print(mode);
 }

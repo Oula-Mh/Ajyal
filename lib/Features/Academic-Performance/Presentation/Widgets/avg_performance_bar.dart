@@ -1,14 +1,17 @@
 import 'package:ajyal/Core/styles/app_color.dart';
+import 'package:ajyal/Core/utils/Function/functions.dart';
 import 'package:flutter/material.dart';
 
 class AvgPerformanceBar extends StatelessWidget {
   final double value; // يجب أن تكون بين 0 و 100
   final String title;
+  final bool isStddev;
 
   const AvgPerformanceBar({
     super.key,
     required this.value,
     required this.title,
+    required this.isStddev,
   });
 
   @override
@@ -16,6 +19,7 @@ class AvgPerformanceBar extends StatelessWidget {
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               "$title \t\t",
@@ -25,6 +29,14 @@ class AvgPerformanceBar extends StatelessWidget {
                 fontSize: 14.5,
               ),
             ),
+            isStddev
+                ? GestureDetector(
+                  onTap: () {
+                    showVarianceDialog(context, value);
+                  },
+                  child: Icon(Icons.lightbulb_outlined, color: Colors.amber),
+                )
+                : SizedBox(),
           ],
         ),
         const SizedBox(height: 12),

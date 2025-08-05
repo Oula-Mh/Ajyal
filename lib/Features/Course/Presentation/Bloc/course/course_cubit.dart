@@ -22,6 +22,8 @@ class CourseCubit extends Cubit<CourseState> {
     response.fold((err) => emit(CourseFail(errMsg: err.errorMessage)), (
       courses,
     ) {
+      selectedCourse = courses[0];
+
       final savedId = getit<CacheHelper>().getData(key: "selectedCourseId");
       coursesList = courses;
       final foundCourse = courses.firstWhere(
@@ -30,7 +32,8 @@ class CourseCubit extends Cubit<CourseState> {
       );
 
       selectedCourse = foundCourse;
-      // selectedCourse = courses.first.id;
+      selectedCourse = courses.first;
+
       emit(CourseSuccess(allcourses: courses));
     });
   }

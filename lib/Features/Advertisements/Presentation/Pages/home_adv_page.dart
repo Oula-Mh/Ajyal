@@ -1,5 +1,7 @@
-import 'package:ajyal/Core/routes/app_router.dart';
+import 'package:ajyal/Core/Network/token_handle.dart';
+import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Bloc/course_Adv/course_adv_cubit.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Widgets/home_adv_widget/adv_title_widget.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Widgets/home_adv_widget/general_adv_list.dart';
@@ -48,7 +50,9 @@ class HomeAdvPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(height: 35),
-                            GeneralAdvList(),
+                            getit<TokenHandler>().hasToken()
+                                ? GeneralAdvList()
+                                : SizedBox(),
                             SizedBox(height: 5),
                             BlocBuilder<CourseAdvCubit, CourseAdvState>(
                               builder: (context, state) {
