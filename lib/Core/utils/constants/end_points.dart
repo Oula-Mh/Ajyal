@@ -1,14 +1,15 @@
 class EndPoints {
   //with emulator
-
-  // static const String baseUrl = 'http://10.0.2.2:8000/api/';
+  static const String baseUrl = 'http://10.0.2.2:8000/api/';
+  static const String fileBaseUrl = 'http://10.0.2.2:8000/';
 
   // with mobile sarah
-  static const String baseUrl = 'http://192.168.1.104:8000/api/';
-  static const String fileBaseUrl = 'http://192.168.1.104:8000/';
+  // static const String baseUrl = 'http://192.168.1.104:8000/api/';
+  // static const String fileBaseUrl = 'http://192.168.1.104:8000/';
 
   //with mobile oula
-  // static const String baseUrl = 'http://192.168.64.129:8000/api/';
+  // static const String baseUrl = 'http://192.168.1.4:8000/api/';
+  // static const String fileBaseUrl = 'http://192.168.1.4:8000/';
 
   //ngrok
   // static const String baseUrl =
@@ -31,6 +32,12 @@ class EndPoints {
   static const String courseDetails = "/course/show/";
   static const String subjectForTeacher =
       "/teacher/get-all-subjects-for-teacher/";
+  //* quiz *//
+  static const String examPre = "quiz/my_solved_quizzes/";
+  static const String examPreDetails = "quiz/my_solved_quiz_details/";
+  static const String examCurrent = "quiz/all_quizzes_for_curriculum/";
+  static const String examCurrentDetails = "quiz/enter/";
+  static const String submitExam = "quiz/submit";
   static const String totalmean = "analysis/total-mean/";
   static const String meanForSubject = "analysis/mean/";
   static const String stddevForSubject = "analysis/stddev/";

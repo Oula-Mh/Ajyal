@@ -1,14 +1,14 @@
 import 'package:ajyal/Core/styles/app_color.dart';
-import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_current/question_current_model.dart';
+import 'package:ajyal/Features/Exam/data/model/exam_current_details_model.dart';
 import 'package:flutter/material.dart';
-
 
 class QuestionGridDialogCurrent extends StatelessWidget {
   final List<Map<String, dynamic>> allSubQuestions;
   final int currentPage;
   final PageController pageController;
 
-  const QuestionGridDialogCurrent({super.key, 
+  const QuestionGridDialogCurrent({
+    super.key,
     required this.allSubQuestions,
     required this.currentPage,
     required this.pageController,
@@ -28,12 +28,15 @@ class QuestionGridDialogCurrent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("جميع الأسئلة",
-                  style:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const Text(
+                "جميع الأسئلة",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 6),
-              const Text("يمكنك التنقل بين الأسئلة",
-                  style: TextStyle(fontSize: 16, color: Colors.black54)),
+              const Text(
+                "يمكنك التنقل بين الأسئلة",
+                style: TextStyle(fontSize: 16, color: Colors.black54),
+              ),
               const SizedBox(height: 30),
               Expanded(
                 child: GridView.builder(
@@ -44,7 +47,8 @@ class QuestionGridDialogCurrent extends StatelessWidget {
                     mainAxisSpacing: 11,
                   ),
                   itemBuilder: (context, index) {
-                    final sub = allSubQuestions[index]['sub'] as SubQuestionCurrent;
+                    final sub =
+                        allSubQuestions[index]['sub'] as QuestionCurrentModel;
                     final bool isCurrent = index == currentPage;
                     final bool isAnswered = sub.userSelectedIndex != -1;
                     return GestureDetector(
@@ -56,9 +60,10 @@ class QuestionGridDialogCurrent extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(
-                            color: isCurrent
-                                ? AppColor.primaryColor
-                                : isAnswered
+                            color:
+                                isCurrent
+                                    ? AppColor.primaryColor
+                                    : isAnswered
                                     ? AppColor.primaryColor
                                     : Colors.grey.shade300,
                             width: 2.5,
@@ -72,9 +77,10 @@ class QuestionGridDialogCurrent extends StatelessWidget {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
-                            color: isCurrent
-                                ? Colors.white
-                                : isAnswered
+                            color:
+                                isCurrent
+                                    ? Colors.white
+                                    : isAnswered
                                     ? Colors.black87
                                     : Colors.black54,
                           ),

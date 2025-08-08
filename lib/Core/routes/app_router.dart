@@ -20,8 +20,14 @@ import 'package:ajyal/Features/Advertisements/Presentation/Pages/teacher_adv_pag
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
 import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
 import 'package:ajyal/Features/Course/Presentation/Pages/course_details.dart';
+import 'package:ajyal/Features/Exam/Presentation/Bloc/exam_current_details/exam_current_details_cubit.dart';
+import 'package:ajyal/Features/Exam/Presentation/Bloc/exam_pre_details/exam_pre_details_cubit.dart';
+import 'package:ajyal/Features/Exam/Presentation/Bloc/submit_exam/submit_exam_cubit.dart';
 import 'package:ajyal/Features/Exam/Presentation/Pages/exam_current_page.dart';
 import 'package:ajyal/Features/Exam/Presentation/Pages/previous_exam_page.dart';
+import 'package:ajyal/Features/Exam/Presentation/Pages/submit_exam_page.dart';
+import 'package:ajyal/Features/Exam/data/model/exam_current_details_model.dart';
+import 'package:ajyal/Features/Exam/data/repos/exam_repoImp.dart';
 import 'package:ajyal/Features/Home/Presentation/Pages/home_page.dart';
 import 'package:ajyal/Features/Home/transition_config_page.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Bloc/login/login_cubit.dart';
@@ -50,6 +56,7 @@ import 'package:ajyal/Features/Parents/Auth/Presentation/Pages/register_view.dar
 import 'package:ajyal/Features/splash/splash_view.dart';
 import 'package:ajyal/test.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -59,7 +66,14 @@ abstract class Routing {
       GoRoute(path: "/", builder: (context, state) => const SplashView()),
       GoRoute(
         path: AppRouter.homePage,
-        builder: (context, state) => const HomePage(),
+        builder: (context, state) {
+          final int? initialIndex = state.extra as int?;
+
+          return HomePage(
+            key: ValueKey(initialIndex), // 👈 هذا هو المهم!
+            initialIndex: initialIndex ?? 0,
+          );
+        },
       ),
       GoRoute(
         path: AppRouter.advPage,
@@ -286,16 +300,44 @@ abstract class Routing {
         path: AppRouter.examCurrentPage,
         builder: (context, state) {
           final data = state.extra as Map<String, dynamic>;
-          return ExamCurrentPage(
-            initialTime: data['initialTime'] as int,
-            totalTime: data['totalTime'] as int,
+          return BlocProvider(
+            create:
+                (context) =>
+                    ExamCurrentDetailsCubit(ExamRepoimp(DioConsumer(Dio())))
+                      ..getExamCurrentDetails(id: data['id'] as int),
+            child: ExamCurrentPage(
+              initialTime: data['initialTime'] as int,
+              totalTime: data['totalTime'] as int,
+            ),
+          );
+        },
+      ),
+
+      GoRoute(
+        path: AppRouter.submitExamPage,
+        builder: (context, state) {
+          final model = state.extra as ExamCurrentDetailsModel;
+          return BlocProvider(
+            create:
+                (context) => SubmitExamCubit(ExamRepoimp(DioConsumer(Dio()))),
+
+            child: SubmitExamPage(model: model),
           );
         },
       ),
 
       GoRoute(
         path: AppRouter.previousExamPage,
-        builder: (context, state) => PreviousExamPage(),
+        builder: (context, state) {
+          final data = state.extra as Map<String, dynamic>;
+          return BlocProvider(
+            create:
+                (context) =>
+                    ExamPreDetailsCubit(ExamRepoimp(DioConsumer(Dio())))
+                      ..getExamPreDetails(id: data['id'] as int),
+            child: PreviousExamPage(nameExam: data['nameExam'] as String),
+          );
+        },
       ),
 
       //======= Analayse Performence ========

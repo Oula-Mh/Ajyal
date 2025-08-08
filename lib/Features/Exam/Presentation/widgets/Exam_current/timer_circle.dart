@@ -6,7 +6,8 @@ class TimerCircle extends StatelessWidget {
   final Color Function() getTimerColor;
   final String Function(int) formatTime;
 
-  const TimerCircle({super.key, 
+  const TimerCircle({
+    super.key,
     required this.controller,
     required this.timeLeft,
     required this.getTimerColor,
@@ -19,8 +20,8 @@ class TimerCircle extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         SizedBox(
-          width: 55,
-          height: 55,
+          width: 60,
+          height: 60,
           child: AnimatedBuilder(
             animation: controller,
             builder: (context, child) {

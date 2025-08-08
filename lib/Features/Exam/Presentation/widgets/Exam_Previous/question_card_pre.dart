@@ -1,10 +1,10 @@
 import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_Previous/options_list_pre.dart';
-import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_Previous/question_pre_model.dart';
+import 'package:ajyal/Features/Exam/data/model/exam_pre_details_model.dart';
 import 'package:flutter/material.dart';
 
 class QuestionCardPre extends StatelessWidget {
-  final FullQuestionPre mainQuestion;
-  final SubQuestionPre subQuestion;
+  final QuestionPreModel mainQuestion;
+  final QuestionPreModel subQuestion;
 
   const QuestionCardPre({
     super.key,
@@ -26,9 +26,9 @@ class QuestionCardPre extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (mainQuestion.mainText != null) ...[
+              if (mainQuestion.questionText.isNotEmpty) ...[
                 Text(
-                  mainQuestion.mainText!,
+                  mainQuestion.questionText,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
@@ -37,7 +37,7 @@ class QuestionCardPre extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
               ],
-              if (mainQuestion.imageUrl != null) ...[
+              if (mainQuestion.image != null) ...[
                 const SizedBox(height: 12),
                 Center(
                   child: GestureDetector(
@@ -47,38 +47,43 @@ class QuestionCardPre extends StatelessWidget {
                         builder:
                             (_) => Dialog(
                               child: InteractiveViewer(
-                                child: Image.asset(mainQuestion.imageUrl!),
+                                child: Image.network(mainQuestion.image!),
                               ),
                             ),
                       );
                     },
-                    child: Image.asset(
-                      mainQuestion.imageUrl!,
+                    child: Image.network(
+                      mainQuestion.image!,
                       height: 140,
                       fit: BoxFit.contain,
                     ),
                   ),
                 ),
               ],
-              if (mainQuestion.mainText != null) ...[
+              if (mainQuestion.questionText.isNotEmpty &&
+                  mainQuestion.id != subQuestion.id) ...[
                 Divider(
                   height: 30,
                   thickness: 1.5,
                   color: Colors.grey.shade300,
                 ),
               ],
-              Text(
-                subQuestion.questionText,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black45,
+              if (subQuestion.questionText.isNotEmpty &&
+                  mainQuestion.id != subQuestion.id) ...[
+                Text(
+                  subQuestion.questionText,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black45,
+                  ),
                 ),
-              ),
+              ],
+
               const SizedBox(height: 16),
               OptionsListPre(subQuestion: subQuestion),
               const SizedBox(height: 20),
-              if (subQuestion.hint != null)
+              if (subQuestion.hint.isNotEmpty)
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
@@ -91,7 +96,7 @@ class QuestionCardPre extends StatelessWidget {
                       SizedBox(width: 10),
                       Expanded(
                         child: Text(
-                          subQuestion.hint!,
+                          subQuestion.hint,
                           style: TextStyle(fontSize: 14),
                         ),
                       ),
