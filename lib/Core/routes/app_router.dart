@@ -30,6 +30,9 @@ import 'package:ajyal/Features/Parents/Auth/Presentation/Pages/login_view.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Pages/qr_scanner.dart';
 import 'package:ajyal/Features/Parents/Auth/data/repos/login/login_repo_imp.dart';
 import 'package:ajyal/Features/Parents/Auth/data/repos/register/register_repo_impl.dart';
+import 'package:ajyal/Features/Payment/Data/repo/payment_repoimp.dart';
+import 'package:ajyal/Features/Payment/view/bloc/cubit/stripe_link_cubit.dart';
+import 'package:ajyal/Features/Payment/view/payment.dart';
 import 'package:ajyal/Features/Student/Auth/Data/models/check_student_info_model.dart';
 import 'package:ajyal/Features/Student/Auth/Data/models/student_profile_model.dart';
 import 'package:ajyal/Features/Student/Auth/Data/repos/student_auth_repoImp.dart';
@@ -60,6 +63,18 @@ abstract class Routing {
       GoRoute(
         path: AppRouter.homePage,
         builder: (context, state) => const HomePage(),
+      ),
+      GoRoute(
+        path: "/pay",
+        builder:
+            (context, state) => BlocProvider(
+              create:
+                  (context) =>
+                      StripeLinkCubit(PaymentRepoimp(DioConsumer(Dio())))
+                        ..payment(),
+              // ..payment(),
+              child: const Payment(),
+            ),
       ),
       GoRoute(
         path: AppRouter.advPage,

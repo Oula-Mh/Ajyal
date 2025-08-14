@@ -4,8 +4,8 @@ class EndPoints {
   // static const String baseUrl = 'http://10.0.2.2:8000/api/';
 
   // with mobile sarah
-  static const String baseUrl = 'http://192.168.1.104:8000/api/';
-  static const String fileBaseUrl = 'http://192.168.1.104:8000/';
+  static const String baseUrl = 'http://192.168.1.101:8000/api/';
+  static const String fileBaseUrl = 'http://192.168.1.101:8000/';
 
   //with mobile oula
   // static const String baseUrl = 'http://192.168.64.129:8000/api/';

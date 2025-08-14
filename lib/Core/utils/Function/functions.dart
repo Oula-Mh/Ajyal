@@ -135,7 +135,7 @@ void showVarianceDialog(BuildContext context, double variancePercentage) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                ' نسبة التباين بتوضح مدى استقرار أدائك عبر الامتحانات.',
+                ' نسبة التباين توضح مدى استقرار أدائك عبر الامتحانات.',
                 style: TextStyle(fontSize: 14),
               ),
               const SizedBox(height: 12),

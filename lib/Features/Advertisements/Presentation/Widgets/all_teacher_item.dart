@@ -4,15 +4,13 @@ import 'package:ajyal/Features/Course/Presentation/Widget/all_course_title_widge
 import 'package:ajyal/Features/Course/Presentation/Widget/show_course_button.dart';
 import 'package:flutter/material.dart';
 
-class AllCourseItem extends StatelessWidget {
+class AllTeacherItem extends StatelessWidget {
   final int itemCount;
   final List<AdvModel> courses;
-  final bool isGeneral;
-  const AllCourseItem({
+  const AllTeacherItem({
     super.key,
     required this.itemCount,
     required this.courses,
-    required this.isGeneral,
   });
 
   @override
@@ -54,17 +52,11 @@ class AllCourseItem extends StatelessWidget {
                               top: 10,
                               right: 5,
                             ),
-                            child:
-                                isGeneral
-                                    ? ShowCourseBttn(
-                                      images: course.images!,
-                                      isGeneral: isGeneral,
-                                    )
-                                    : ShowCourseBttn(
-                                      id: course.advertisableId!,
-                                      images: course.images!,
-                                      isGeneral: isGeneral,
-                                    ),
+                            child: ShowCourseBttn(
+                              id: course.advertisableId!,
+                              images: course.images!,
+                              isGeneral: false,
+                            ),
                           ),
                         ],
                       ),

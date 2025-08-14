@@ -47,14 +47,6 @@ class _AnalysPerfBodyState extends State<AnalysPerfBody> {
     _onSubjectChanged(selectedSubjectId); // تحميل مبدئي
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   context.read<StudentAllMeanCubit>().getAverageBySubject(1);
-  //   context.read<StudentAllStddevCubit>().getStddevBySubject(1);
-  //   context.read<AllQuizzCubitCubit>().getQuizzesForAnalysis(1);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -74,41 +66,44 @@ class _AnalysPerfBodyState extends State<AnalysPerfBody> {
             ItemAnalysSelection(onSubjectChanged: _onSubjectChanged),
             Padding(
               padding: const EdgeInsets.all(16),
-              child: Container(
-                color: AppColor.white1,
-                child: Column(
-                  children: [
-                    AnalysisTabbar(controller: widget.controller),
-                    const SizedBox(height: 20),
-                    Builder(
-                      builder: (_) {
-                        final currentTabIndex = widget.controller.index;
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              //========== المتوسط
-                              MeanWidget(currentTabIndex: currentTabIndex),
-                              //====== التباين
-                              const SizedBox(height: 20),
-                              StddevWidget(currentTabIndex: currentTabIndex),
-                              const SizedBox(height: 15),
-                              //====== الاختبارات
-                              QuizListWidget(currentTabIndex: currentTabIndex),
-                              const SizedBox(height: 24),
-                              ChartWidget(
-                                showChart: widget.showChart,
-                                onTap: widget.onTap,
-                                currentTabIndex: currentTabIndex,
-                              ),
-                            ],
+              child: Column(
+                children: [
+                  AnalysisTabbar(controller: widget.controller),
+                  const SizedBox(height: 20),
+                  Builder(
+                    builder: (_) {
+                      final currentTabIndex = widget.controller.index;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            color: const Color.fromRGBO(243, 248, 255, 1),
+                            child: Column(
+                              children: [
+                                //========== المتوسط
+                                MeanWidget(currentTabIndex: currentTabIndex),
+                                //====== التباين
+                                const SizedBox(height: 20),
+                                StddevWidget(currentTabIndex: currentTabIndex),
+                                const SizedBox(height: 15),
+                              ],
+                            ),
                           ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                          //====== الاختبارات
+                          //QuizListWidget(currentTabIndex: currentTabIndex),
+                          const SizedBox(height: 24),
+                          //====== الرسم البياني
+                          ChartWidget(
+                            showChart: widget.showChart,
+                            onTap: widget.onTap,
+                            currentTabIndex: currentTabIndex,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
           ],

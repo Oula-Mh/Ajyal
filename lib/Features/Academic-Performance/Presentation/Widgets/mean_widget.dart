@@ -13,7 +13,7 @@ class MeanWidget extends StatelessWidget {
     return BlocBuilder<StudentAllMeanCubit, StudentAllMeanState>(
       builder: (context, state) {
         if (state is StudentAllMeanLoading) {
-          // ✅ Skeleton instead of CircularProgressIndicator
+          //  Skeleton instead of CircularProgressIndicator
           return PercentBarSkelton(title: "متوسط الأداء:");
         } else if (state is StudentAllMeanSuccess) {
           final model = state.model;

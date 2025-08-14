@@ -55,6 +55,7 @@ class CacheImage extends StatelessWidget {
             width: width,
             decoration: BoxDecoration(
               image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
     );

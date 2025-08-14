@@ -2,6 +2,7 @@
     <application
         android:label="ajyal"
         android:name="${applicationName}"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -37,9 +38,11 @@
 
          In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
     <queries>
+        <package android:name="com.android.chrome" /> 
         <intent>
-            <action android:name="android.intent.action.PROCESS_TEXT"/>
-            <data android:mimeType="text/plain"/>
+           <action android:name="android.intent.action.VIEW" />
+           <data android:scheme="https" /> 
         </intent>
     </queries>
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

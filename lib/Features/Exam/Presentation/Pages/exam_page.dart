@@ -1,5 +1,4 @@
 import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
-import 'package:ajyal/Core/routes/app_router.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';

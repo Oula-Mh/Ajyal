@@ -7,7 +7,7 @@ PreferredSizeWidget customAppBar(BuildContext context, String title) {
     backgroundColor: AppColor.primaryColor,
     leading: IconButton(
       onPressed: () {
-        // Navigator.of(context).pop();
+        Navigator.of(context).pop();
       },
       icon: Icon(Icons.arrow_back),
       color: AppColor.white1,

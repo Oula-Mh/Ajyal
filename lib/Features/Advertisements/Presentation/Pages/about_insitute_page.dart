@@ -9,7 +9,10 @@ class AboutInstitutePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(context, "عن المعهد"),
-      body: TeacherAdvListView(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        child: Column(children: [TeacherAdvListView()]),
+      ),
     );
   }
 }

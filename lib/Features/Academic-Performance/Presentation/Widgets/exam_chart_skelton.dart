@@ -12,7 +12,7 @@ class ExamCharSkelton extends StatelessWidget {
         Row(
           children: [
             Text(
-              "الرسم البياني : ",
+              " مخطط لتوضيح درجاتك في الاختبارات : ",
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColor.primaryColor,

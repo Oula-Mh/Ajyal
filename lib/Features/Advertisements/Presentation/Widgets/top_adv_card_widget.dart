@@ -1,4 +1,3 @@
-import 'package:ajyal/Core/routes/app_router.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/utils/constants/end_points.dart';
@@ -52,9 +51,6 @@ class TeacherAdvListView extends StatelessWidget {
                               );
                             },
                             child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
                               width: 135,
                               margin: const EdgeInsets.only(
                                 left: 15,
@@ -68,7 +64,7 @@ class TeacherAdvListView extends StatelessWidget {
                                     imageUrl:
                                         EndPoints.fileBaseUrl +
                                         item.images![0].path!,
-                                    width: 135,
+                                    width: 150,
                                     height:
                                         MediaQuery.of(context).size.height / 5,
                                     isStringExist: true,
@@ -77,7 +73,7 @@ class TeacherAdvListView extends StatelessWidget {
                                     bottom: 5,
                                     right: 5,
                                     child: Card(
-                                      elevation: 15,
+                                      elevation: 5,
                                       color: AppColor.secondaryColor
                                           .withOpacity(.80),
                                       shape: RoundedRectangleBorder(
