@@ -7,10 +7,12 @@ import 'package:ajyal/Features/Advertisements/Presentation/Bloc/course_Adv/cours
 import 'package:ajyal/Features/Advertisements/Presentation/Bloc/general_adv/general_adv_cubit.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/home_adv_page.dart';
 import 'package:ajyal/Features/Community/Presentation/Pages/chat_page.dart';
-import 'package:ajyal/Features/Course/Data/Model/course_model.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
 import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
+import 'package:ajyal/Features/Exam/Presentation/Bloc/exam_current/exam_current_cubit.dart';
+import 'package:ajyal/Features/Exam/Presentation/Bloc/exam_pre/exam_pre_cubit.dart';
 import 'package:ajyal/Features/Exam/Presentation/Pages/exam_page.dart';
+import 'package:ajyal/Features/Exam/data/repos/exam_repoImp.dart';
 import 'package:ajyal/Features/Subjects/Data/repo/subject_repoimp.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_cubit.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Pages/subject_page.dart';
@@ -19,14 +21,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final int initialIndex;
 
+  const HomePage({super.key, this.initialIndex = 0});
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
+  late int _currentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex;
+  }
+
   final List<Widget> _children = [
     MultiBlocProvider(
       providers: [
@@ -57,6 +67,7 @@ class _HomePageState extends State<HomePage> {
       ],
       child: SubjectPage(),
     ),
+
     ChatPage(),
     MultiBlocProvider(
       providers: [
@@ -71,6 +82,13 @@ class _HomePageState extends State<HomePage> {
         ),
         BlocProvider(
           create: (context) => CourseCubit(CourseRepoimp(DioConsumer(Dio()))),
+        ),
+        BlocProvider(
+          create: (context) => ExamPreCubit(ExamRepoimp(DioConsumer(Dio()))),
+        ),
+        BlocProvider(
+          create:
+              (context) => ExamCurrentCubit(ExamRepoimp(DioConsumer(Dio()))),
         ),
       ],
       child: ExamPage(),

@@ -1,5 +1,6 @@
+ 
 import 'package:ajyal/Core/styles/app_color.dart';
-import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_Previous/question_pre_model.dart';
+import 'package:ajyal/Features/Exam/data/model/exam_pre_details_model.dart';
 import 'package:flutter/material.dart';
 
 class QuestionGridDialogPre extends StatelessWidget {
@@ -16,6 +17,11 @@ class QuestionGridDialogPre extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // التحقق: هل كل الأسئلة لم يُجب عليها؟
+    final allAnswersNull = allSubQuestions.every(
+      (q) => (q["sub"] as QuestionPreModel).studentAnswer == null,
+    );
+
     return Dialog.fullscreen(
       child: Scaffold(
         appBar: AppBar(
@@ -47,18 +53,38 @@ class QuestionGridDialogPre extends StatelessWidget {
                   ),
                   itemBuilder: (context, index) {
                     final subQ =
-                        allSubQuestions[index]["sub"] as SubQuestionPre;
+                        allSubQuestions[index]["sub"] as QuestionPreModel;
+
                     Color borderColor = Colors.grey;
                     Color textColor = Colors.black;
 
-                    if (subQ.userSelectedIndex == subQ.correctAnswerIndex) {
-                      borderColor = Colors.green;
-                      textColor = Colors.green.shade900;
-                    } else if (subQ.userSelectedIndex !=
-                            subQ.correctAnswerIndex &&
-                        subQ.userSelectedIndex != -1) {
-                      borderColor = Colors.red;
-                      textColor = Colors.red.shade900;
+                    final studentAnswer = subQ.studentAnswer;
+                    final correctChoice = subQ.correctChoice;
+
+                    if (allAnswersNull) {
+                      // لم يُجب الطالب على أي سؤال
+                      if (correctChoice != null &&
+                          correctChoice.id ==
+                              subQ.choices
+                                  .firstWhere(
+                                    (c) => c.id == correctChoice.id,
+                                    orElse: () => subQ.choices.first,
+                                  )
+                                  .id) {
+                        borderColor = Colors.green;
+                        textColor = Colors.green.shade900;
+                      } else {
+                        borderColor = Colors.red;
+                        textColor = Colors.red.shade900;
+                      }
+                    } else if (studentAnswer != null && correctChoice != null) {
+                      if (studentAnswer.id == correctChoice.id) {
+                        borderColor = Colors.green;
+                        textColor = Colors.green.shade900;
+                      } else {
+                        borderColor = Colors.red;
+                        textColor = Colors.red.shade900;
+                      }
                     }
 
                     return GestureDetector(

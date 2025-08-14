@@ -1,30 +1,70 @@
-import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_Previous/question_pre_model.dart';
+import 'package:ajyal/Features/Exam/data/model/exam_pre_details_model.dart';
 import 'package:flutter/material.dart';
 
 class OptionsListPre extends StatelessWidget {
-  final SubQuestionPre subQuestion;
+  final QuestionPreModel subQuestion;
 
   const OptionsListPre({super.key, required this.subQuestion});
 
   @override
   Widget build(BuildContext context) {
+    final correct = subQuestion.correctChoice;
+    final selected = subQuestion.studentAnswer;
+    final bool studentDidNotAnswer = selected == null;
+
     return Column(
-      children: List.generate(subQuestion.options.length, (i) {
+      children: List.generate(subQuestion.choices.length, (i) {
+        final choice = subQuestion.choices[i];
+
+        // هل هو الخيار الصحيح؟
+        bool isCorrect = correct != null && choice.id == correct.id;
+        // هل هو الخيار الذي اختاره الطالب؟
+        bool isSelected = selected != null && choice.id == selected.id;
+
+        // الألوان الافتراضية
         Color borderColor = Colors.grey.shade400;
         Color containerColor = Colors.white;
-        Color correct = const Color(0xFFEFF9EF);
-        Color incorrect = const Color(0xFFF9EBEB);
 
-        if (i == subQuestion.correctAnswerIndex &&
-            i == subQuestion.userSelectedIndex) {
-          borderColor = Colors.green;
-          containerColor = correct;
-        } else if (i == subQuestion.correctAnswerIndex) {
-          borderColor = Colors.green;
-          containerColor = correct;
-        } else if (i == subQuestion.userSelectedIndex) {
-          borderColor = Colors.red;
-          containerColor = incorrect;
+        Color correctColor = const Color(0xFFEFF9EF); // أخضر فاتح
+        Color incorrectColor = const Color(0xFFF9EBEB); // أحمر فاتح
+
+        // منطق التلوين
+        if (studentDidNotAnswer) {
+          // لم يجب الطالب: الكل أحمر إلا الصحيح
+          if (isCorrect) {
+            borderColor = Colors.green;
+            containerColor = correctColor;
+          } else {
+            borderColor = Colors.red;
+            containerColor = incorrectColor;
+          }
+        } else {
+          // أجاب الطالب: عادي
+          if (isCorrect && isSelected) {
+            borderColor = Colors.green;
+            containerColor = correctColor;
+          } else if (isCorrect) {
+            borderColor = Colors.green;
+            containerColor = correctColor;
+          } else if (isSelected) {
+            borderColor = Colors.red;
+            containerColor = incorrectColor;
+          }
+        }
+
+        // منطق الأيقونات
+        IconData icon;
+        Color iconColor;
+
+        if (isCorrect) {
+          icon = Icons.check_circle;
+          iconColor = Colors.green;
+        } else if (isSelected || studentDidNotAnswer) {
+          icon = Icons.cancel;
+          iconColor = Colors.red;
+        } else {
+          icon = Icons.circle_outlined;
+          iconColor = Colors.grey;
         }
 
         return Container(
@@ -37,21 +77,14 @@ class OptionsListPre extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(
-                i == subQuestion.correctAnswerIndex
-                    ? Icons.check_circle
-                    : i == subQuestion.userSelectedIndex
-                    ? Icons.cancel
-                    : Icons.circle_outlined,
-                color:
-                    i == subQuestion.correctAnswerIndex
-                        ? Colors.green
-                        : i == subQuestion.userSelectedIndex
-                        ? Colors.red
-                        : Colors.grey,
-              ),
+              Icon(icon, color: iconColor),
               const SizedBox(width: 10),
-              Expanded(child: Text(subQuestion.options[i])),
+              Expanded(
+                child: Text(
+                  choice.choiceText,
+                  style: const TextStyle(fontSize: 15),
+                ),
+              ),
             ],
           ),
         );

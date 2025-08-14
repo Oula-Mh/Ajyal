@@ -1,11 +1,14 @@
+import 'package:ajyal/Features/Exam/Presentation/Bloc/exam_pre_details/exam_pre_details_cubit.dart';
 import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_Previous/question_card_pre.dart';
-import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_Previous/question_pre_model.dart';
 import 'package:ajyal/Features/Exam/Presentation/widgets/exam_navigation_bar.dart';
+import 'package:ajyal/Features/Exam/data/model/exam_pre_details_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/Exam_Previous/question_grid_dialog_pre.dart';
 
 class PreviousExamPage extends StatefulWidget {
-  const PreviousExamPage({super.key});
+  final String nameExam;
+  const PreviousExamPage({required this.nameExam, super.key});
 
   @override
   State<PreviousExamPage> createState() => _PreviousExamPageState();
@@ -15,226 +18,7 @@ class _PreviousExamPageState extends State<PreviousExamPage> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  late final List<FullQuestionPre> questions;
-  late final List<Map<String, dynamic>> allSubQuestions;
-
-  @override
-  void initState() {
-    super.initState();
-    questions = _loadQuestions();
-    allSubQuestions = <Map<String, dynamic>>[];
-    for (var fq in questions) {
-      for (var sq in fq.subQuestions) {
-        allSubQuestions.add({"main": fq, "sub": sq});
-      }
-    }
-  }
-
-  List<FullQuestionPre> _loadQuestions() {
-    // هنا يمكنك تحميل البيانات من API لاحقاً
-    return [
-      FullQuestionPre(
-        mainText: "راقب الرسم البياني التالي ثم أجب على الأسئلة.",
-        imageUrl: "assets/images/exam.jfif",
-        subQuestions: [
-          SubQuestionPre(
-            questionText: "ما القيمة التي يمثلها العمود الأحمر؟",
-            options: ["٢٠", "٤٠", "٦٠", "٨٠"],
-            correctAnswerIndex: 2,
-            userSelectedIndex: 1,
-            hint: "احسب عدد الوحدات التي يغطيها العمود الأحمر.",
-          ),
-          SubQuestionPre(
-            questionText: "أي لون يمثل أعلى قيمة؟",
-            options: ["الأحمر", "الأزرق", "الأخضر", "الأصفر"],
-            correctAnswerIndex: 1,
-            userSelectedIndex: 1,
-            hint: "انظر إلى ارتفاع كل عمود.",
-          ),
-        ],
-      ),
-      FullQuestionPre(
-        mainText: "اختر الكلمة الصحيحة التي تناسب التعريف التالي:",
-        subQuestions: [
-          SubQuestionPre(
-            questionText: "ما معنى 'التمثيل الضوئي'؟",
-            options: [
-              "نوع من انقسام الخلايا",
-              "عملية إنتاج الغذاء باستخدام ضوء الشمس",
-              "قياس شدة الضوء",
-              "لا شيء مما سبق",
-            ],
-            correctAnswerIndex: 1,
-            userSelectedIndex: 0,
-            hint: "فكر كيف تصنع النباتات غذاءها.",
-          ),
-          SubQuestionPre(
-            questionText: "اختر التعريف الصحيح لـ 'التبخر'.",
-            options: [
-              "تحول الماء إلى بخار",
-              "زيادة في كمية الأمطار",
-              "ذوبان المادة الصلبة إلى سائل",
-              "لا شيء مما سبق",
-            ],
-            correctAnswerIndex: 0,
-            userSelectedIndex: 0,
-            hint: "يحدث عند تسخين الماء.",
-          ),
-        ],
-      ),
-      FullQuestionPre(
-        mainText: null,
-        subQuestions: [
-          SubQuestionPre(
-            questionText: "ما هو لون علم فرنسا؟",
-            options: [
-              "أحمر وأخضر",
-              "أزرق وأبيض وأحمر",
-              "أسود وأصفر",
-              "أزرق وأصفر",
-            ],
-            correctAnswerIndex: 1,
-            userSelectedIndex: 0,
-            hint: "يتكون من ٣ ألوان رأسية.",
-          ),
-        ],
-      ),
-      FullQuestionPre(
-        mainText: "راقب الرسم البياني التالي ثم أجب على الأسئلة.",
-        imageUrl: "assets/images/exam.jfif",
-        subQuestions: [
-          SubQuestionPre(
-            questionText: "ما القيمة التي يمثلها العمود الأحمر؟",
-            options: ["٢٠", "٤٠", "٦٠", "٨٠"],
-            correctAnswerIndex: 2,
-            userSelectedIndex: 1,
-            hint: "احسب عدد الوحدات التي يغطيها العمود الأحمر.",
-          ),
-          SubQuestionPre(
-            questionText: "أي لون يمثل أعلى قيمة؟",
-            options: ["الأحمر", "الأزرق", "الأخضر", "الأصفر"],
-            correctAnswerIndex: 1,
-            userSelectedIndex: 1,
-            hint: "انظر إلى ارتفاع كل عمود.",
-          ),
-        ],
-      ),
-      FullQuestionPre(
-        mainText: "اختر الكلمة الصحيحة التي تناسب التعريف التالي:",
-        subQuestions: [
-          SubQuestionPre(
-            questionText: "ما معنى 'التمثيل الضوئي'؟",
-            options: [
-              "نوع من انقسام الخلايا",
-              "عملية إنتاج الغذاء باستخدام ضوء الشمس",
-              "قياس شدة الضوء",
-              "لا شيء مما سبق",
-            ],
-            correctAnswerIndex: 1,
-            userSelectedIndex: 0,
-            hint: "فكر كيف تصنع النباتات غذاءها.",
-          ),
-          SubQuestionPre(
-            questionText: "اختر التعريف الصحيح لـ 'التبخر'.",
-            options: [
-              "تحول الماء إلى بخار",
-              "زيادة في كمية الأمطار",
-              "ذوبان المادة الصلبة إلى سائل",
-              "لا شيء مما سبق",
-            ],
-            correctAnswerIndex: 0,
-            userSelectedIndex: 0,
-            hint: "يحدث عند تسخين الماء.",
-          ),
-        ],
-      ),
-      FullQuestionPre(
-        mainText: null,
-        subQuestions: [
-          SubQuestionPre(
-            questionText: "ما هو لون علم فرنسا؟",
-            options: [
-              "أحمر وأخضر",
-              "أزرق وأبيض وأحمر",
-              "أسود وأصفر",
-              "أزرق وأصفر",
-            ],
-            correctAnswerIndex: 1,
-            userSelectedIndex: 0,
-            hint: "يتكون من ٣ ألوان رأسية.",
-          ),
-        ],
-      ),
-      FullQuestionPre(
-        mainText: "راقب الرسم البياني التالي ثم أجب على الأسئلة.",
-        imageUrl: "assets/images/exam.jfif",
-        subQuestions: [
-          SubQuestionPre(
-            questionText: "ما القيمة التي يمثلها العمود الأحمر؟",
-            options: ["٢٠", "٤٠", "٦٠", "٨٠"],
-            correctAnswerIndex: 2,
-            userSelectedIndex: 1,
-            hint: "احسب عدد الوحدات التي يغطيها العمود الأحمر.",
-          ),
-          SubQuestionPre(
-            questionText: "أي لون يمثل أعلى قيمة؟",
-            options: ["الأحمر", "الأزرق", "الأخضر", "الأصفر"],
-            correctAnswerIndex: 1,
-            userSelectedIndex: 1,
-            hint: "انظر إلى ارتفاع كل عمود.",
-          ),
-        ],
-      ),
-      FullQuestionPre(
-        mainText: null,
-        subQuestions: [
-          SubQuestionPre(
-            questionText: "ما هو لون علم فرنسا؟",
-            options: [
-              "أحمر وأخضر",
-              "أزرق وأبيض وأحمر",
-              "أسود وأصفر",
-              "أزرق وأصفر",
-            ],
-            correctAnswerIndex: 1,
-            userSelectedIndex: 0,
-            hint: "يتكون من ٣ ألوان رأسية.",
-          ),
-        ],
-      ),
-      FullQuestionPre(
-        mainText: "اختر الكلمة الصحيحة التي تناسب التعريف التالي:",
-        subQuestions: [
-          SubQuestionPre(
-            questionText: "ما معنى 'التمثيل الضوئي'؟",
-            options: [
-              "نوع من انقسام الخلايا",
-              "عملية إنتاج الغذاء باستخدام ضوء الشمس",
-              "قياس شدة الضوء",
-              "لا شيء مما سبق",
-            ],
-            correctAnswerIndex: 1,
-            userSelectedIndex: 0,
-            hint: "فكر كيف تصنع النباتات غذاءها.",
-          ),
-          SubQuestionPre(
-            questionText: "اختر التعريف الصحيح لـ 'التبخر'.",
-            options: [
-              "تحول الماء إلى بخار",
-              "زيادة في كمية الأمطار",
-              "ذوبان المادة الصلبة إلى سائل",
-              "لا شيء مما سبق",
-            ],
-            correctAnswerIndex: 0,
-            userSelectedIndex: 0,
-            hint: "يحدث عند تسخين الماء.",
-          ),
-        ],
-      ),
-    ];
-  }
-
-  void _openQuestionGridDialog() {
+  void _openQuestionGridDialog(List<Map<String, dynamic>> allSubQuestions) {
     showDialog(
       context: context,
       builder:
@@ -255,50 +39,99 @@ class _PreviousExamPageState extends State<PreviousExamPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        title: const Text("المتتاليات "),
+        title: Text(widget.nameExam),
         backgroundColor: Colors.white,
       ),
-      body: PageView.builder(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() => _currentPage = index);
-        },
-        itemCount: allSubQuestions.length,
-        itemBuilder: (context, index) {
-          final mainQuestion =
-              allSubQuestions[index]["main"] as FullQuestionPre;
-          final subQuestion = allSubQuestions[index]["sub"] as SubQuestionPre;
 
-          return Center(
-            child: QuestionCardPre(
-              mainQuestion: mainQuestion,
-              subQuestion: subQuestion,
-            ),
-          );
+      body: BlocBuilder<ExamPreDetailsCubit, ExamPreDetailsState>(
+        builder: (context, state) {
+          if (state is ExamPreDetailsLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is ExamPreDetailsSuccess) {
+            final questions = state.examPreDetailsModel.questions;
+
+            final allSubQuestions = <Map<String, dynamic>>[];
+
+            for (var q in questions) {
+              if (q.children.isEmpty && q.parentQuestionId == null) {
+                allSubQuestions.add({"main": q, "sub": q});
+              } else {
+                for (var child in q.children) {
+                  allSubQuestions.add({"main": q, "sub": child});
+                }
+              }
+            }
+
+            return PageView.builder(
+              controller: _pageController,
+              onPageChanged: (index) {
+                setState(() => _currentPage = index);
+              },
+              itemCount: allSubQuestions.length,
+              itemBuilder: (context, index) {
+                final mainQuestion =
+                    allSubQuestions[index]["main"] as QuestionPreModel;
+                final subQuestion =
+                    allSubQuestions[index]["sub"] as QuestionPreModel;
+
+                return QuestionCardPre(
+                  mainQuestion: mainQuestion,
+                  subQuestion: subQuestion,
+                );
+              },
+            );
+          } else if (state is ExamPreDetailsFailure) {
+            return Center(child: Text("حدث خطأ: ${state.errMsg}"));
+          }
+
+          return const SizedBox.shrink();
         },
       ),
-      bottomNavigationBar: ExamNavigationBar(
-        currentPage: _currentPage,
-        totalPages: allSubQuestions.length,
-        onPrevious:
-            _currentPage > 0
-                ? () => _pageController.previousPage(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                )
-                : null,
-        onNext:
-            _currentPage < allSubQuestions.length - 1
-                ? () => _pageController.nextPage(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.linearToEaseOut,
-                )
-                : null,
-        onOpenGrid: _openQuestionGridDialog,
-      ),
+
+      bottomNavigationBar:
+          BlocBuilder<ExamPreDetailsCubit, ExamPreDetailsState>(
+            builder: (context, state) {
+              if (state is! ExamPreDetailsSuccess) {
+                return const SizedBox.shrink();
+              }
+
+              final questions = state.examPreDetailsModel.questions;
+              final allSubQuestions = <Map<String, dynamic>>[];
+              for (var q in questions) {
+                if (q.children.isEmpty && q.parentQuestionId == null) {
+                  allSubQuestions.add({"main": q, "sub": q});
+                } else {
+                  for (var child in q.children) {
+                    allSubQuestions.add({"main": q, "sub": child});
+                  }
+                }
+              }
+
+              return ExamNavigationBar(
+                currentPage: _currentPage,
+                totalPages: allSubQuestions.length,
+                onPrevious:
+                    _currentPage > 0
+                        ? () => _pageController.previousPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        )
+                        : null,
+                onNext:
+                    _currentPage < allSubQuestions.length - 1
+                        ? () => _pageController.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.linearToEaseOut,
+                        )
+                        : null,
+                onOpenGrid: () => _openQuestionGridDialog(allSubQuestions),
+              );
+            },
+          ),
     );
   }
 }
