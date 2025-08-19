@@ -48,8 +48,11 @@ import 'package:ajyal/Features/Student/Auth/Presentation/Bloc/register/register_
 import 'package:ajyal/Features/Student/Auth/Presentation/Pages/check_student_page.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Pages/complete_register_page.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Pages/login_page.dart';
+import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/pages/invoices.page.dart';
+import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/pages/my_courses_page.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Pages/profile_page.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Pages/student_info_page.dart';
+import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/pages/payment_page.dart';
 import 'package:ajyal/Features/Subjects/Data/repo/pdf_file_repimp.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/pdf_file/pdf_file_cubit.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/search/search_cubit.dart';
@@ -379,6 +382,21 @@ abstract class Routing {
               ],
               child: AnalysPerfPage(),
             ),
+      ),
+
+      // =========== pay ==============
+      GoRoute(
+        path: AppRouter.myCoursesPage,
+        builder: (context, state) => const MyCoursesPage(),
+      ),
+
+      GoRoute(
+        path: AppRouter.paymentsPage,
+        builder: (context, state) => const PaymentsPage(),
+      ),
+      GoRoute(
+        path: AppRouter.invoicesPage,
+        builder: (context, state) => const InvoicesPage(),
       ),
     ],
   );

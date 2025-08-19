@@ -1,5 +1,4 @@
 import 'package:ajyal/Core/Network/token_handle.dart';
-import 'package:ajyal/Core/routes/app_router.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/utils/Function/functions.dart';
@@ -46,9 +45,21 @@ class ListProfileField extends StatelessWidget {
         ),
         SizedBox(height: 10),
         ProfileField(
-          onTap: () {},
+          onTap: () {
+            GoRouter.of(context).push(AppRouter.myCoursesPage);
+          },
           text: "كورساتي",
           iconData: Icons.book,
+          color: AppColor.primaryColor,
+          isNeedArrow: true,
+        ),
+        SizedBox(height: 10),
+        ProfileField(
+          onTap: () {
+            GoRouter.of(context).push(AppRouter.invoicesPage);
+          },
+          text: "المدفوعات",
+          iconData: Icons.receipt_long,
           color: AppColor.primaryColor,
           isNeedArrow: true,
         ),

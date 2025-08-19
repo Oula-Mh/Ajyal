@@ -1,14 +1,8 @@
-import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
-import 'package:ajyal/Core/routes/app_router.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
-import 'package:ajyal/Features/Exam/Presentation/Bloc/exam_pre/exam_pre_cubit.dart';
 import 'package:ajyal/Features/Exam/Presentation/Bloc/submit_exam/submit_exam_cubit.dart';
-import 'package:ajyal/Features/Exam/Presentation/Pages/exam_page.dart';
 import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_current/result.dart';
 import 'package:ajyal/Features/Exam/data/model/exam_current_details_model.dart';
-import 'package:ajyal/Features/Exam/data/repos/exam_repoImp.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -42,7 +36,6 @@ class _SubmitExamPageState extends State<SubmitExamPage> {
   }
 
   Future<bool> _onWillPop() async {
-    // عند الضغط على زر العودة، نوجه المستخدم مباشرة إلى صفحة الاختبارات
     GoRouter.of(context).go(AppRouter.homePage, extra: 3);
 
     return false; // منع الرجوع الافتراضي (إلغاء pop)
@@ -129,43 +122,6 @@ class _SubmitExamPageState extends State<SubmitExamPage> {
 
   Widget _buildResult(BuildContext context, int result) =>
       ResultScreen(result: result);
-  // Center(
-  //   child: Column(
-  //     mainAxisSize: MainAxisSize.min,
-  //     children: [
-  //       const Icon(Icons.check_circle, size: 60, color: Colors.green),
-  //       const SizedBox(height: 10),
-  //       const Text(
-  //         "تم حساب نتيجتك!",
-  //         style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-  //       ),
-  //       const SizedBox(height: 10),
-  //       Text(
-  //         '$result',
-  //         style: const TextStyle(fontSize: 18),
-  //         textAlign: TextAlign.center,
-  //       ),
-  //       const SizedBox(height: 20),
-  //       ElevatedButton(
-  //         onPressed: () {
-  //           Navigator.pushReplacement(
-  //             context,
-  //             MaterialPageRoute(
-  //               builder:
-  //                   (context) => BlocProvider(
-  //                     create:
-  //                         (context) =>
-  //                             ExamPreCubit(ExamRepoimp(DioConsumer(Dio()))),
-  //                     child: ExamPage(),
-  //                   ),
-  //             ),
-  //           );
-  //         },
-  //         child: const Text("الرجوع إلى الصفحة الرئيسية"),
-  //       ),
-  //     ],
-  //   ),
-
   Widget _buildError(BuildContext context, String error) => Center(
     child: Column(
       mainAxisSize: MainAxisSize.min,

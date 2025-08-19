@@ -25,4 +25,7 @@ class AppRouter {
   static const previousExamPage = "/previousExamPage";
   static const analaysPerfPage = "/analaysPerfPage";
   static const submitExamPage = "/SubmitExamPage";
+  static const myCoursesPage = "/MyCoursesPage";
+  static const paymentsPage = "/PaymentsPage";
+  static const invoicesPage = "/InvoicesPage";
 }
