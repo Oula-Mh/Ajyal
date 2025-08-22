@@ -1,3 +1,4 @@
+import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Bloc/register/register_cubit.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,17 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import '../../../../../Custom/Custom_ui.dart/gradient_background_widget.dart';
 
 class QrScanner extends StatefulWidget {
-  const QrScanner({super.key});
+  final String name;
+  final String number;
+  final String passowrd;
+  final String rePassword;
+  const QrScanner({
+    super.key,
+    required this.name,
+    required this.number,
+    required this.passowrd,
+    required this.rePassword,
+  });
   @override
   State<QrScanner> createState() => _QRScanPageState();
 }
@@ -32,7 +43,7 @@ class _QRScanPageState extends State<QrScanner> {
             context,
           ).showSnackBar(SnackBar(content: Text("تم تسجيل الدخول بنجاح")));
           Future.delayed(Duration(seconds: 2), () {
-            GoRouter.of(context).go('/homePage');
+            GoRouter.of(context).push(AppRouter.parentLogin);
           });
         } else if (state is RegisterParentFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -89,7 +100,13 @@ class _QRScanPageState extends State<QrScanner> {
                                 setState(() {
                                   isScanned = true;
                                 });
-                                cubit.register(code);
+                                cubit.register(
+                                  code,
+                                  widget.name,
+                                  widget.passowrd,
+                                  widget.rePassword,
+                                  widget.number,
+                                );
                               }
                             },
 

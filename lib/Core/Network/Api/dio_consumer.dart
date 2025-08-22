@@ -13,13 +13,21 @@ class DioConsumer implements Api {
     _dio.options = BaseOptions(
       baseUrl: EndPoints.baseUrl,
       receiveDataWhenStatusError: true,
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
     );
 
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          final token = getit<TokenHandler>().getToken();
+          final token =
+              getit<TokenHandler>().hasToken(TokenHandler.parentTokenKey)
+                  ? getit<TokenHandler>().getToken(TokenHandler.parentTokenKey)
+                  : getit<TokenHandler>().getToken(
+                    TokenHandler.studentTokenKey,
+                  );
           if (token != null) {
             options.headers['Authorization'] = 'Bearer $token';
           }

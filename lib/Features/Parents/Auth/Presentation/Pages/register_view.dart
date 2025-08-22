@@ -1,4 +1,3 @@
-import 'package:ajyal/Core/routes/app_router.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Custom/Custom_ui.dart/gradient_background_widget.dart';
 import 'package:ajyal/Custom/Custom_widgets/auth/custom_auth_bttn.dart';
@@ -48,7 +47,7 @@ class RegisterForm extends StatelessWidget {
           icon: Icons.person,
           keyboardType: TextInputType.text,
           hint: "ادخل اسمك",
-          controller: cubit.name,
+          controller: cubit.nameController,
         ),
 
         CustomTextField(
@@ -56,7 +55,7 @@ class RegisterForm extends StatelessWidget {
           icon: Icons.phone,
           keyboardType: TextInputType.phone,
           hint: "ادخل رقم هاتفك",
-          controller: cubit.phone,
+          controller: cubit.phoneController,
         ),
 
         CustomTextField(
@@ -66,7 +65,7 @@ class RegisterForm extends StatelessWidget {
           hint: "ادخل كلمة المرور",
           isPassword: true,
           passToggle: true,
-          controller: cubit.passowrd,
+          controller: cubit.passowrdController,
         ),
 
         CustomTextField(
@@ -76,12 +75,21 @@ class RegisterForm extends StatelessWidget {
           hint: "أكد كلمة المرور :",
           isPassword: true,
           passToggle: true,
-          controller: cubit.confirmPassowrd,
+          controller: cubit.confirmPassowrdController,
         ),
 
         CustomAuthBttn(
           onPressed: () {
-            GoRouter.of(context).push(AppRouter.qrScannerPage);
+            cubit.printit();
+            GoRouter.of(context).push(
+              AppRouter.qrScannerPage,
+              extra: {
+                "name": cubit.nameController.text,
+                "password": cubit.passowrdController.text,
+                "confirm": cubit.confirmPassowrdController.text,
+                "number": cubit.phoneController.text,
+              },
+            );
           },
           bttnText: 'التالي',
         ),

@@ -50,7 +50,9 @@ class HomeAdvPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(height: 35),
-                            getit<TokenHandler>().hasToken()
+                            getit<TokenHandler>().hasToken(
+                                  TokenHandler.studentTokenKey,
+                                )
                                 ? GeneralAdvList()
                                 : SizedBox(),
                             SizedBox(height: 5),

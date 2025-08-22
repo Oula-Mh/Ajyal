@@ -17,8 +17,7 @@ class LoginParentRepoImpl implements LoginParentRepo {
     try {
       var data = await apiService.post(EndPoints.loginParent, body);
       String token = data['data']['token'];
-      await getit<TokenHandler>().saveToken(token);
-
+      await getit<TokenHandler>().saveToken(TokenHandler.parentTokenKey, token);
       return const Right("r");
     } on Exception catch (e) {
       if (e is DioException) {

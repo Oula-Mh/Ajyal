@@ -58,7 +58,7 @@ class CompleteRegisterPage extends StatelessWidget {
                         } else if (state is RegisterSuccess) {
                           GoRouter.of(
                             context,
-                          ).pushReplacement(AppRouter.homePage);
+                          ).pushReplacement(AppRouter.loginPage);
                         }
                       },
                       builder: (context, state) {

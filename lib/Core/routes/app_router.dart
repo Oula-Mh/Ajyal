@@ -36,6 +36,12 @@ import 'package:ajyal/Features/Parents/Auth/Presentation/Pages/login_view.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Pages/qr_scanner.dart';
 import 'package:ajyal/Features/Parents/Auth/data/repos/login/login_repo_imp.dart';
 import 'package:ajyal/Features/Parents/Auth/data/repos/register/register_repo_impl.dart';
+import 'package:ajyal/Features/Parents/Home/Data/repos/student_link_repo_imp.dart';
+import 'package:ajyal/Features/Parents/Home/Presentation/bloc/StudentLink/student_link_cubit.dart';
+import 'package:ajyal/Features/Parents/Home/Presentation/pages/parent_home.dart';
+import 'package:ajyal/Features/Parents/Home/Presentation/widgets/all_student_linked.dart';
+import 'package:ajyal/Features/Parents/Home/Presentation/widgets/link_student_scanner.dart';
+import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Presentation/pages/attendance_page.dart';
 import 'package:ajyal/Features/Payment/Data/repo/payment_repoimp.dart';
 import 'package:ajyal/Features/Payment/view/bloc/cubit/stripe_link_cubit.dart';
 import 'package:ajyal/Features/Payment/view/payment.dart';
@@ -68,12 +74,16 @@ abstract class Routing {
     routes: [
       GoRoute(path: "/", builder: (context, state) => const SplashView()),
       GoRoute(
+        path: AppRouter.parentHome,
+        builder: (context, state) => const ParentHome(),
+      ),
+      GoRoute(
         path: AppRouter.homePage,
         builder: (context, state) {
           final int? initialIndex = state.extra as int?;
 
           return HomePage(
-            key: ValueKey(initialIndex), // 👈 هذا هو المهم!
+            key: ValueKey(initialIndex),
             initialIndex: initialIndex ?? 0,
           );
         },
@@ -206,14 +216,27 @@ abstract class Routing {
       ),
       GoRoute(
         path: AppRouter.qrScannerPage,
-        builder:
-            (context, state) => BlocProvider(
-              create:
-                  (context) => RegisterParentCubit(
-                    RegisterParentRepoImpl(DioConsumer(Dio())),
-                  ),
-              child: const QrScanner(),
+        builder: (context, state) {
+          final data = state.extra as Map<String, dynamic>;
+
+          final name = data['name'] as String;
+          final passWord = data['password'] as String;
+          final confirm = data['confirm'] as String;
+          final number = data['number'] as String;
+          return BlocProvider(
+            create: (context) {
+              return RegisterParentCubit(
+                RegisterParentRepoImpl(DioConsumer(Dio())),
+              );
+            },
+            child: QrScanner(
+              name: name,
+              number: number,
+              passowrd: passWord,
+              rePassword: confirm,
             ),
+          );
+        },
       ),
 
       GoRoute(
@@ -378,6 +401,29 @@ abstract class Routing {
                 ),
               ],
               child: AnalysPerfPage(),
+            ),
+      ),
+
+      GoRoute(
+        path: AppRouter.attendecePage,
+        builder:
+            (context, state) => const AttendanceClalenderPage(
+              absenceDaysPerMonth: {
+                8: [2, 5, 7],
+              },
+            ),
+      ),
+      GoRoute(
+        path: AppRouter.allStudentLinked,
+        builder: (context, state) => const AllStudentLinked(),
+      ),
+      GoRoute(
+        path: AppRouter.linkStudentScanner,
+        builder:
+            (context, state) => BlocProvider(
+              create:
+                  (context) => StudentLinkCubit(getit<StudentLinkRepoImp>()),
+              child: LinkStudentScanner(),
             ),
       ),
     ],

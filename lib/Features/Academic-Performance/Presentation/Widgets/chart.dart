@@ -9,19 +9,6 @@ class ExamLineChartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> dummyQuizData = List.generate(30, (index) {
-      return {
-        "id": index + 1,
-        "curriculum_id": 1,
-        "quiz_name": "Quiz for Curriculum ${index + 1}",
-        "exam_date": "2025-07-${(index % 30 + 1).toString().padLeft(2, '0')}",
-        "result": (5 + (index % 15)).toStringAsFixed(2),
-        "max_score": 20,
-      };
-    });
-    // final List<QuizItem> quizList =
-    //     dummyQuizData.map((e) => QuizItem.fromJson(e)).toList();
-
     int maxScore = quizList.fold(
       0,
       (prev, e) => e.maxScore > prev ? e.maxScore : prev,
@@ -36,15 +23,15 @@ class ExamLineChartPage extends StatelessWidget {
       ),
     );
 
-
     return Card(
       elevation: 5,
       child: InteractiveViewer(
         constrained: false,
         scaleEnabled: true,
         panEnabled: true,
+
         child: SizedBox(
-          width: quizList.length * 40,
+          width: (quizList.length * 40).clamp(300, double.infinity).toDouble(),
           height: 220,
           child: Padding(
             padding: const EdgeInsets.only(top: 17.5, right: 10),

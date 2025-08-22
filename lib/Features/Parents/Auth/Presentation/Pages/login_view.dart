@@ -1,5 +1,7 @@
+import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/utils/Function/validation.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Custom/Custom_ui.dart/gradient_background_widget.dart';
 import 'package:ajyal/Custom/Custom_widgets/auth/custom_auth_bttn.dart';
 import 'package:ajyal/Custom/Custom_widgets/auth/custom_container_auth.dart';
@@ -47,8 +49,8 @@ class LoginForm extends StatelessWidget {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text("تم تسجيل الدخول بنجاح")));
-          //مثال: الانتقال للصفحة التالية
-          GoRouter.of(context).go('/homePage');
+          getit<CacheHelper>().saveData(key: "role", value: "Parent");
+          GoRouter.of(context).go(AppRouter.parentHome);
         } else if (state is LoginParentFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("فشل تسجيل الدخول: ${state.errMessage}")),
@@ -69,7 +71,7 @@ class LoginForm extends StatelessWidget {
                 controller: cubit.phone,
                 hint: "ادخل رقم هاتفك",
                 validator: (val) {
-                  return validInput(val!, 9, 9, "phone");
+                  // return validInput(val!, 9, 10, "phone");
                 },
               ),
 

@@ -1,6 +1,8 @@
+import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/utils/Function/functions.dart';
 import 'package:ajyal/Core/utils/Function/validation.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Custom/Custom_widgets/auth/custom_auth_bttn.dart';
 import 'package:ajyal/Custom/Custom_widgets/auth/custom_text_buttom_auth.dart';
 import 'package:ajyal/Custom/Custom_widgets/auth/custom_text_field.dart';
@@ -21,6 +23,7 @@ class LoginFormStudent extends StatelessWidget {
             Navigator.of(context).pop();
           });
         } else if (state is LoginSuccess) {
+          getit<CacheHelper>().saveData(key: "role", value: "Student");
           GoRouter.of(context).pushReplacement(AppRouter.configPage);
         }
       },

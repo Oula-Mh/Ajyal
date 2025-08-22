@@ -1,3 +1,4 @@
+import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Features/Academic-Performance/Data/Model/all_quizz_model.dart';
 import 'package:ajyal/Features/Academic-Performance/Presentation/Bloc/AllQuizzesCubit/all_quizz_cubit_cubit.dart';
 import 'package:ajyal/Features/Academic-Performance/Presentation/Widgets/name_score_skelton.dart';
@@ -23,7 +24,11 @@ class QuizListWidget extends StatelessWidget {
                   : currentTabIndex == 1
                   ? model.quiz
                   : model.both;
-          return NameAndScoreList(quizList: quizList);
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+            color: AppColor.white1,
+            child: NameAndScoreList(quizList: quizList),
+          );
         } else if (state is AllQuizzFail) {
           return Center(child: Text("خطأ: ${state.errMessage}"));
         } else {

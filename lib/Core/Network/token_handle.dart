@@ -5,22 +5,23 @@ class TokenHandler {
 
   TokenHandler(this.cacheHelper);
 
-  static const String _tokenKey = "auth_token";
+  static const String parentTokenKey = "parent_token";
+  static const String studentTokenKey = "student_token";
 
-  Future<void> saveToken(String token) async {
-    await cacheHelper.saveData(key: _tokenKey, value: token);
+  Future<void> saveToken(String key, String token) async {
+    await cacheHelper.saveData(key: key, value: token);
   }
 
-  String? getToken() {
-    return cacheHelper.getDataString(key: _tokenKey);
+  String? getToken(String key) {
+    return cacheHelper.getDataString(key: key);
   }
 
-  Future<void> clearToken() async {
-    await cacheHelper.removeData(key: _tokenKey);
+  Future<void> clearToken(String key) async {
+    await cacheHelper.removeData(key: key);
   }
 
-  bool hasToken() {
-    return cacheHelper.getDataString(key: _tokenKey) != null;
+  bool hasToken(String key) {
+    return cacheHelper.getDataString(key: key) != null;
   }
 }
 

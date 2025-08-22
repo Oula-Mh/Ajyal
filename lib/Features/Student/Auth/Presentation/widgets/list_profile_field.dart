@@ -56,7 +56,7 @@ class ListProfileField extends StatelessWidget {
         BlocListener<ProfileCubit, ProfileState>(
           listener: (context, state) {
             if (state is LogoutDone) {
-              getit<TokenHandler>().clearToken();
+              getit<TokenHandler>().clearToken(TokenHandler.studentTokenKey);
               //  CacheHelper().removeData(key: "token");
               Navigator.push(
                 context,

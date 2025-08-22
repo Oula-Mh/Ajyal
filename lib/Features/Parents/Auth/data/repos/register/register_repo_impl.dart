@@ -17,8 +17,8 @@ class RegisterParentRepoImpl implements RegisterParentRepo {
     try {
       var data = await apiService.post(EndPoints.registerParent, body);
       String token = data['data']['token'];
-      await getit<TokenHandler>().saveToken(token);
-      return const Right("r");
+      await getit<TokenHandler>().saveToken(TokenHandler.parentTokenKey, token);
+      return Right(data['message']);
     } on Exception catch (e) {
       if (e is DioException) {
         return left(ServerFailure.fromDioError(e));

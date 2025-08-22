@@ -26,7 +26,7 @@ class HeaderRow extends StatelessWidget {
               child: Icon(Icons.notifications, size: 30, color: Colors.white),
             ),
           ),
-          getit<TokenHandler>().hasToken()
+          getit<TokenHandler>().hasToken(TokenHandler.studentTokenKey)
               ? IconButton(
                 onPressed: () {
                   GoRouter.of(context).push(AppRouter.studentProfilePage);

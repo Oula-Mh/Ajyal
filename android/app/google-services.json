@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "879406949173",
+    "project_id": "ajyal-45f04",
+    "storage_bucket": "ajyal-45f04.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:879406949173:android:4ce16295465b74f519a27c",
+        "android_client_info": {
+          "package_name": "com.example.ajyal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3LFGncFyixT1JfpzJp_h7odMiSnmVdQo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

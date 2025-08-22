@@ -2,7 +2,7 @@ import 'package:ajyal/Features/Parents/Auth/data/repos/login/login_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ajyal/Core/utils/safe_cubit.dart'; // استيراد SafeCubit
+import 'package:ajyal/Core/utils/safe_cubit.dart';
 
 part 'login_state.dart';
 

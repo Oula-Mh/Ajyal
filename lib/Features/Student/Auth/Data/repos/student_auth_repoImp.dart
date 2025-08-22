@@ -55,7 +55,10 @@ class StudentAuthRepoimp implements StudentAuthRepo {
       String token = response['data']['token'];
       print("😎token : $token\n");
       // TokenHandle().setToken(token);
-      await getit<TokenHandler>().saveToken(token);
+      await getit<TokenHandler>().saveToken(
+        TokenHandler.studentTokenKey,
+        token,
+      );
       return Right("login done !");
     } on Exception catch (e) {
       if (e is DioException) {

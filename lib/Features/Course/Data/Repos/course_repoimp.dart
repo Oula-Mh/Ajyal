@@ -1,7 +1,5 @@
-import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/Network/Api/api_consumer.dart';
 import 'package:ajyal/Core/Network/Errors/failure_handle.dart';
-import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Core/utils/constants/end_points.dart';
 import 'package:ajyal/Features/Course/Data/Model/course_details_model.dart';
 import 'package:ajyal/Features/Course/Data/Model/course_model.dart';

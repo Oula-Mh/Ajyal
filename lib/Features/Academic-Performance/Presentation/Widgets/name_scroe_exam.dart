@@ -22,9 +22,9 @@ class NameAndScoreList extends StatelessWidget {
               ),
             ),
             Text(
-              "${quizList.length} اختبار",
+              "العلامة",
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AppColor.primaryColor,
+                color: const Color.fromARGB(255, 62, 133, 65),
                 fontSize: 14.5,
               ),
             ),
@@ -33,20 +33,24 @@ class NameAndScoreList extends StatelessWidget {
         const SizedBox(height: 10),
         ...List.generate(quizList.length, (index) {
           final quiz = quizList[index];
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('${index + 1}. ${quiz.quizName}'),
-                Text(
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('${index + 1}. ${quiz.quizName}'),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.only(right: 13),
+                decoration: BoxDecoration(
+                  border: Border(right: BorderSide(color: Colors.grey)),
+                ),
+                child: Text(
                   '${double.parse(quiz.result).toInt()}/${quiz.maxScore}',
                   style: Theme.of(
                     context,
                   ).textTheme.titleMedium?.copyWith(color: Colors.blueAccent),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         }),
       ],

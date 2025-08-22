@@ -12,18 +12,25 @@ class RegisterParentCubit extends Cubit<RegisterParentState> {
   static RegisterParentCubit get(BuildContext context) =>
       BlocProvider.of(context);
 
-  final TextEditingController name = TextEditingController();
-  final TextEditingController phone = TextEditingController();
-  final TextEditingController passowrd = TextEditingController();
-  final TextEditingController confirmPassowrd = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController passowrdController = TextEditingController();
+  final TextEditingController confirmPassowrdController =
+      TextEditingController();
 
-  Future<void> register(String studentIdQr) async {
+  Future<void> register(
+    String studentIdQr,
+    String name,
+    String password,
+    String rePassword,
+    String number,
+  ) async {
     emit(RegisterParentLoading());
     var result = await registerParentRepo.register({
-      "name": name.text,
-      "phone_number": phone.text,
-      "password": passowrd.text,
-      "password_confirmation": confirmPassowrd.text,
+      "name": name,
+      "phone_number": number,
+      "password": password,
+      "password_confirmation": rePassword,
       "student_id_qr": studentIdQr,
     });
     result.fold(
@@ -33,6 +40,12 @@ class RegisterParentCubit extends Cubit<RegisterParentState> {
       (x) {
         emit(RegisterParentSuccess());
       },
+    );
+  }
+
+  void printit() {
+    print(
+      "${nameController.text} \n ${passowrdController.text} \n ${confirmPassowrdController.text} \n }",
     );
   }
 }

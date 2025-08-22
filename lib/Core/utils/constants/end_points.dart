@@ -1,19 +1,17 @@
 class EndPoints {
-  //with emulator
+  // with emulator
   // static const String baseUrl = 'http://10.0.2.2:8000/api/';
   // static const String fileBaseUrl = 'http://10.0.2.2:8000/';
 
   // with mobile sarah
-  static const String baseUrl = 'http://192.168.1.101:8000/api/';
-  static const String fileBaseUrl = 'http://192.168.1.101:8000/';
-  // static const String baseUrl = 'http://192.168.1.104:8000/api/';
-  // static const String fileBaseUrl = 'http://192.168.1.104:8000/';
+  static const String baseUrl = 'http://192.168.1.106:8000/api/';
+  static const String fileBaseUrl = 'http://192.168.1.106:8000/';
 
-  //with mobile oula
+  // with mobile oula
   // static const String baseUrl = 'http://192.168.1.4:8000/api/';
   // static const String fileBaseUrl = 'http://192.168.1.4:8000/';
 
-  //ngrok
+  // ngrok
   // static const String baseUrl =
   //     'https://5d07-185-132-133-96.ngrok-free.app/api/';
 
@@ -34,7 +32,6 @@ class EndPoints {
   static const String courseDetails = "/course/show/";
   static const String subjectForTeacher =
       "/teacher/get-all-subjects-for-teacher/";
-  //* quiz *//
   static const String examPre = "quiz/my_solved_quizzes/";
   static const String examPreDetails = "quiz/my_solved_quiz_details/";
   static const String examCurrent = "quiz/all_quizzes_for_curriculum/";
@@ -48,4 +45,5 @@ class EndPoints {
   // Parent
   static const String loginParent = 'parent/login';
   static const String registerParent = 'parent/register';
+  static const String linkStudent = 'student/link';
 }
