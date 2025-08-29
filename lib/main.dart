@@ -1,14 +1,11 @@
-import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/routes/app_router.dart';
 import 'package:ajyal/Core/styles/app_theme.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Notification/firebase_config.dart';
-import 'package:ajyal/Features/Subjects/Data/global.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 
 // للتعامل مع إشعارات الخلفية (Background)
 

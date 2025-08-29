@@ -47,6 +47,12 @@ import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Presentation/page
 import 'package:ajyal/Features/Parents/ParentChoice/contact_us/Data/repo/contact_us_repoimp.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/contact_us/Presentation/Bloc/contact_us/contact_us_cubit.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/contact_us/Presentation/Pages/contact_us_page.dart';
+import 'package:ajyal/Features/Parents/performance_analysis/data/models/subject_mean_parent_model.dart';
+import 'package:ajyal/Features/Parents/performance_analysis/data/repo/performance_analysis_repoImp.dart';
+import 'package:ajyal/Features/Parents/performance_analysis/presentaion/bloc/details_exam_parent/details_exam_parent_cubit.dart';
+import 'package:ajyal/Features/Parents/performance_analysis/presentaion/bloc/parent_combine_mean/parent_combined_mean_cubit.dart';
+import 'package:ajyal/Features/Parents/performance_analysis/presentaion/page/student_mark_analysis.dart';
+import 'package:ajyal/Features/Parents/performance_analysis/presentaion/page/student_subject_details.dart';
 import 'package:ajyal/Features/Payment/Data/repo/payment_repoimp.dart';
 import 'package:ajyal/Features/Payment/view/bloc/cubit/stripe_link_cubit.dart';
 import 'package:ajyal/Features/Payment/view/payment.dart';

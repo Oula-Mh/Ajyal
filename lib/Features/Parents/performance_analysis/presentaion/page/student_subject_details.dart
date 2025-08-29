@@ -1,4 +1,6 @@
+import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Parents/performance_analysis/data/models/subject_mean_parent_model.dart';
 import 'package:ajyal/Features/Parents/performance_analysis/presentaion/widgets/exam_list.dart';
 import 'package:ajyal/Features/Parents/performance_analysis/presentaion/widgets/filter_buttons.dart';
@@ -36,6 +38,8 @@ class _StudentSubjectDetailsPageState extends State<StudentSubjectDetailsPage>
     if (_tabController.indexIsChanging) return;
     _fetchMarks(widget.subjects[_tabController.index].id);
   }
+
+  //  final idStudent = getit<CacheHelper>().getData(key: "studentId");
 
   void _fetchMarks(int subjectId) {
     context.read<DetailsExamParentCubit>().getMarks(

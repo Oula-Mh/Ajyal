@@ -23,7 +23,7 @@ class StudentAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       centerTitle: true,
       bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
+        preferredSize: const Size.fromHeight(45),
         child: TabBar(
           controller: tabController,
           indicator: UnderlineTabIndicator(

@@ -20,7 +20,7 @@ class ExamCardWidget extends StatelessWidget {
             Text(
               exam.quizName,
               style: const TextStyle(
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 fontFamily: "Cairo",
                 color: AppColor.primaryColor,
@@ -38,7 +38,7 @@ class ExamCardWidget extends StatelessWidget {
                 Text(
                   "التاريخ: ${exam.examDate}",
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
                     color: Colors.grey,
                     fontFamily: "Cairo",
                   ),
@@ -50,12 +50,12 @@ class ExamCardWidget extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 186, 151, 174),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(13),
               ),
               child: Text(
                 "العلامة: ${exam.result ?? "-"} / ${exam.maxScore}",
                 style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
                   fontFamily: "Cairo",

@@ -24,11 +24,7 @@ class ExamList extends StatelessWidget {
             return const Center(
               child: Text(
                 "لا يوجد امتحانات لهذا النوع",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.grey,
-                  fontFamily: "Cairo",
-                ),
+                style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
             );
           }

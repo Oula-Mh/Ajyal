@@ -19,9 +19,7 @@ class HeaderRow extends StatelessWidget {
           IconButton(
             splashColor: AppColor.secondaryColor,
             focusColor: AppColor.secondaryColor,
-            onPressed: () {
-              GoRouter.of(context).push(AppRouter.studentMarkAnalysis);
-            },
+            onPressed: () {},
             icon: const Badge(
               label: Text('3', style: TextStyle(color: Colors.white)),
               backgroundColor: Colors.red,

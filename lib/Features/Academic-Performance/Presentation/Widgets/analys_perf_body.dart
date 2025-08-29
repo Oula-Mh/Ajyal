@@ -6,6 +6,7 @@ import 'package:ajyal/Features/Academic-Performance/Presentation/Widgets/chart_w
 import 'package:ajyal/Features/Academic-Performance/Presentation/Widgets/course_analysis.dart';
 import 'package:ajyal/Features/Academic-Performance/Presentation/Widgets/item_analys_selection.dart';
 import 'package:ajyal/Features/Academic-Performance/Presentation/Widgets/mean_widget.dart';
+import 'package:ajyal/Features/Academic-Performance/Presentation/Widgets/quiz_list_widget.dart';
 import 'package:ajyal/Features/Academic-Performance/Presentation/Widgets/stddev_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

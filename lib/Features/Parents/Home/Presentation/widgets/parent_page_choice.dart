@@ -63,7 +63,9 @@ class ParentPageChoice extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             padding: EdgeInsets.zero,
             children: [
-              gridTile("نتائج الطالب", () {}),
+              gridTile("نتائج الطالب", () {
+                GoRouter.of(context).push(AppRouter.studentMarkAnalysis);
+              }),
               gridTile("تقييم الحضور", () {
                 GoRouter.of(context).push(AppRouter.attendecePage);
               }),
