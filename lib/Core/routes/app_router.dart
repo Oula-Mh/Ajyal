@@ -30,18 +30,23 @@ import 'package:ajyal/Features/Exam/data/model/exam_current_details_model.dart';
 import 'package:ajyal/Features/Exam/data/repos/exam_repoImp.dart';
 import 'package:ajyal/Features/Home/Presentation/Pages/home_page.dart';
 import 'package:ajyal/Features/Home/transition_config_page.dart';
+import 'package:ajyal/Features/Notification/Presentation/Bloc/notification/notification_cubit.dart';
+import 'package:ajyal/Features/Notification/Presentation/Pages/parent_notification.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Bloc/login/login_cubit.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Bloc/register/register_cubit.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Pages/login_view.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Pages/qr_scanner.dart';
 import 'package:ajyal/Features/Parents/Auth/data/repos/login/login_repo_imp.dart';
 import 'package:ajyal/Features/Parents/Auth/data/repos/register/register_repo_impl.dart';
-import 'package:ajyal/Features/Parents/Home/Data/repos/student_link_repo_imp.dart';
+import 'package:ajyal/Features/Parents/Home/Data/repos/home_parent_repoimp.dart';
 import 'package:ajyal/Features/Parents/Home/Presentation/bloc/StudentLink/student_link_cubit.dart';
 import 'package:ajyal/Features/Parents/Home/Presentation/pages/parent_home.dart';
 import 'package:ajyal/Features/Parents/Home/Presentation/widgets/all_student_linked.dart';
 import 'package:ajyal/Features/Parents/Home/Presentation/widgets/link_student_scanner.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Presentation/pages/attendance_page.dart';
+import 'package:ajyal/Features/Parents/ParentChoice/contact_us/Data/repo/contact_us_repoimp.dart';
+import 'package:ajyal/Features/Parents/ParentChoice/contact_us/Presentation/Bloc/contact_us/contact_us_cubit.dart';
+import 'package:ajyal/Features/Parents/ParentChoice/contact_us/Presentation/Pages/contact_us_page.dart';
 import 'package:ajyal/Features/Payment/Data/repo/payment_repoimp.dart';
 import 'package:ajyal/Features/Payment/view/bloc/cubit/stripe_link_cubit.dart';
 import 'package:ajyal/Features/Payment/view/payment.dart';
@@ -75,7 +80,14 @@ import 'package:go_router/go_router.dart';
 abstract class Routing {
   static final router = GoRouter(
     routes: [
-      GoRoute(path: "/", builder: (context, state) => const SplashView()),
+      GoRoute(
+        path: "/",
+        builder:
+            (context, state) => BlocProvider(
+              create: (context) => NotificationCubit(),
+              child: const SplashView(),
+            ),
+      ),
       GoRoute(
         path: AppRouter.parentHome,
         builder: (context, state) => const ParentHome(),
@@ -221,7 +233,6 @@ abstract class Routing {
         path: AppRouter.qrScannerPage,
         builder: (context, state) {
           final data = state.extra as Map<String, dynamic>;
-
           final name = data['name'] as String;
           final passWord = data['password'] as String;
           final confirm = data['confirm'] as String;
@@ -418,14 +429,20 @@ abstract class Routing {
       ),
       GoRoute(
         path: AppRouter.allStudentLinked,
-        builder: (context, state) => const AllStudentLinked(),
+        builder:
+            (context, state) => BlocProvider(
+              create:
+                  (context) =>
+                      StudentLinkCubit(getit<HomeParentRepoImp>())
+                        ..getAllParentStudent(),
+              child: const AllStudentLinked(),
+            ),
       ),
       GoRoute(
         path: AppRouter.linkStudentScanner,
         builder:
             (context, state) => BlocProvider(
-              create:
-                  (context) => StudentLinkCubit(getit<StudentLinkRepoImp>()),
+              create: (context) => StudentLinkCubit(getit<HomeParentRepoImp>()),
               child: LinkStudentScanner(),
             ),
       ),
@@ -443,6 +460,21 @@ abstract class Routing {
       GoRoute(
         path: AppRouter.invoicesPage,
         builder: (context, state) => const InvoicesPage(),
+      ),
+      GoRoute(
+        path: AppRouter.parentNotification,
+        builder: (context, state) => const ParentNotification(),
+      ),
+      GoRoute(
+        path: AppRouter.contactUsPage,
+        builder:
+            (context, state) => BlocProvider(
+              create:
+                  (context) =>
+                      ContactUsCubit(ContactUsRepoimp(DioConsumer(Dio())))
+                        ..getParentName(),
+              child: const ContactUsPage(),
+            ),
       ),
     ],
   );

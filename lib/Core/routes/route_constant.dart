@@ -32,4 +32,6 @@ class AppRouter {
   static const myCoursesPage = "/MyCoursesPage";
   static const paymentsPage = "/PaymentsPage";
   static const invoicesPage = "/InvoicesPage";
+  static const parentNotification = "/parentNotification";
+  static const contactUsPage = "/contactUsPage";
 }

@@ -28,7 +28,7 @@ class _QRScanPageState extends State<LinkStudentScanner> {
           Future.delayed(Duration(seconds: 2), () {
             GoRouter.of(context).push(AppRouter.allStudentLinked);
           });
-        } else if (state is StudentLinkFail) {
+        } else if (state is FailState) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("حدث خطأ في الربط : ${state.errMessage}")),
           );

@@ -6,6 +6,8 @@ class AppImages {
   static const notFound = '$basePath/not_found.png';
   static const withoutText = '$basePath/without_text.png';
   static const frame = '$basePath/Frame.png';
+  static const email = '$basePath/message (2).png';
+  static const email1 = '$basePath/message (4).png';
 
   //===== SVG ======
   static const math = "assets/images/svg/math.svg";

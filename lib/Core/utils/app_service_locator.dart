@@ -4,10 +4,11 @@ import 'package:ajyal/Core/Network/token_handle.dart';
 import 'package:ajyal/Features/Academic-Performance/Data/Repo/analysis_repoimp.dart';
 import 'package:ajyal/Features/Course/Data/Model/course_model.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
-import 'package:ajyal/Features/Parents/Home/Data/repos/student_link_repo.dart';
-import 'package:ajyal/Features/Parents/Home/Data/repos/student_link_repo_imp.dart';
+import 'package:ajyal/Features/Parents/Home/Data/repos/home_parent_repo.dart';
+import 'package:ajyal/Features/Parents/Home/Data/repos/home_parent_repoimp.dart';
 import 'package:ajyal/Features/Subjects/Data/repo/subject_repoimp.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 
 final getit = GetIt.instance;
@@ -29,7 +30,7 @@ void setUpAppService() async {
   getit.registerLazySingleton(() => AnalysisRepoimp(getit.get<DioConsumer>()));
   getit.registerLazySingleton(() => SubjectRepoimp(getit.get<DioConsumer>()));
   getit.registerLazySingleton(
-    () => StudentLinkRepoImp(getit.get<DioConsumer>()),
+    () => HomeParentRepoImp(getit.get<DioConsumer>()),
   );
 
   getit<TokenHandler>().hasToken(TokenHandler.studentTokenKey)

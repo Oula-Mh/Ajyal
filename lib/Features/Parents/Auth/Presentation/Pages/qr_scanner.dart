@@ -42,14 +42,13 @@ class _QRScanPageState extends State<QrScanner> {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text("تم تسجيل الدخول بنجاح")));
-          Future.delayed(Duration(seconds: 2), () {
+          Future.delayed(Duration(seconds: 1), () {
             GoRouter.of(context).push(AppRouter.parentLogin);
           });
         } else if (state is RegisterParentFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("فشل تسجيل الدخول: ${state.errMessage}")),
           );
-          GoRouter.of(context).go('/qrScannerPage');
         }
       },
       builder: (context, state) {

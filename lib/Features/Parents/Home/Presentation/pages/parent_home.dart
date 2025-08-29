@@ -1,11 +1,9 @@
-import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/styles/app_text_style.dart';
 import 'package:ajyal/Core/utils/constants/app_images.dart';
 import 'package:ajyal/Features/Parents/Home/Presentation/widgets/parent_page_choice.dart';
 import 'package:ajyal/Features/Parents/Home/Presentation/widgets/student_card_info.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class ParentHome extends StatelessWidget {
   const ParentHome({super.key});
@@ -55,9 +53,8 @@ class ParentHome extends StatelessWidget {
                     StudentInfoCard(
                       studentName: "studentName",
                       studentClass: "studentClass",
-                      // onAddStudents: () {},
-                      // onQrPressed: () {},
                     ),
+                    SizedBox(height: 30),
                     ParentPageChoice(),
                   ],
                 ),

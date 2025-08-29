@@ -1,93 +1,92 @@
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Custom/Custom_widgets/custom_app_bar.dart';
+import 'package:ajyal/Features/Parents/Home/Presentation/bloc/StudentLink/student_link_cubit.dart';
+import 'package:ajyal/Features/Parents/Home/Presentation/widgets/single_student_item.dart';
+import 'package:ajyal/Features/Parents/Home/Presentation/widgets/student_check_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AllStudentLinked extends StatelessWidget {
+class AllStudentLinked extends StatefulWidget {
   const AllStudentLinked({super.key});
 
   @override
+  State<AllStudentLinked> createState() => _AllStudentLinkedState();
+}
+
+class _AllStudentLinkedState extends State<AllStudentLinked> {
+  //  bool selectedList = false;
+
+  @override
   Widget build(BuildContext context) {
+    List<ParentStudentModell> students = [
+      ParentStudentModell(
+        id: 1,
+        firstName: "Dameon",
+        lastName: "Dicki",
+        classLevel: "البكالوريا العلمية",
+      ),
+      ParentStudentModell(
+        id: 2,
+        firstName: "Alice",
+        lastName: "Johnson",
+        classLevel: "الثانوية العامة",
+      ),
+      ParentStudentModell(
+        id: 3,
+        firstName: "Mohammed",
+        lastName: "Ali",
+        classLevel: "الصف الحادي عشر",
+      ),
+      ParentStudentModell(
+        id: 4,
+        firstName: "Sara",
+        lastName: "Smith",
+        classLevel: "الصف العاشر",
+      ),
+    ];
+
     return Scaffold(
       appBar: customAppBar(context, "جميع الطلاب"),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 22),
-            child: Text(
-              "يمكنك متابعة أداء جميع ابناءك بسهولة عن طريق تطبيقنا في معهد أجيال",
-              style: TextStyle(
-                color: AppColor.primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 19,
-                height: 1.5,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Text(
-              "* يمكنك التبديل بين الطلاب عن طريق مسح الرمز",
-              style: TextStyle(color: AppColor.borderTextField),
-            ),
-          ),
-          SizedBox(height: 20),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 2,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    elevation: 2,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border(
-                          bottom: BorderSide(
-                            color: AppColor.secondaryColor,
-                            width: 2,
-                          ),
-                        ),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: ListTile(
-                        title: Text(
-                          "الطالب ${index + 1} : سارة النجار النعال",
-                          style: TextStyle(
-                            height: 1.5,
-                            color: AppColor.primaryColor,
-                          ),
-                        ),
-                        subtitle: Text(
-                          "الصف : بكالوريا",
-                          style: TextStyle(
-                            height: 2,
-                            color: AppColor.primaryColor,
-                          ),
-                        ),
-                        trailing: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade400),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(3.0),
-                            child: Icon(
-                              Icons.qr_code,
-                              color: AppColor.primaryColor,
-                              size: 36,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+      body: BlocBuilder<StudentLinkCubit, StudentLinkState>(
+        builder: (context, state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 22,
+                ),
+                child: Text(
+                  "يمكنك متابعة أداء جميع ابناءك بسهولة عن طريق تطبيقنا في معهد أجيال",
+                  style: TextStyle(
+                    color: AppColor.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 19,
+                    height: 1.5,
                   ),
-                );
-              },
-            ),
-          ),
-        ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Text(
+                  "*  يمكنك التبديل بين الطلاب عن طريق اختيار أحد الطلاب في حال وجود أكثر من طالب  ضمن معهدنا",
+                  style: TextStyle(color: AppColor.borderTextField),
+                ),
+              ),
+              SizedBox(height: 20),
+              state is LoadingState
+                  ? Center(child: CircularProgressIndicator())
+                  : state is AllParentStuentLoaded
+                  ? state.listModel.length == 1
+                      ? SingleStudentItem(student: state.listModel[0])
+                      : StudentCheckList(students: students)
+                  : state is FailState
+                  ? Center(child: Text(state.errMessage))
+                  : Center(child: Text("حدث خطأ ما !!")),
+            ],
+          );
+        },
       ),
     );
   }
