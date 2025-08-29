@@ -3,7 +3,6 @@ import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/in
 import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/invoices_header_widget.dart';
 import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/invoices_transaction_card.dart';
 import 'package:flutter/material.dart';
-import 'package:ajyal/Core/styles/app_color.dart';
 
 class InvoicesPage extends StatefulWidget {
   const InvoicesPage({super.key});
@@ -130,7 +129,7 @@ class _InvoicesPageState extends State<InvoicesPage> {
     transactions.sort((a, b) => b["date"].compareTo(a["date"]));
 
     return Scaffold(
-      backgroundColor: AppColor.white1,
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           Column(

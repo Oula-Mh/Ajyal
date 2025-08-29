@@ -1,5 +1,5 @@
+import 'package:ajyal/Features/Advertisements/Presentation/Pages/about_insitute_page.dart';
 import 'package:flutter/material.dart';
-import 'package:ajyal/Core/styles/app_color.dart';
 
 class HeaderWidget extends StatelessWidget {
   final double totalPaid;
@@ -26,9 +26,14 @@ class HeaderWidget extends StatelessWidget {
       width: double.infinity,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppColor.primaryColor, Color.fromARGB(255, 108, 120, 150)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          //   colors: [AppColor.primaryColor, Color.fromARGB(255, 108, 120, 150)],
+          colors: [
+            AppColors.primaryColor,
+            AppColors.gradientLight,
+            AppColors.secondaryColor,
+          ],
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
         ),
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(25),
@@ -80,7 +85,7 @@ class HeaderWidget extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 10),
           Text(
             "الكورس المختار: $selectedCourse",
             style: const TextStyle(color: Colors.white70, fontSize: 16),
@@ -94,7 +99,7 @@ class HeaderWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
+        color: Colors.white.withOpacity(0.2),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Colors.white24),
       ),

@@ -65,8 +65,7 @@ class TopInfoCard extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        // GoRouter.of(context).push(AppRouter.aboutInstitutePage);
-                        GoRouter.of(context).push("/pay");
+                        GoRouter.of(context).push(AppRouter.aboutInstitutePage);
                       },
                       child: Text(
                         "عن المعهد",

@@ -1,4 +1,3 @@
-import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/utils/constants/end_points.dart';
 import 'package:ajyal/Custom/Custom_widgets/cache_image_widget.dart';
 import 'package:flutter/material.dart';

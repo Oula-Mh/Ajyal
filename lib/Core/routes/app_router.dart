@@ -352,11 +352,20 @@ abstract class Routing {
         path: AppRouter.examCurrentPage,
         builder: (context, state) {
           final data = state.extra as Map<String, dynamic>;
-          return BlocProvider(
-            create:
-                (context) =>
-                    ExamCurrentDetailsCubit(ExamRepoimp(DioConsumer(Dio())))
-                      ..getExamCurrentDetails(id: data['id'] as int),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create:
+                    (context) =>
+                        ExamCurrentDetailsCubit(ExamRepoimp(DioConsumer(Dio())))
+                          ..getExamCurrentDetails(id: data['id'] as int),
+              ),
+              BlocProvider(
+                create:
+                    (context) =>
+                        SubmitExamCubit(ExamRepoimp(DioConsumer(Dio()))),
+              ),
+            ],
             child: ExamCurrentPage(
               initialTime: data['initialTime'] as int,
               totalTime: data['totalTime'] as int,
@@ -475,6 +484,38 @@ abstract class Routing {
                         ..getParentName(),
               child: const ContactUsPage(),
             ),
+      ),
+      GoRoute(
+        path: AppRouter.studentMarkAnalysis,
+        builder:
+            (context, state) => BlocProvider(
+              create:
+                  (context) => ParentCombinedMeanCubit(
+                    PerformanceAnalysisRepoimp(DioConsumer(Dio())),
+                  ),
+              child: StudentMarkAnalysis(),
+            ),
+      ),
+
+      // GoRoute(
+      //   path: AppRouter.studentSubjectDetails,
+      //   builder: (context, state) {
+      //     final model = state.extra as List<SubjectMeanParentModel>;
+      //     return StudentSubjectDetails(subjects: model);
+      //   },
+      // ),
+      GoRoute(
+        path: AppRouter.studentSubjectDetails,
+        builder: (context, state) {
+          final model = state.extra as List<SubjectMeanParentModel>;
+          return BlocProvider(
+            create:
+                (context) => DetailsExamParentCubit(
+                  PerformanceAnalysisRepoimp(DioConsumer(Dio())),
+                ),
+            child: StudentSubjectDetailsPage(subjects: model),
+          );
+        },
       ),
     ],
   );

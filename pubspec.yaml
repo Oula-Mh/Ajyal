@@ -53,7 +53,7 @@ dependencies:
   cached_network_image: ^3.4.1
   another_carousel_pro: ^1.0.2
   google_nav_bar: ^5.0.7
-  font_awesome_flutter: ^10.6.0
+  font_awesome_flutter: ^10.9.1
   percent_indicator: ^4.2.5
   circular_countdown_timer: ^0.2.4
   fl_chart: ^1.0.0
@@ -61,7 +61,7 @@ dependencies:
   lottie: ^3.3.1
   firebase_core: ^4.0.0
   firebase_messaging: ^16.0.0
-
+  carousel_slider: ^5.1.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

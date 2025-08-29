@@ -48,4 +48,8 @@ class EndPoints {
   static const String linkStudent = 'student/link';
   static const String allParentStudent = 'parent/parent-students';
   static const String parentProfile = 'parent/profile';
+  static const String studentAnalysis = 'analysis/student/';
+  static const String subjectMean = '/subjects-mean/';
+  static const String totalMeanParent = '/total-mean/';
+  static const String subjectMarks = '/curriculum/';
 }

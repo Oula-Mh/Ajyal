@@ -18,21 +18,24 @@ class TeacherAdvListView extends StatelessWidget {
       builder: (context, state) {
         return Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "إعلانات الأساتذة",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-                state is TeacherAdvSuccess
-                    ? ViewAllAdv(
-                      router: AppRouter.allTeacherPage,
-                      params: {'resultsList': state.model.data},
-                      viewText: "عرض الكل",
-                    )
-                    : SizedBox(),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "مدرسو المركز :",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  state is TeacherAdvSuccess
+                      ? ViewAllAdv(
+                        router: AppRouter.allTeacherPage,
+                        params: {'resultsList': state.model.data},
+                        viewText: "عرض الكل",
+                      )
+                      : SizedBox(),
+                ],
+              ),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height / 5,

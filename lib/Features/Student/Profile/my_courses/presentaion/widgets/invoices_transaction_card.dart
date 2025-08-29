@@ -61,7 +61,7 @@ class TransactionCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
-                        color: isPaid ? Colors.green : Colors.red,
+                        color: Colors.grey.shade700,
                       ),
                     ),
                     Text(
