@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
       child: SubjectPage(),
     ),
 
-    ChatPage(),
+    CommunityQuestionPage(),
     MultiBlocProvider(
       providers: [
         BlocProvider(
