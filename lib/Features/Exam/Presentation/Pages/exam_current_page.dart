@@ -379,6 +379,7 @@ class _ExamCurrentPageState extends State<ExamCurrentPage>
           showDialog(
             context: context,
             barrierDismissible: false,
+
             builder: (BuildContext context) {
               return Dialog(
                 shape: RoundedRectangleBorder(
@@ -424,7 +425,9 @@ class _ExamCurrentPageState extends State<ExamCurrentPage>
                         ),
                         onPressed: () {
                           // Navigator.of(context).pop(); // إغلاق الـ Dialog
-                          GoRouter.of(context).go(AppRouter.homePage, extra: 3);
+                          GoRouter.of(
+                            context,
+                          ).pushReplacement(AppRouter.homePage, extra: 3);
                         },
                         child: const Text(
                           "حسناً",

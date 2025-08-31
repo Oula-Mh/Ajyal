@@ -2,27 +2,72 @@ import 'package:ajyal/Features/Parents/performance_analysis/presentaion/widgets/
 import 'package:flutter/material.dart';
 import '../../data/models/subject_mean_parent_model.dart';
 
+// class SubjectChartCardWidget extends StatelessWidget {
+//   final List<SubjectMeanParentModel> subjects;
+
+//   const SubjectChartCardWidget({super.key, required this.subjects});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+//       elevation: 5,
+//       child: Padding(
+//         padding: const EdgeInsets.all(16),
+//         child: Column(
+//           children: [
+//             const Text(
+//               "معدل كل مادة",
+//               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+//             ),
+//             const SizedBox(height: 12),
+//             SizedBox(
+//               height: 300,
+//               child: SubjectBarChartWidget(subjects: subjects),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 class SubjectChartCardWidget extends StatelessWidget {
   final List<SubjectMeanParentModel> subjects;
+  final double chartHeight; // ارتفاع الرسم البياني نسبي للشاشة
 
-  const SubjectChartCardWidget({super.key, required this.subjects});
+  const SubjectChartCardWidget({
+    super.key,
+    required this.subjects,
+    required this.chartHeight,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+    final screenWidth = media.size.width;
+    final padding = 16.0;
+    final textSizeTitle = screenWidth * 0.05;
+
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(screenWidth * 0.06),
+      ),
       elevation: 5,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(padding),
         child: Column(
           children: [
-            const Text(
+            Text(
               "معدل كل مادة",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: textSizeTitle,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: screenWidth * 0.03),
             SizedBox(
-              height: 300,
+              height: chartHeight,
+              width: double.infinity,
               child: SubjectBarChartWidget(subjects: subjects),
             ),
           ],
