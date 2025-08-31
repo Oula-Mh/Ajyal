@@ -17,6 +17,7 @@ import 'package:ajyal/Features/Advertisements/Presentation/Pages/all_generaladv_
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/all_teacheradv_page.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/home_adv_page.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/teacher_adv_page.dart';
+import 'package:ajyal/Features/Community/Presentation/Pages/my_questions_page.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
 import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
 import 'package:ajyal/Features/Course/Presentation/Pages/course_details.dart';
@@ -522,6 +523,11 @@ abstract class Routing {
             child: StudentSubjectDetailsPage(subjects: model),
           );
         },
+      ),
+
+      GoRoute(
+        path: AppRouter.myQuestionPage,
+        builder: (context, state) => const MyQuestionPage(),
       ),
     ],
   );

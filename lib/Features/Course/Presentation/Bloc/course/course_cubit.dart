@@ -22,7 +22,7 @@ class CourseCubit extends Cubit<CourseState> {
     response.fold((err) => emit(CourseFail(errMsg: err.errorMessage)), (
       courses,
     ) {
-      selectedCourse = courses[0];
+      ///  selectedCourse = courses[0];
 
       final savedId = getit<CacheHelper>().getData(key: "selectedCourseId");
       coursesList = courses;

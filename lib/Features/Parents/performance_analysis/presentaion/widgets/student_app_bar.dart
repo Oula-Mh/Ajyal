@@ -22,26 +22,23 @@ class StudentAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
       ),
       centerTitle: true,
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(45),
-        child: TabBar(
-          controller: tabController,
-          indicator: UnderlineTabIndicator(
-            borderSide: BorderSide(width: 4, color: AppColor.secondaryColor),
-          ),
-          labelColor: AppColor.secondaryColor,
-          unselectedLabelColor: AppColor.white1.withOpacity(0.7),
-          labelStyle: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            fontFamily: "Cairo",
-          ),
-          unselectedLabelStyle: const TextStyle(
-            fontSize: 16,
-            fontFamily: "Cairo",
-          ),
-          tabs: subjects.map((s) => Tab(text: s.name)).toList(),
+      bottom: TabBar(
+        controller: tabController,
+        indicator: UnderlineTabIndicator(
+          borderSide: BorderSide(width: 4, color: AppColor.secondaryColor),
         ),
+        labelColor: AppColor.secondaryColor,
+        unselectedLabelColor: AppColor.white1.withOpacity(0.7),
+        labelStyle: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Cairo",
+        ),
+        unselectedLabelStyle: const TextStyle(
+          fontSize: 16,
+          fontFamily: "Cairo",
+        ),
+        tabs: subjects.map((s) => Tab(text: s.name)).toList(),
       ),
     );
   }

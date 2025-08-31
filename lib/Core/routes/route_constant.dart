@@ -36,4 +36,5 @@ class AppRouter {
   static const contactUsPage = "/contactUsPage";
   static const studentMarkAnalysis = "/StudentMarkAnalysis";
   static const studentSubjectDetails = "/StudentSubjectDetails";
+  static const myQuestionPage = "/MyQuestionPage";
 }
