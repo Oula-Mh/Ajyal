@@ -50,7 +50,10 @@ class ProfileField extends StatelessWidget {
             children: [
               Row(children: children),
               isNeedArrow
-                  ? Icon(Icons.arrow_back_ios_new, color: Colors.grey)
+                  ? Transform.flip(
+                    flipX: true, // يعكس الأيقونة أفقياً
+                    child: Icon(Icons.arrow_back_ios_new, color: Colors.grey),
+                  )
                   : Container(),
             ],
           ),

@@ -43,7 +43,7 @@ class ParentPageChoice extends StatelessWidget {
                       border: Border.all(color: Colors.blue.shade300),
                       shape: BoxShape.circle,
                     ),
-                    child: NotificationIcon(),
+                    child: NotificationIcon(isStudent: false),
                     // child: Icon(
                     //   Icons.notifications,
                     //   color: AppColor.primaryColor,

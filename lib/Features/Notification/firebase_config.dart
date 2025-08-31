@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print('سارة لقد حصلت على إشعار جديد: ${message.notification!.body!}');
+  print(' لقد حصلت على إشعار جديد: ${message.notification!.body!}');
   // اعمل init للـ CacheHelper هون بدل ما تعتمد على getIt
   final prefs = await SharedPreferences.getInstance();
 

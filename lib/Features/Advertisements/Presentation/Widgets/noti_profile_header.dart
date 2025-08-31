@@ -1,10 +1,10 @@
 import 'package:ajyal/Core/Network/token_handle.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
+import 'package:ajyal/Features/Notification/Presentation/Widget/notification_bell.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:ajyal/Core/styles/app_color.dart';
 
 class HeaderRow extends StatelessWidget {
   const HeaderRow({super.key});
@@ -16,14 +16,13 @@ class HeaderRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          IconButton(
-            splashColor: AppColor.secondaryColor,
-            focusColor: AppColor.secondaryColor,
-            onPressed: () {},
-            icon: const Badge(
-              label: Text('3', style: TextStyle(color: Colors.white)),
-              backgroundColor: Colors.red,
-              child: Icon(Icons.notifications, size: 30, color: Colors.white),
+          GestureDetector(
+            onTap: () {
+              GoRouter.of(context).push(AppRouter.parentNotification);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: NotificationIcon(isStudent: true),
             ),
           ),
           getit<TokenHandler>().hasToken(TokenHandler.studentTokenKey)
