@@ -43,7 +43,7 @@ class _StudentSubjectDetailsPageState extends State<StudentSubjectDetailsPage>
 
   void _fetchMarks(int subjectId) {
     context.read<DetailsExamParentCubit>().getMarks(
-      idStudent: idStudent,
+      idStudent: int.parse(idStudent),
       idSubject: subjectId,
     );
   }

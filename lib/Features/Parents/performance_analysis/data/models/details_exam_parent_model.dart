@@ -30,8 +30,8 @@ class ExamParentModel {
   final int curriculumId;
   final String quizName;
   final String examDate;
-  final String? result;
-  final int maxScore;
+  final double? result;
+  final double maxScore;
 
   ExamParentModel({
     required this.id,
