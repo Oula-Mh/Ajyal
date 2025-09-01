@@ -2,18 +2,20 @@ import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class PaymentItem extends StatelessWidget {
+class UnPaidInvoicesCard extends StatelessWidget {
   final double amount;
   final DateTime dueDate;
   final bool isPayable;
+  // final int numInvoices;
   final VoidCallback onPay;
 
-  const PaymentItem({
+  const UnPaidInvoicesCard({
     super.key,
     required this.amount,
     required this.dueDate,
     required this.isPayable,
     required this.onPay,
+    // required this .numInvoices
   });
 
   @override
@@ -41,6 +43,7 @@ class PaymentItem extends StatelessWidget {
                 color: AppColor.primaryColor,
                 size: 28,
               ),
+              // child: Text("$numInvoices",style: TextStyle(color: AppColor.primaryColor,fontSize: 18,fontWeight:FontWeight.bold),),
             ),
             const SizedBox(width: 16),
 

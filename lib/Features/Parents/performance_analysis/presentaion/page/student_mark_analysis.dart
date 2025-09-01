@@ -1,5 +1,3 @@
-import 'package:ajyal/Cache/cache_helper.dart';
-import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Parents/performance_analysis/presentaion/bloc/parent_combine_mean/parent_combined_mean_cubit.dart';
 import 'package:ajyal/Features/Parents/performance_analysis/presentaion/widgets/%D8%A7ighlight_row.dart';
 import 'package:ajyal/Features/Parents/performance_analysis/presentaion/widgets/main_card_widget.dart';
@@ -79,6 +77,8 @@ class _StudentMarkAnalysisState extends State<StudentMarkAnalysis> {
   @override
   void initState() {
     super.initState();
+    // final idStudent = getit<CacheHelper>().getData(key: "studentId");
+
     context.read<ParentCombinedMeanCubit>().fetchAll(1, 1);
   }
 

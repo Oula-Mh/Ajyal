@@ -67,11 +67,15 @@ import 'package:ajyal/Features/Student/Auth/Presentation/Bloc/register/register_
 import 'package:ajyal/Features/Student/Auth/Presentation/Pages/check_student_page.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Pages/complete_register_page.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Pages/login_page.dart';
+import 'package:ajyal/Features/Student/Profile/my_courses/data/repo/profile_repoimp.dart';
+import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/Bloc/invoices/invoices_cubit.dart';
+import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/Bloc/my_courses/my_courses_cubit.dart';
+import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/Bloc/unPaid_invoices/unPaid_invoices_cubit.dart';
 import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/pages/invoices.page.dart';
 import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/pages/my_courses_page.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Pages/profile_page.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Pages/student_info_page.dart';
-import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/pages/payment_page.dart';
+import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/pages/unPaid_invoices_page.dart';
 import 'package:ajyal/Features/Subjects/Data/repo/pdf_file_repimp.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/pdf_file/pdf_file_cubit.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/search/search_cubit.dart';
@@ -467,17 +471,40 @@ abstract class Routing {
       // =========== pay ==============
       GoRoute(
         path: AppRouter.myCoursesPage,
-        builder: (context, state) => const MyCoursesPage(),
+        builder:
+            (context, state) => BlocProvider(
+              create:
+                  (context) =>
+                      MyCoursesCubit(ProfileRepoimp(DioConsumer(Dio()))),
+              child: MyCoursesPage(),
+            ),
       ),
 
       GoRoute(
-        path: AppRouter.paymentsPage,
-        builder: (context, state) => const PaymentsPage(),
+        path: AppRouter.unPaidInvoicesPage,
+        builder: (context, state) {
+          final id = state.extra as int;
+
+          return BlocProvider(
+            create:
+                (context) =>
+                    UnPaidInvoicesCubit(ProfileRepoimp(DioConsumer(Dio()))),
+            child: UnPaidInvoicesPage(idCourse: id),
+          );
+        },
       ),
+
       GoRoute(
         path: AppRouter.invoicesPage,
-        builder: (context, state) => const InvoicesPage(),
+        builder:
+            (context, state) => BlocProvider(
+              create:
+                  (context) =>
+                      InvoicesCubit(ProfileRepoimp(DioConsumer(Dio()))),
+              child: InvoicesPage(),
+            ),
       ),
+
       GoRoute(
         path: AppRouter.parentNotification,
         builder: (context, state) => const ParentNotification(),

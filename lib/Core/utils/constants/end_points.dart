@@ -6,13 +6,18 @@ class EndPoints {
   // static const String fileBaseUrl = 'http://10.0.2.2:8000/';
 
   // with mobile sarah
-  static const String baseUrl = 'http://192.168.1.102:8000/api/';
-  static const String fileBaseUrl = 'http://192.168.1.102:8000/';
+  // static const String baseUrl = 'http://192.168.1.102:8000/api/';
+  // static const String fileBaseUrl = 'http://192.168.1.102:8000/';
 
   // with mobile oula
-  // static const String baseUrl = 'http://192.168.1.104:8000/api/';
-  // static const String fileBaseUrl = 'http://192.168.1.104:8000/';
+  // static const String baseUrl = 'http://192.168.1.3:8000/api/';
+  // static const String fileBaseUrl = 'http://192.168.1.3:8000/';
 
+  static const String baseUrl = 'http://10.70.226.94:8000/api/';
+  static const String fileBaseUrl = 'http://10.70.226.94:8000/';
+
+  // static const String baseUrl = 'https://e2e578a51c24.ngrok-free.app/api/ ';
+  // static const String fileBaseUrl = 'https://e2e578a51c24.ngrok-free.app';
   // ngrok
   // static const String baseUrl =
   //     'https://5d07-185-132-133-96.ngrok-free.app/api/'
@@ -43,6 +48,9 @@ class EndPoints {
   static const String meanForSubject = "analysis/mean/";
   static const String stddevForSubject = "analysis/stddev/";
   static const String quizzes = "analysis/quizzes/";
+  static const String payment = "payment/students/";
+  static const String invoices = "/courses/payments/invoices";
+  static const String myCoursesDetails = "student/my-courses-with-details";
 
   // Parent
   static const String loginParent = 'parent/login';

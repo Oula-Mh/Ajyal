@@ -1,6 +1,8 @@
-import 'package:ajyal/Features/Student/Profile/my_courses/data/models/my_courses_model.dart';
+import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/Bloc/my_courses/my_courses_cubit.dart';
 import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/animated_course_card.dart';
+import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/course_card_shimmer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyCoursesPage extends StatefulWidget {
   const MyCoursesPage({super.key});
@@ -10,43 +12,17 @@ class MyCoursesPage extends StatefulWidget {
 }
 
 class _MyCoursesPageState extends State<MyCoursesPage> {
-  final List<MyCoursesModel> courses = [
-    MyCoursesModel(
-      name: "كورس صيفي – بكالوريا",
-      startDate: "2025-08-01T09:00:00",
-      endDate: "2025-08-20T18:00:00",
-      section: "الشعبة A",
-      scheduleImage: "assets/images/photo_2025-08-09_03-11-18.jpg",
-    ),
-    MyCoursesModel(
-      name: "كورس شتوي – تاسع",
-      startDate: "2025-01-10T09:00:00",
-      endDate: "2025-02-20T18:00:00",
-      section: "الشعبة B",
-      scheduleImage: "assets/images/photo_2025-08-09_03-11-18.jpg",
-    ),
-    MyCoursesModel(
-      name: "جلسات امتحانية – بكالوريا",
-      startDate: "2025-08-05T09:00:00",
-      endDate: "2025-08-30T18:00:00",
-      section: "الشعبة C",
-      scheduleImage: "assets/images/photo_2025-08-09_03-11-18.jpg",
-    ),
-    MyCoursesModel(
-      name: "جلسات امتحانية – بكالوريا",
-      startDate: "2025-08-05T09:00:00",
-      endDate: "2025-08-30T18:00:00",
-      section: "الشعبة C",
-      scheduleImage: "assets/images/photo_2025-08-09_03-11-18.jpg",
-    ),
-  ];
-
   final List<Color> pastelColors = const [
-    Color.fromARGB(255, 232, 251, 235),
     Color.fromARGB(255, 228, 242, 251),
     Color.fromARGB(255, 250, 233, 233),
     Color.fromARGB(255, 251, 248, 233),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<MyCoursesCubit>().getMyCoursesDetails();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,22 +34,42 @@ class _MyCoursesPageState extends State<MyCoursesPage> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        // backgroundColor: AppColor.primaryColor,
         backgroundColor: Colors.white,
         elevation: 0,
-        //  foregroundColor: Colors.white,
       ),
+      body: BlocBuilder<MyCoursesCubit, MyCoursesState>(
+        builder: (context, state) {
+          if (state is MyCoursesLoading) {
+            return ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: 1,
+              itemBuilder: (context, index) => const CourseCardShimmer(),
+            );
+          } else if (state is MyCoursesFailure) {
+            return Center(child: Text("خطأ: ${state.errMsg}"));
+          } else if (state is MyCoursesSuccess) {
+            final courses = state.myCoursesModel.data;
 
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: courses.length,
-        itemBuilder: (context, index) {
-          final color = pastelColors[index % pastelColors.length];
-          return AnimatedCourseCard(
-            course: courses[index],
-            backgroundColor: color,
-            delay: index * 200,
-          );
+            if (courses.isEmpty) {
+              return const Center(child: Text("لا توجد كورسات"));
+            }
+
+            return ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: courses.length,
+              itemBuilder: (context, index) {
+                final color = pastelColors[index % pastelColors.length];
+                final course = courses[index];
+
+                return AnimatedCourseCard(
+                  course: course,
+                  backgroundColor: color,
+                  delay: index * 200,
+                );
+              },
+            );
+          }
+          return const SizedBox.shrink();
         },
       ),
     );
