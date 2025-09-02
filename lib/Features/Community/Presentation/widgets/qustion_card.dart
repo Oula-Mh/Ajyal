@@ -1,6 +1,8 @@
+import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Features/Community/Presentation/Pages/all_question_page.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class QuestionCard extends StatelessWidget {
   final Question question;
@@ -42,37 +44,13 @@ class QuestionCard extends StatelessWidget {
                         question.text,
                         style: TextStyle(
                           fontSize: 16.0,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           color: Colors.grey[800],
-                          height: 1.4,
+                          height: 1.7,
                         ),
                       ),
                     ),
-                    SizedBox(width: 6),
-                    // الصورة (إذا موجودة)
-                    if (question.imageUrl != null)
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            question.imageUrl!,
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
-                            errorBuilder:
-                                (context, error, stackTrace) => Container(
-                                  width: 80,
-                                  height: 80,
-                                  color: Colors.grey[200],
-                                  child: Icon(
-                                    Icons.broken_image,
-                                    color: Colors.grey[400],
-                                  ),
-                                ),
-                          ),
-                        ),
-                      ),
+                    SizedBox(width: 8),
                   ],
                 ),
               ),
@@ -86,28 +64,33 @@ class QuestionCard extends StatelessWidget {
             padding: const EdgeInsets.only(right: 8),
             child: Align(
               alignment: Alignment.centerRight,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColor.primaryColor),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.arrow_back_ios_new,
-                      color: AppColor.primaryColor,
-                      size: 15,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "عرض السؤال والردود",
-                        style: TextStyle(color: AppColor.primaryColor),
+              child: GestureDetector(
+                onTap: () {
+                  GoRouter.of(context).push(AppRouter.myQuestionPage);
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColor.primaryColor),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.arrow_back_ios_new,
+                        color: AppColor.primaryColor,
+                        size: 15,
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          " السؤال والردود",
+                          style: TextStyle(color: AppColor.primaryColor),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -38,4 +38,5 @@ class AppRouter {
   static const studentSubjectDetails = "/StudentSubjectDetails";
   static const myQuestionPage = "/MyQuestionPage";
   static const allQuestionPage = "/allQuestionPage";
+  static const slectedCoursePage = "/slectedCoursePage";
 }

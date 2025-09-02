@@ -16,6 +16,7 @@ class TransitionConfigPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.white1,
       body: BlocProvider(
         create:
             (context) => CourseCubit(getit<CourseRepoimp>())..getAllCourse(),
@@ -25,10 +26,46 @@ class TransitionConfigPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  "Blorf zanta keplin druv Mokta vreen ziblo charn Wexin plord nubra tek",
+                /// أيقونة النجاح
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: AppColor.primaryColor.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.check_circle,
+                    color: AppColor.primaryColor,
+                    size: 100,
+                  ),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 30),
+
+                /// النص الأساسي
+                Text(
+                  "تم تسجيل دخولك بنجاح 🎉",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.primaryColor,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 10),
+
+                /// النص الفرعي
+                Text(
+                  "يمكنك الآن متابعة رحلتك التعليمية ضمن التطبيق والاستفادة من الخدمات المقدمة .",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[700],
+                    height: 2,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 50),
+
+                /// BlocConsumer لحفظ الكورس والزر
                 BlocConsumer<CourseCubit, CourseState>(
                   listener: (context, state) {
                     if (state is CourseSuccess) {
@@ -47,6 +84,9 @@ class TransitionConfigPage extends StatelessWidget {
                       customAlert(context, state.errMsg, () {
                         Navigator.of(context).pop();
                       });
+                    } else if (state is CourseInitial ||
+                        state is CourseLoading) {
+                      // ممكن نخلي اللودينغ ضمن الـ builder فقط
                     } else {
                       customAlert(context, "Something wrong happen", () {
                         Navigator.of(context).pop();
@@ -54,21 +94,38 @@ class TransitionConfigPage extends StatelessWidget {
                     }
                   },
                   builder: (context, state) {
-                    return state is CourseSuccess
-                        ? MaterialButton(
+                    if (state is CourseSuccess) {
+                      return SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
                           onPressed: () {
                             GoRouter.of(
                               context,
                             ).pushReplacement(AppRouter.homePage);
                           },
-                          color: AppColor.primaryColor,
-                          textColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColor.primaryColor,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 16,
+                              horizontal: 20,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                           ),
-                          child: Text('الانتقال'),
-                        )
-                        : Center(child: CircularProgressIndicator());
+                          child: const Text(
+                            "الانتقال للصفحة الرئيسية",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
                   },
                 ),
               ],

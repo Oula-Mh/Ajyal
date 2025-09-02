@@ -34,7 +34,7 @@ class QuizItem {
   final int curriculumId;
   final String quizName;
   final String examDate;
-  final String result;
+  final double result; // or String, depending on your API
   final int maxScore;
 
   QuizItem({
@@ -52,7 +52,7 @@ class QuizItem {
       curriculumId: json['curriculum_id'],
       quizName: json['quiz_name'],
       examDate: json['exam_date'],
-      result: json['result'],
+      result: (json['result'] as num).toDouble(), // or .toString()
       maxScore: json['max_score'],
     );
   }

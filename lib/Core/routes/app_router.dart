@@ -22,6 +22,7 @@ import 'package:ajyal/Features/Community/Presentation/Pages/my_questions_page.da
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
 import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
 import 'package:ajyal/Features/Course/Presentation/Pages/course_details.dart';
+import 'package:ajyal/Features/Course/Presentation/Pages/select_course_page.dart';
 import 'package:ajyal/Features/Exam/Presentation/Bloc/exam_current_details/exam_current_details_cubit.dart';
 import 'package:ajyal/Features/Exam/Presentation/Bloc/exam_pre_details/exam_pre_details_cubit.dart';
 import 'package:ajyal/Features/Exam/Presentation/Bloc/submit_exam/submit_exam_cubit.dart';
@@ -45,6 +46,9 @@ import 'package:ajyal/Features/Parents/Home/Presentation/bloc/StudentLink/studen
 import 'package:ajyal/Features/Parents/Home/Presentation/pages/parent_home.dart';
 import 'package:ajyal/Features/Parents/Home/Presentation/widgets/all_student_linked.dart';
 import 'package:ajyal/Features/Parents/Home/Presentation/widgets/link_student_scanner.dart';
+import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Data/Repo/attendence_repo.dart';
+import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Data/Repo/attendence_repoimpl.dart';
+import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Presentation/bloc/Attendence/attendence_cubit.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Presentation/pages/attendance_page.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/contact_us/Data/repo/contact_us_repoimp.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/contact_us/Presentation/Bloc/contact_us/contact_us_cubit.dart';
@@ -438,10 +442,12 @@ abstract class Routing {
       GoRoute(
         path: AppRouter.attendecePage,
         builder:
-            (context, state) => const AttendanceClalenderPage(
-              absenceDaysPerMonth: {
-                8: [2, 5, 7],
-              },
+            (context, state) => BlocProvider(
+              create:
+                  (context) =>
+                      AttendenceCubit(AttendenceRepoimpl(DioConsumer(Dio())))
+                        ..getStudentAbsence(),
+              child: const AttendanceClalenderPage(),
             ),
       ),
       GoRoute(
@@ -534,6 +540,12 @@ abstract class Routing {
         path: AppRouter.allQuestionPage,
         builder: (context, state) {
           return AllQuestionPage();
+        },
+      ),
+      GoRoute(
+        path: AppRouter.slectedCoursePage,
+        builder: (context, state) {
+          return SelectCoursePage();
         },
       ),
     ],

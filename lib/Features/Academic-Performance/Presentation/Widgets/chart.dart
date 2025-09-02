@@ -19,7 +19,8 @@ class ExamLineChartPage extends StatelessWidget {
       quizList.length,
       (index) => FlSpot(
         index.toDouble(),
-        double.tryParse(quizList[index].result) ?? 0,
+        quizList[index].result,
+        // double.tryParse(quizList[index].result) ?? 0,
       ),
     );
 
@@ -97,10 +98,8 @@ class ExamLineChartPage extends StatelessWidget {
                   LineChartBarData(
                     spots: List.generate(
                       quizList.length,
-                      (index) => FlSpot(
-                        index.toDouble(),
-                        double.parse(quizList[index].result),
-                      ),
+                      (index) =>
+                          FlSpot(index.toDouble(), quizList[index].result),
                     ),
                     isCurved: true,
                     color: Colors.blue,

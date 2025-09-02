@@ -44,7 +44,7 @@ class NameAndScoreList extends StatelessWidget {
                   border: Border(right: BorderSide(color: Colors.grey)),
                 ),
                 child: Text(
-                  '${double.parse(quiz.result).toInt()}/${quiz.maxScore}',
+                  '${quiz.result.toInt()}/${quiz.maxScore}',
                   style: Theme.of(
                     context,
                   ).textTheme.titleMedium?.copyWith(color: Colors.blueAccent),

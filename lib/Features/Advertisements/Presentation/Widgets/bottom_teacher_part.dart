@@ -7,7 +7,6 @@ import 'package:ajyal/Features/Subjects/Data/repo/subject_repoimp.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:ajyal/Features/Advertisements/Presentation/Widgets/custom_info_row.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BottonTeacherPart extends StatelessWidget {

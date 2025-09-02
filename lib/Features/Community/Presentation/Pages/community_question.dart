@@ -1,5 +1,6 @@
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
+import 'package:ajyal/Core/styles/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:go_router/go_router.dart';
@@ -21,8 +22,8 @@ class CommunityQuestionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("مناقشة الأسئلة"),
-        titleTextStyle: TextStyle(color: AppColor.white1),
+        title: Text(" أسئلة الطلاب", style: Styles.largeWhite),
+        centerTitle: true,
         backgroundColor: AppColor.primaryColor,
       ),
       body: Padding(

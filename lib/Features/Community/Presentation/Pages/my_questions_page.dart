@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -193,9 +192,11 @@ class MessageBubble extends StatelessWidget {
         if (isMainQuestion)
           const Padding(
             padding: EdgeInsets.only(right: 25, bottom: 4, top: 5),
-            child: Text(
-              "السؤال الرئيسي",
-              style: TextStyle(color: Colors.grey, fontSize: 12),
+            child: Align(
+              child: Text(
+                "السؤال الرئيسي",
+                style: TextStyle(color: Colors.grey, fontSize: 12),
+              ),
             ),
           ),
         Align(

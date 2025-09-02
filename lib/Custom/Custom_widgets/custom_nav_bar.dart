@@ -33,8 +33,8 @@ class CustomNavigationBar extends StatelessWidget {
         tabs: [
           iconBottomNavigation(Icons.home, "الرئيسية"),
           iconBottomNavigation(Icons.menu_book_rounded, "موادي"),
-          iconBottomNavigation(Icons.assignment_outlined, "اختبارت"),
           iconBottomNavigation(Icons.chat_outlined, "تواصل"),
+          iconBottomNavigation(Icons.assignment_outlined, "اختبارت"),
         ],
       ),
     );

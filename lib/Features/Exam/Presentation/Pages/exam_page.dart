@@ -345,21 +345,17 @@
 
 //oula
 
-import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
-import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
-import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
+import 'package:ajyal/Core/styles/app_text_style.dart';
 import 'package:ajyal/Features/Exam/Presentation/Bloc/exam_current/exam_current_cubit.dart';
 import 'package:ajyal/Features/Exam/Presentation/Bloc/exam_pre/exam_pre_cubit.dart';
 import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_page/current_exam_list_widget.dart';
 import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_page/exam_type_tab_bar.dart';
 import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_page/previous_exam_list_widget.dart';
-import 'package:ajyal/Features/Subjects/Data/repo/subject_repoimp.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_cubit.dart';
-import 'package:dio/dio.dart';
+import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../widgets/Exam_page/course_selector_widget.dart';
 import '../widgets/Exam_page/subject_selector_bar.dart';
 
 class ExamPage extends StatefulWidget {
@@ -381,13 +377,13 @@ class _ExamPageState extends State<ExamPage> {
   int selectedGradeIndex = 0;
   int selectedTabIndex = 0;
 
-  final List<SubjectWithIcon> subjects = [
-    SubjectWithIcon(id: 1, name: "رياضيات", icon: Icons.calculate),
-    SubjectWithIcon(id: 2, name: "فيزياء", icon: Icons.science),
-    SubjectWithIcon(id: 3, name: "كيمياء", icon: Icons.bubble_chart),
-    SubjectWithIcon(id: 4, name: "علوم", icon: Icons.biotech),
-    SubjectWithIcon(id: 5, name: "عربي", icon: Icons.menu_book),
-  ];
+  // final List<SubjectWithIcon> subjects = [
+  //   SubjectWithIcon(id: 1, name: "رياضيات", icon: Icons.calculate),
+  //   SubjectWithIcon(id: 2, name: "فيزياء", icon: Icons.science),
+  //   SubjectWithIcon(id: 3, name: "كيمياء", icon: Icons.bubble_chart),
+  //   SubjectWithIcon(id: 4, name: "علوم", icon: Icons.biotech),
+  //   SubjectWithIcon(id: 5, name: "عربي", icon: Icons.menu_book),
+  // ];
 
   @override
   void initState() {
@@ -400,43 +396,9 @@ class _ExamPageState extends State<ExamPage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 229, 238, 246),
       appBar: AppBar(
-        title: const Text("الاختبارات", style: TextStyle(color: Colors.white)),
+        title: Text("المواد الدراسية", style: Styles.largeWhite),
+        centerTitle: true,
         backgroundColor: AppColor.primaryColor,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.school, color: Colors.white),
-            tooltip: "تحديد الكورس",
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                builder:
-                    (_) => MultiBlocProvider(
-                      providers: [
-                        BlocProvider(
-                          create:
-                              (context) => CourseCubit(
-                                CourseRepoimp(DioConsumer(Dio())),
-                              ),
-                        ),
-                        BlocProvider(
-                          create:
-                              (context) => SubjectCubit(
-                                SubjectRepoimp(DioConsumer(Dio())),
-                              ),
-                        ),
-                      ],
-                      child: CourseSelectorWidget(
-                        onCourseSelected: (String selectedCourseId) {
-                          context.read<SubjectCubit>().fetchSubjects(
-                            int.parse(selectedCourseId),
-                          );
-                        },
-                      ),
-                    ),
-              );
-            },
-          ),
-        ],
       ),
       body: Column(
         children: [
@@ -459,19 +421,27 @@ class _ExamPageState extends State<ExamPage> {
             },
           ),
 
-          SubjectSelectorBar(
-            subjects: subjects,
-            selectedIndex: selectedGradeIndex,
-            onSubjectSelected: (index) {
-              setState(() => selectedGradeIndex = index);
+          BlocBuilder<SubjectCubit, SubjectState>(
+            builder: (context, state) {
+              return state is SubjectLoadedSuccess
+                  ? SubjectSelectorBar(
+                    subjects: state.subjects,
+                    selectedIndex: selectedGradeIndex,
+                    onSubjectSelected: (index) {
+                      setState(() => selectedGradeIndex = index);
 
-              if (selectedTabIndex == 0) {
-                context.read<ExamPreCubit>().getExamPre(id: subjects[index].id);
-              } else {
-                context.read<ExamCurrentCubit>().getExamCurrent(
-                  id: subjects[index].id,
-                );
-              }
+                      if (selectedTabIndex == 0) {
+                        context.read<ExamPreCubit>().getExamPre(
+                          id: state.subjects[index].id!,
+                        );
+                      } else {
+                        context.read<ExamCurrentCubit>().getExamCurrent(
+                          id: state.subjects[index].id!,
+                        );
+                      }
+                    },
+                  )
+                  : CircularProgressIndicator();
             },
           ),
           Expanded(

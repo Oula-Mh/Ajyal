@@ -19,6 +19,10 @@ class CourseCubit extends Cubit<CourseState> {
   Future<void> getAllCourse() async {
     emit(CourseLoading());
     var response = await courseRepo.getAllCourses();
+    if (isClosed) {
+      // If it's closed, do nothing. Just exit the function.
+      return;
+    }
     response.fold((err) => emit(CourseFail(errMsg: err.errorMessage)), (
       courses,
     ) {

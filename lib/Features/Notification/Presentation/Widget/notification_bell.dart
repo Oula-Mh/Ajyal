@@ -15,7 +15,7 @@ class NotificationIcon extends StatelessWidget {
     return count == 0
         ? Icon(
           Icons.notifications,
-          size: isStudent ? 40 : 30,
+          size: isStudent ? 32 : 30,
           color: isStudent ? Colors.white : AppColor.primaryColor,
         )
         : Badge(

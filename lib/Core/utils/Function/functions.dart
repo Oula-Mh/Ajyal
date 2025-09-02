@@ -191,3 +191,22 @@ void showVarianceDialog(BuildContext context, double variancePercentage) {
         ),
   );
 }
+
+Map<int, List<int>> buildAbsenceDaysPerMonth(List<dynamic> absenceDaysJson) {
+  final Map<int, List<int>> absenceDaysPerMonth = {};
+
+  for (var item in absenceDaysJson) {
+    final String dateStr = item['absence_date'];
+    final DateTime date = DateTime.parse(dateStr);
+
+    final int month = date.month;
+    final int day = date.day;
+
+    if (!absenceDaysPerMonth.containsKey(month)) {
+      absenceDaysPerMonth[month] = [];
+    }
+    absenceDaysPerMonth[month]!.add(day);
+  }
+
+  return absenceDaysPerMonth;
+}

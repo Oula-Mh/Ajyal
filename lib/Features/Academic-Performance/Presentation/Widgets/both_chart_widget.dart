@@ -17,10 +17,7 @@ class ExamLineChartBoth extends StatelessWidget {
     // 🟢 نظري (Quizzes)
     final quizSpots = List.generate(
       quizList.quiz.length,
-      (index) => FlSpot(
-        index.toDouble(),
-        double.tryParse(quizList.quiz[index].result) ?? 0,
-      ),
+      (index) => FlSpot(index.toDouble(), quizList.quiz[index].result),
     );
 
     // 📘 كتابي (Paper Exams) – تفترض وجود بيانات خاصة بها. نستخدم هنا maxScore كنموذج
@@ -34,7 +31,7 @@ class ExamLineChartBoth extends StatelessWidget {
 
     // 🟣 كليهما – متوسط بين quiz و paper
     final bothSpots = List.generate(quizList.both.length, (index) {
-      final quiz = double.tryParse(quizList.quiz[index].result) ?? 0;
+      final quiz = quizList.quiz[index].result;
       final paper = quizList.paperExams[index].maxScore.toDouble();
       return FlSpot(index.toDouble(), (quiz + paper) / 2);
     });

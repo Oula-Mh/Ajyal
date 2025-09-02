@@ -1,6 +1,5 @@
 import 'package:ajyal/Features/Advertisements/Presentation/Widgets/top_adv_card_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:ui';
@@ -195,32 +194,34 @@ class AboutInstitutePage extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 160),
+            const SizedBox(height: 130),
             // 🔹 سلايدر صور
-            CarouselSlider(
-              options: CarouselOptions(
-                height: 200,
-                autoPlay: true,
-                enlargeCenterPage: true,
-              ),
-              items:
-                  [
-                    "assets/images/photo_2025-08-20_15-08-01.jpg",
-                    "assets/images/photo_2025-08-20_15-08-31.jpg",
-                    "assets/images/photo_2025-08-20_15-08-37.jpg",
-                  ].map((path) {
-                    return ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: Image.asset(
-                        path,
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                      ),
-                    );
-                  }).toList(),
+            // CarouselSlider(
+            //   options: CarouselOptions(
+            //     height: 200,
+            //     autoPlay: true,
+            //     enlargeCenterPage: true,
+            //   ),
+            //   items:
+            //       [
+            //         "assets/images/photo_2025-08-20_15-08-01.jpg",
+            //         "assets/images/photo_2025-08-20_15-08-31.jpg",
+            //         "assets/images/photo_2025-08-20_15-08-37.jpg",
+            //       ].map((path) {
+            //         return ClipRRect(
+            //           borderRadius: BorderRadius.circular(16),
+            //           child: Image.asset(
+            //             path,
+            //             fit: BoxFit.cover,
+            //             width: double.infinity,
+            //           ),
+            //         );
+            //       }).toList(),
+            // ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: const TeacherAdvListView(),
             ),
-            const SizedBox(height: 15),
-            const TeacherAdvListView(),
           ],
         ),
       ),

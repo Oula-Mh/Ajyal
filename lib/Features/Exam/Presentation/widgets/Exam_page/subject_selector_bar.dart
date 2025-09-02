@@ -73,11 +73,11 @@
 //oula
 
 import 'package:ajyal/Core/styles/app_color.dart';
-import 'package:ajyal/Features/Exam/Presentation/Pages/exam_page.dart';
+import 'package:ajyal/Features/Subjects/Data/model/subject_model.dart';
 import 'package:flutter/material.dart';
 
 class SubjectSelectorBar extends StatelessWidget {
-  final List<SubjectWithIcon> subjects;
+  final List<SubjectModel> subjects;
   final int selectedIndex;
   final Function(int) onSubjectSelected;
 
@@ -113,12 +113,12 @@ class SubjectSelectorBar extends StatelessWidget {
                             : Colors.grey.shade200,
                     radius: 30,
                     child: Icon(
-                      subject.icon,
+                      Icons.book,
                       color: isSelected ? Colors.white : AppColor.primaryColor,
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Text(subject.name, style: const TextStyle(fontSize: 10)),
+                  Text(subject.name!, style: const TextStyle(fontSize: 10)),
                 ],
               ),
             ),

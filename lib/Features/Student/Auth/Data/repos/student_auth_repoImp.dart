@@ -36,7 +36,7 @@ class StudentAuthRepoimp implements StudentAuthRepo {
       var response = await api.get(EndPoints.studentProfile);
       print("$response\n");
       final studentModel = StudentProfileModel.fromJson(response);
-      print("\n${studentModel.data}===========😍\n");
+      print("\n${studentModel.data}===========\n");
       return Right(studentModel);
     } on Exception catch (e) {
       if (e is DioException) {
@@ -53,8 +53,7 @@ class StudentAuthRepoimp implements StudentAuthRepo {
       print("login in repo implement\n");
       print(response);
       String token = response['data']['token'];
-      print("😎token : $token\n");
-      // TokenHandle().setToken(token);
+      print("token : $token\n");
       await getit<TokenHandler>().saveToken(
         TokenHandler.studentTokenKey,
         token,

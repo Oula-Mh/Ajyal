@@ -11,7 +11,7 @@ class FaqTabView extends StatelessWidget {
     return Column(
       children: [
         Expanded(child: QuestionListView(questions: questions)),
-        _buildEnterQuestionBar(),
+        // _buildEnterQuestionBar(),
       ],
     );
   }

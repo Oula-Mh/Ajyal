@@ -1,4 +1,6 @@
+import 'package:ajyal/Core/Network/token_handle.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Core/utils/constants/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
@@ -48,15 +50,27 @@ class TopInfoCard extends StatelessWidget {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    TextButton(
-                      onPressed: () {
-                        GoRouter.of(context).push(AppRouter.rolePage);
-                      },
-                      child: Text(
-                        "تسجيل الدخول",
-                        style: TextStyle(color: AppColor.primaryColor),
-                      ),
-                    ),
+                    getit<TokenHandler>().hasToken(TokenHandler.studentTokenKey)
+                        ? TextButton(
+                          onPressed: () {
+                            GoRouter.of(
+                              context,
+                            ).push(AppRouter.slectedCoursePage);
+                          },
+                          child: Text(
+                            "اختيار كورس",
+                            style: TextStyle(color: AppColor.primaryColor),
+                          ),
+                        )
+                        : TextButton(
+                          onPressed: () {
+                            GoRouter.of(context).push(AppRouter.rolePage);
+                          },
+                          child: Text(
+                            "تسجيل الدخول",
+                            style: TextStyle(color: AppColor.primaryColor),
+                          ),
+                        ),
                     Container(
                       height: 20,
                       width: 1,
