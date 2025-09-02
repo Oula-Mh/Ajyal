@@ -7,7 +7,7 @@ import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class ResultScreen extends StatefulWidget {
-  final int result;
+  final double result;
 
   const ResultScreen({Key? key, required this.result}) : super(key: key);
 
@@ -35,37 +35,37 @@ class _ResultScreenState extends State<ResultScreen>
     super.dispose();
   }
 
-  String _getMotivationalMessage(int score) {
-    if (score >= 90) return "🎉 ممتاز! أنت نجم!";
-    if (score >= 75) return "🌟 أداء رائع!";
-    if (score >= 50) return "👍 جيد، تابع التقدم!";
-    return "لا بأس، القادم أجمل!\nما فاتك لا يعني أنك فشلت، بل يعني أن الفرصة ما زالت بيدك لتتقدم.";
+  String _getMotivationalMessage(double score) {
+    if (score >= 90) {
+      return "🎉 ممتاز جدًا! أنت نجم، استمر بهذا الأداء الرائع!";
+    }
+    if (score >= 75) {
+      return "🌟 أداء قوي! أنت على الطريق الصحيح، فقط حافظ على التركيز.";
+    }
+    if (score >= 50) {
+      return "👍 جيد! لديك إمكانيات كبيرة، استمر بالمثابرة لتحقق الأفضل.";
+    }
+    return "💪 لا بأس، القادم أجمل!\nما فاتك لا يعني أنك فشلت، بل الفرصة ما زالت أمامك لتتقدم.";
   }
 
-  // Color _getScoreColor(int score) {
-  //   if (score >= 90) return Colors.green;
-  //   if (score >= 75) return Colors.blue;
-  //   if (score >= 50) return Colors.orange;
-  //   return const Color.fromARGB(255, 246, 89, 77);
-  // }
-  Color _getScoreColor(int score) {
-    if (score >= 17) return Colors.green;
-    if (score >= 15) return Colors.blue;
-    if (score >= 8) return Colors.orange;
+  Color _getScoreColor(double score) {
+    if (score >= 90) return Colors.green;
+    if (score >= 75) return Colors.lightBlue;
+    if (score >= 50) return Colors.orange;
     return const Color.fromARGB(255, 246, 89, 77);
   }
 
   @override
   Widget build(BuildContext context) {
-    final int result = widget.result;
-    final double percent = result / 100;
+    final double result = widget.result;
+    final double percent = (result / 100).clamp(0.0, 1.0);
     final Color scoreColor = _getScoreColor(result);
     final String message = _getMotivationalMessage(result);
 
     return Scaffold(
       body: Stack(
         children: [
-          // 💫 خلفية بلورية متدرجة ناعمة
+          // 💫 خلفية بلورية متدرجة
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -80,17 +80,18 @@ class _ResultScreenState extends State<ResultScreen>
             ),
           ),
 
-          // ✨ مؤثر النجوم في الأعلى
-          Align(
-            alignment: Alignment.topCenter,
-            child: Lottie.asset(
-              'assets/lottie/congratulations.json',
-              width: double.infinity,
-              height: 300,
-              fit: BoxFit.cover,
-              repeat: true,
+          // ✨ Lottie يظهر فقط إذا النتيجة >= 75
+          if (result >= 75)
+            Align(
+              alignment: Alignment.topCenter,
+              child: Lottie.asset(
+                'assets/lottie/congratulations.json',
+                width: double.infinity,
+                height: 300,
+                fit: BoxFit.cover,
+                repeat: true,
+              ),
             ),
-          ),
 
           // 🧩 المحتوى الرئيسي
           FadeTransition(
@@ -113,10 +114,9 @@ class _ResultScreenState extends State<ResultScreen>
                         color: scoreColor,
                       ),
                     ),
-
                     const SizedBox(height: 24),
 
-                    // 🔵 Container لعرض النتيجة
+                    // 🔵 كرت النتيجة
                     ClipRRect(
                       borderRadius: BorderRadius.circular(24),
                       child: BackdropFilter(
@@ -135,27 +135,23 @@ class _ResultScreenState extends State<ResultScreen>
                               ),
                             ],
                           ),
-                          child: Column(
-                            children: [
-                              CircularPercentIndicator(
-                                radius: 80.0,
-                                lineWidth: 16.0,
-                                animation: true,
-                                animationDuration: 1200,
-                                percent: percent.clamp(0.0, 1.0),
-                                center: Text(
-                                  "$result%",
-                                  style: TextStyle(
-                                    fontSize: 36.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: scoreColor,
-                                  ),
-                                ),
-                                circularStrokeCap: CircularStrokeCap.round,
-                                progressColor: scoreColor,
-                                backgroundColor: Colors.grey.shade200,
+                          child: CircularPercentIndicator(
+                            radius: 80.0,
+                            lineWidth: 16.0,
+                            animation: true,
+                            animationDuration: 1200,
+                            percent: percent,
+                            center: Text(
+                              "$result%",
+                              style: TextStyle(
+                                fontSize: 36.0,
+                                fontWeight: FontWeight.bold,
+                                color: scoreColor,
                               ),
-                            ],
+                            ),
+                            circularStrokeCap: CircularStrokeCap.round,
+                            progressColor: scoreColor,
+                            backgroundColor: Colors.grey.shade200,
                           ),
                         ),
                       ),
@@ -163,7 +159,7 @@ class _ResultScreenState extends State<ResultScreen>
 
                     const SizedBox(height: 32),
 
-                    // 📝 كرت النص التحفيزي خارج الـ container
+                    // 📝 الرسالة التحفيزية
                     Card(
                       color: scoreColor.withOpacity(0.1),
                       elevation: 0,
@@ -192,7 +188,7 @@ class _ResultScreenState extends State<ResultScreen>
             ),
           ),
 
-          // 🔘 زر العودة بأسفل الشاشة
+          // 🔘 زر العودة
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(

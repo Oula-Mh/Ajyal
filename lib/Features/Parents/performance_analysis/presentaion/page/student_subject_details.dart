@@ -39,11 +39,9 @@ class _StudentSubjectDetailsPageState extends State<StudentSubjectDetailsPage>
     _fetchMarks(widget.subjects[_tabController.index].id);
   }
 
-  final idStudent = getit<CacheHelper>().getData(key: "studentId");
-
   void _fetchMarks(int subjectId) {
     context.read<DetailsExamParentCubit>().getMarks(
-      idStudent: int.parse(idStudent),
+      idStudent: int.parse(getit<CacheHelper>().getData(key: "studentId")),
       idSubject: subjectId,
     );
   }

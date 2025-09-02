@@ -69,7 +69,14 @@ class ParentPageChoice extends StatelessWidget {
               gridTile("تقييم الحضور", () {
                 GoRouter.of(context).push(AppRouter.attendecePage);
               }),
-              gridTile("الأقساط المالية", () {}),
+              gridTile("الأقساط المالية", () {
+                GoRouter.of(context).push(
+                  AppRouter.invoicesPage,
+                  extra: int.parse(
+                    getit<CacheHelper>().getData(key: "studentId"),
+                  ),
+                );
+              }),
               gridTile("التواصل مع الإدارة", () {
                 GoRouter.of(context).push(AppRouter.contactUsPage);
               }),

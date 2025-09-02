@@ -18,7 +18,7 @@ class SubmitExamPage extends StatefulWidget {
 }
 
 class _SubmitExamPageState extends State<SubmitExamPage> {
-  int? _resultMessage;
+  double? _resultMessage;
   String? _errorMessage;
   bool _animationFinishedOnce = false;
   bool _animationLooping = false;
@@ -29,7 +29,7 @@ class _SubmitExamPageState extends State<SubmitExamPage> {
     context.read<SubmitExamCubit>().submitExam(widget.model);
   }
 
-  void _updateResult({int? result, String? error}) {
+  void _updateResult({double? result, String? error}) {
     _resultMessage = result;
     _errorMessage = error;
     if (_animationFinishedOnce) setState(() {});
@@ -120,7 +120,7 @@ class _SubmitExamPageState extends State<SubmitExamPage> {
     ),
   );
 
-  Widget _buildResult(BuildContext context, int result) =>
+  Widget _buildResult(BuildContext context, double result) =>
       ResultScreen(result: result);
   Widget _buildError(BuildContext context, String error) => Center(
     child: Column(

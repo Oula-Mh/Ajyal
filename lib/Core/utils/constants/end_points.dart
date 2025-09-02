@@ -2,14 +2,15 @@ class EndPoints {
   // with emulator
   // static const String baseUrl = 'http://10.0.2.2:8000/api/';
   // static const String fileBaseUrl = 'http://10.0.2.2:8000/';
-  // static const String baseUrl = 'http://10.0.2.2:8000/api/';
-  // static const String fileBaseUrl = 'http://10.0.2.2:8000/';
 
   // with mobile sarah
-  static const String baseUrl = 'http://192.168.1.100:8000/api/';
-  static const String fileBaseUrl = 'http://192.168.1.100:8000/';
+  // static const String baseUrl = 'http://192.168.1.100:8000/api/';
+  // static const String fileBaseUrl = 'http://192.168.1.100:8000/';
 
   // with mobile oula
+  static const String baseUrl = 'http://192.168.1.2:8000/api/';
+  static const String fileBaseUrl = 'http://192.168.1.2:8000/';
+
   // static const String baseUrl = 'http://192.168.1.3:8000/api/';
   // static const String fileBaseUrl = 'http://192.168.1.3:8000/';
 
@@ -19,8 +20,8 @@ class EndPoints {
   // static const String baseUrl = 'https://e2e578a51c24.ngrok-free.app/api/ ';
   // static const String fileBaseUrl = 'https://e2e578a51c24.ngrok-free.app';
   // ngrok
-  // static const String baseUrl =
-  //     'https://5d07-185-132-133-96.ngrok-free.app/api/'
+  // static const String baseUrl = 'https://71c3a0641fef.ngrok-free.app/api/';
+  // static const String fileBaseUrl = 'https://71c3a0641fef.ngrok-free.app';
 
   /* ******************************************************************************** */
   // Student

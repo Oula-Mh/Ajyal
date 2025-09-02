@@ -97,10 +97,12 @@ class ExamRepoimp implements ExamRepo {
   //******************************************************************* */
 
   @override
-  Future<Either<Failure, int>> submitExam(Map body) async {
+  Future<Either<Failure, double>> submitExam(Map body) async {
     try {
       final data = await api.post(EndPoints.submitExam, body);
-      return Right(data['data']);
+      return Right(
+        double.parse((data['data'] as num).toDouble().toStringAsFixed(2)),
+      );
     } on Exception catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioError(e));
