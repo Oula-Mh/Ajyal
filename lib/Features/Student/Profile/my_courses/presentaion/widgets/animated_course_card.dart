@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'course_card.dart';
 
 class AnimatedCourseCard extends StatefulWidget {
-  final MyCoursesModel course;
+  final Course course;
   final Color backgroundColor;
   final int delay;
 

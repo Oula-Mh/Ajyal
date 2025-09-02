@@ -1,8 +1,210 @@
+// import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/Bloc/invoices/invoices_cubit.dart';
+// import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/invoices_course_dropdown.dart';
+// import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/invoices_filter_button.dart';
+// import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/invoices_header_widget.dart';
+// import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/invoices_transaction_card.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+
+// class InvoicesPage extends StatefulWidget {
+//   const InvoicesPage({super.key});
+
+//   @override
+//   State<InvoicesPage> createState() => _InvoicesPageState();
+// }
+
+// class _InvoicesPageState extends State<InvoicesPage> {
+//   String selectedCourse = "الكل";
+//   String filterType = "الكل";
+//   bool showDropdown = false;
+//   final GlobalKey _filterKey = GlobalKey();
+//   double dropdownTop = 0;
+//   double dropdownLeft = 0;
+
+//   void toggleDropdown() {
+//     if (showDropdown) {
+//       setState(() => showDropdown = false);
+//     } else {
+//       setState(() => showDropdown = true);
+//       final RenderBox renderBox =
+//           _filterKey.currentContext!.findRenderObject() as RenderBox;
+//       final position = renderBox.localToGlobal(Offset.zero);
+//       dropdownTop = position.dy + renderBox.size.height;
+//       dropdownLeft = position.dx;
+//     }
+//   }
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     // جلب البيانات أول ما تفتح الصفحة
+//     context.read<InvoicesCubit>().getinvoices(idStudent: 1); // حط id الطالب
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<InvoicesCubit, InvoicesState>(
+//       builder: (context, state) {
+//         if (state is InvoicesLoading) {
+//           return const Center(child: CircularProgressIndicator());
+//         } else if (state is InvoicesFailure) {
+//           return Center(child: Text("خطأ: ${state.errMsg}"));
+//         } else if (state is InvoicesSuccess) {
+//           final coursesData = state.invoicesModel.data; // ✅ البيانات من الباك
+
+//           List<Map<String, dynamic>> transactions = [];
+//           double totalPaid = 0;
+//           double totalDue = 0;
+
+//           for (var courseData in coursesData) {
+//             final course = courseData.course;
+
+//             if (selectedCourse != "الكل" && course.name != selectedCourse) {
+//               continue;
+//             }
+
+//             // الفواتير المدفوعة
+//             if (filterType == "الكل" || filterType == "مدفوع") {
+//               for (var invoice in courseData.paidInvoices) {
+//                 for (var p in invoice.payments) {
+//                   totalPaid += double.parse(invoice.value);
+//                   transactions.add({
+//                     "type": "مدفوع",
+//                     "course": course.name,
+//                     "amount": invoice.value,
+//                     "date": p.paymentDate,
+//                     "description": "مدفوع (${p.paymentDate})",
+//                   });
+//                 }
+//               }
+//             }
+
+//             // الفواتير غير المدفوعة
+//             if (filterType == "الكل" || filterType == "غير مدفوع") {
+//               for (var invoice in courseData.unpaidInvoices) {
+//                 totalDue += double.parse(invoice.value);
+//                 transactions.add({
+//                   "type": "غير مدفوع",
+//                   "course": course.name,
+//                   "amount": invoice.value,
+//                   "date": invoice.dueDate,
+//                   "description": "موعد الاستحقاق",
+//                 });
+//               }
+//             }
+//           }
+
+//           // ترتيب حسب التاريخ
+//           // transactions.sort((a, b) => b["date"].compareTo(a["date"]));
+
+//           return Scaffold(
+//             backgroundColor: Colors.white,
+//             body: Stack(
+//               children: [
+//                 Column(
+//                   children: [
+//                     HeaderWidget(
+//                       totalPaid: totalPaid,
+//                       totalDue: totalDue,
+//                       selectedCourse: selectedCourse,
+//                       filterType: filterType,
+//                       filterKey: _filterKey,
+//                       onFilterTap: toggleDropdown,
+//                     ),
+//                     Padding(
+//                       padding: const EdgeInsets.symmetric(
+//                         horizontal: 15,
+//                         vertical: 8,
+//                       ),
+//                       child: Wrap(
+//                         spacing: 12,
+//                         children: [
+//                           FilterButton(
+//                             label: "الكل",
+//                             selected: filterType == "الكل",
+//                             onTap: () => setState(() => filterType = "الكل"),
+//                           ),
+//                           FilterButton(
+//                             label: "مدفوع",
+//                             selected: filterType == "مدفوع",
+//                             onTap: () => setState(() => filterType = "مدفوع"),
+//                           ),
+//                           FilterButton(
+//                             label: "غير مدفوع",
+//                             selected: filterType == "غير مدفوع",
+//                             onTap:
+//                                 () => setState(() => filterType = "غير مدفوع"),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     Expanded(
+//                       child:
+//                           transactions.isEmpty
+//                               ? Center(
+//                                 child: Text(
+//                                   "لا توجد بيانات للعرض",
+//                                   style: TextStyle(
+//                                     fontSize: 16,
+//                                     color: Colors.grey.shade600,
+//                                   ),
+//                                 ),
+//                               )
+//                               : ListView.builder(
+//                                 padding: const EdgeInsets.symmetric(
+//                                   horizontal: 15,
+//                                 ),
+//                                 itemCount: transactions.length,
+//                                 itemBuilder: (context, index) {
+//                                   return TransactionCard(
+//                                     transaction: transactions[index],
+//                                   );
+//                                 },
+//                               ),
+//                     ),
+//                   ],
+//                 ),
+//                 if (showDropdown)
+//                   Positioned.fill(
+//                     child: GestureDetector(
+//                       onTap: toggleDropdown,
+//                       child: Container(color: Colors.transparent),
+//                     ),
+//                   ),
+//                 if (showDropdown)
+//                   CourseDropdown(
+//                     coursesData:
+//                         coursesData
+//                             .map((c) => {"name": c.course.name})
+//                             .toList(), // ✅ تحويل لواجهة
+//                     selectedCourse: selectedCourse,
+//                     top: dropdownTop,
+//                     left: dropdownLeft,
+//                     onSelect: (name) {
+//                       setState(() {
+//                         selectedCourse = name;
+//                         showDropdown = false;
+//                       });
+//                     },
+//                   ),
+//               ],
+//             ),
+//           );
+//         } else {
+//           return const SizedBox();
+//         }
+//       },
+//     );
+//   }
+// }
+import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/Bloc/invoices/invoices_cubit.dart';
 import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/invoices_course_dropdown.dart';
 import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/invoices_filter_button.dart';
 import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/invoices_header_widget.dart';
+import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/invoices_shimmer.dart';
 import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/invoices_transaction_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class InvoicesPage extends StatefulWidget {
   const InvoicesPage({super.key});
@@ -12,56 +214,6 @@ class InvoicesPage extends StatefulWidget {
 }
 
 class _InvoicesPageState extends State<InvoicesPage> {
-  final List<Map<String, dynamic>> coursesData = [
-    {
-      "id": 1,
-      "name": "برمجة بايثون",
-      "description": "مقدمة في لغة بايثون للمبتدئين",
-      "student_payments": [
-        {
-          "payment_id": 101,
-          "amount": 100,
-          "date": "2025-08-01",
-          "method": "بطاقة ائتمان",
-        },
-        {
-          "payment_id": 102,
-          "amount": 15000000,
-          "date": "2025-08-05",
-          "method": "تحويل بنكي",
-        },
-      ],
-      "student_dues": [
-        {
-          "due_id": 201,
-          "amount": 200000,
-          "due_date": "2025-08-15",
-          "status": "غير مدفوع",
-        },
-      ],
-    },
-    {
-      "id": 2,
-      "name": "تصميم واجهات المستخدم",
-      "description": "دورة متقدمة في تصميم واجهات المستخدم باستخدام Figma",
-      "student_payments": [],
-      "student_dues": [
-        {
-          "due_id": 202,
-          "amount": 300,
-          "due_date": "2025-08-20",
-          "status": "غير مدفوع",
-        },
-        {
-          "due_id": 203,
-          "amount": 150,
-          "due_date": "2025-09-01",
-          "status": "غير مدفوع",
-        },
-      ],
-    },
-  ];
-
   String selectedCourse = "الكل";
   String filterType = "الكل";
   bool showDropdown = false;
@@ -83,137 +235,174 @@ class _InvoicesPageState extends State<InvoicesPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    // جلب البيانات أول ما تفتح الصفحة
+    context.read<InvoicesCubit>().getinvoices(idStudent: 1); // حط id الطالب
+  }
+
+  @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> transactions = [];
-    double totalPaid = 0;
-    double totalDue = 0;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final textScale = screenWidth / 375; // أساس 375px (iPhone 11 تقريباً)
+    return BlocBuilder<InvoicesCubit, InvoicesState>(
+      builder: (context, state) {
+        if (state is InvoicesLoading) {
+          return InvoicesShimmer(
+            textScale: textScale,
+          ); // Shimmer ضمن Scaffold كامل
+        } else if (state is InvoicesFailure) {
+          return Center(child: Text("خطأ: ${state.errMsg}"));
+        } else if (state is InvoicesSuccess) {
+          final coursesData = state.invoicesModel.data; // ✅ البيانات من الباك
 
-    for (var course in coursesData) {
-      if (selectedCourse != "الكل" && course["name"] != selectedCourse)
-        continue;
+          List<Map<String, dynamic>> transactions = [];
+          double totalPaid = 0;
+          double totalDue = 0;
 
-      if (filterType == "الكل" || filterType == "مدفوع") {
-        totalPaid += course["student_payments"].fold(
-          0,
-          (sum, p) => sum + p["amount"],
-        );
-      }
-      if (filterType == "الكل" || filterType == "غير مدفوع") {
-        totalDue += course["student_dues"].fold(
-          0,
-          (sum, d) => sum + d["amount"],
-        );
-      }
+          for (var courseData in coursesData) {
+            final course = courseData.course;
 
-      for (var p in course["student_payments"]) {
-        if (filterType == "غير مدفوع") continue;
-        transactions.add({
-          "type": "مدفوع",
-          "course": course["name"],
-          "amount": p["amount"],
-          "date": p["date"],
-          "description": p["method"],
-        });
-      }
-      for (var d in course["student_dues"]) {
-        if (filterType == "مدفوع") continue;
-        transactions.add({
-          "type": "غير مدفوع",
-          "course": course["name"],
-          "amount": d["amount"],
-          "date": d["due_date"],
-          "description": "موعد الاستحقاق",
-        });
-      }
-    }
-    transactions.sort((a, b) => b["date"].compareTo(a["date"]));
+            if (selectedCourse != "الكل" && course.name != selectedCourse) {
+              continue;
+            }
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              HeaderWidget(
-                totalPaid: totalPaid,
-                totalDue: totalDue,
-                selectedCourse: selectedCourse,
-                filterType: filterType,
-                filterKey: _filterKey,
-                onFilterTap: toggleDropdown,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 8,
-                ),
-                child: Wrap(
-                  spacing: 12,
+            // الفواتير المدفوعة
+            if (filterType == "الكل" || filterType == "مدفوع") {
+              for (var invoice in courseData.paidInvoices) {
+                for (var p in invoice.payments) {
+                  totalPaid += double.parse(invoice.value);
+                  transactions.add({
+                    "type": "مدفوع",
+                    "course": course.name,
+                    "amount": invoice.value,
+                    "date": p.paymentDate,
+                    "description": "مدفوع (${p.paymentDate})",
+                  });
+                }
+              }
+            }
+
+            // الفواتير غير المدفوعة
+            if (filterType == "الكل" || filterType == "غير مدفوع") {
+              for (var invoice in courseData.unpaidInvoices) {
+                totalDue += double.parse(invoice.value);
+                transactions.add({
+                  "type": "غير مدفوع",
+                  "course": course.name,
+                  "amount": invoice.value,
+                  "date": invoice.dueDate,
+                  "description": "موعد الاستحقاق",
+                });
+              }
+            }
+          }
+
+          // ترتيب حسب التاريخ
+          //transactions.sort((a, b) => b["date"].compareTo(a["date"]));
+
+          return Scaffold(
+            backgroundColor: Colors.white,
+            body: Stack(
+              children: [
+                Column(
                   children: [
-                    FilterButton(
-                      label: "الكل",
-                      selected: filterType == "الكل",
-                      onTap: () => setState(() => filterType = "الكل"),
+                    HeaderWidget(
+                      totalPaid: totalPaid,
+                      totalDue: totalDue,
+                      selectedCourse: selectedCourse,
+                      filterType: filterType,
+                      filterKey: _filterKey,
+                      onFilterTap: toggleDropdown,
+                      textScale: textScale,
                     ),
-                    FilterButton(
-                      label: "مدفوع",
-                      selected: filterType == "مدفوع",
-                      onTap: () => setState(() => filterType = "مدفوع"),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.04,
+                        vertical: screenWidth * 0.02,
+                      ),
+                      child: Wrap(
+                        spacing: 12,
+                        children: [
+                          FilterButton(
+                            label: "الكل",
+                            selected: filterType == "الكل",
+                            onTap: () => setState(() => filterType = "الكل"),
+                            textScale: textScale,
+                          ),
+                          FilterButton(
+                            label: "مدفوع",
+                            selected: filterType == "مدفوع",
+                            onTap: () => setState(() => filterType = "مدفوع"),
+                            textScale: textScale,
+                          ),
+                          FilterButton(
+                            label: "غير مدفوع",
+                            selected: filterType == "غير مدفوع",
+                            onTap:
+                                () => setState(() => filterType = "غير مدفوع"),
+                            textScale: textScale,
+                          ),
+                        ],
+                      ),
                     ),
-                    FilterButton(
-                      label: "غير مدفوع",
-                      selected: filterType == "غير مدفوع",
-                      onTap: () => setState(() => filterType = "غير مدفوع"),
+                    Expanded(
+                      child:
+                          transactions.isEmpty
+                              ? Center(
+                                child: Text(
+                                  "لا توجد بيانات للعرض",
+                                  style: TextStyle(
+                                    fontSize: 14 * textScale,
+                                    color: Colors.grey.shade600,
+                                  ),
+                                ),
+                              )
+                              : ListView.builder(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.04,
+                                ),
+                                itemCount: transactions.length,
+                                itemBuilder: (context, index) {
+                                  return TransactionCard(
+                                    transaction: transactions[index],
+                                    textScale: textScale,
+                                  );
+                                },
+                              ),
                     ),
                   ],
                 ),
-              ),
-              Expanded(
-                child:
-                    transactions.isEmpty
-                        ? Center(
-                          child: Text(
-                            "لا توجد بيانات للعرض",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey.shade600,
-                            ),
-                          ),
-                        )
-                        : ListView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          itemCount: transactions.length,
-                          itemBuilder: (context, index) {
-                            return TransactionCard(
-                              transaction: transactions[index],
-                            );
-                          },
-                        ),
-              ),
-            ],
-          ),
-          if (showDropdown)
-            Positioned.fill(
-              child: GestureDetector(
-                onTap: toggleDropdown,
-                child: Container(color: Colors.transparent),
-              ),
+                if (showDropdown)
+                  Positioned.fill(
+                    child: GestureDetector(
+                      onTap: toggleDropdown,
+                      child: Container(color: Colors.transparent),
+                    ),
+                  ),
+                if (showDropdown)
+                  CourseDropdown(
+                    coursesData:
+                        coursesData
+                            .map((c) => {"name": c.course.name})
+                            .toList(), // ✅ تحويل لواجهة
+                    selectedCourse: selectedCourse,
+                    top: dropdownTop,
+                    left: dropdownLeft,
+                    onSelect: (name) {
+                      setState(() {
+                        selectedCourse = name;
+                        showDropdown = false;
+                      });
+                    },
+                  ),
+              ],
             ),
-          if (showDropdown)
-            CourseDropdown(
-              coursesData: coursesData,
-              selectedCourse: selectedCourse,
-              top: dropdownTop,
-              left: dropdownLeft,
-              onSelect: (name) {
-                setState(() {
-                  selectedCourse = name;
-                  showDropdown = false;
-                });
-              },
-            ),
-        ],
-      ),
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
     );
   }
 }

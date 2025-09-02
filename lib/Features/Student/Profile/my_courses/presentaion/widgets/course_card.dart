@@ -1,12 +1,12 @@
-import 'package:ajyal/Core/routes/route_constant.dart';
-import 'package:ajyal/Features/Student/Profile/my_courses/data/models/my_courses_model.dart';
+import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
-import 'package:go_router/go_router.dart';
+import 'package:ajyal/Features/Student/Profile/my_courses/data/models/my_courses_model.dart';
+import 'course_image.dart';
 import 'course_status_badge.dart';
 
 class CourseCard extends StatelessWidget {
-  final MyCoursesModel course;
+  final Course course;
   final Color backgroundColor;
 
   const CourseCard({
@@ -27,12 +27,7 @@ class CourseCard extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(20),
-                  ),
-                  child: Image.asset(course.scheduleImage, fit: BoxFit.cover),
-                ),
+                ImageProgram(course: course),
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Text(
@@ -57,6 +52,7 @@ class CourseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 30, left: 5, right: 5),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(30),
@@ -68,21 +64,21 @@ class CourseCard extends StatelessWidget {
           ),
         ],
       ),
-      padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(children: [CourseStatusBadge(course: course)]),
+          CourseStatusBadge(course: course),
           const SizedBox(height: 14),
           Text(
             course.name,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
-          Text(
-            "الشعبة: ${course.section}",
-            style: TextStyle(fontSize: 15, color: Colors.grey.shade700),
-          ),
+          if (course.classroomCourses.isNotEmpty)
+            Text(
+              "الشعبة: ${course.classroomCourses.first.classroom.classNumber}",
+              style: TextStyle(fontSize: 15, color: Colors.grey.shade700),
+            ),
           const SizedBox(height: 10),
           Align(
             alignment: Alignment.centerRight,
@@ -97,51 +93,7 @@ class CourseCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          Row(
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black87,
-                  elevation: 2,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 8,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-                onPressed: () {
-                  GoRouter.of(context).push(AppRouter.paymentsPage);
-                },
-                child: const Text(
-                  "دفع الفواتير",
-                  style: TextStyle(fontSize: 14),
-                ),
-              ),
-              const SizedBox(width: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  elevation: 2,
-                  backgroundColor: AppColor.primaryColor,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 10,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-                onPressed: () {},
-                child: const Text(
-                  "تفاصيل أكثر",
-                  style: TextStyle(fontSize: 14),
-                ),
-              ),
-            ],
-          ),
+          ActionButtons(context: context, courseId: course.id),
         ],
       ),
     );

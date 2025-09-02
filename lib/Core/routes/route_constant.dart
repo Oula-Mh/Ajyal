@@ -30,7 +30,7 @@ class AppRouter {
   static const linkStudentScanner = "/linkStudentScanner";
   static const parentHome = "/parentHome";
   static const myCoursesPage = "/MyCoursesPage";
-  static const paymentsPage = "/PaymentsPage";
+  static const unPaidInvoicesPage = "/UnPaidInvoicesPage";
   static const invoicesPage = "/InvoicesPage";
   static const parentNotification = "/parentNotification";
   static const contactUsPage = "/contactUsPage";
