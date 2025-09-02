@@ -128,7 +128,7 @@ abstract class Routing {
                       StripeLinkCubit(PaymentRepoimp(DioConsumer(Dio())))
                         ..payment(),
               // ..payment(),
-              child: const Payment(),
+              child: const PaymentStripe(),
             ),
       ),
       GoRoute(

@@ -1,7 +1,6 @@
 import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
-import 'package:ajyal/Core/utils/Function/functions.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Course/Data/Model/course_model.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
@@ -67,10 +66,6 @@ class SelectCoursePage extends StatelessWidget {
                         listener: (context, state) {
                           if (state is CourseSuccess) {
                             List<CourseModel> list = state.allcourses;
-                          } else {
-                            customAlert(context, "Something wrong happen", () {
-                              Navigator.of(context).pop();
-                            });
                           }
                         },
                         builder: (context, state) {

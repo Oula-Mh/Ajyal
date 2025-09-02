@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Payment extends StatefulWidget {
-  const Payment({super.key});
+class PaymentStripe extends StatefulWidget {
+  const PaymentStripe({super.key});
 
   @override
-  State<Payment> createState() => _PaymentState();
+  State<PaymentStripe> createState() => _PaymentState();
 }
 
-class _PaymentState extends State<Payment> {
+class _PaymentState extends State<PaymentStripe> {
   Future<void> openLink(String url) async {
     final Uri uri = Uri.parse(url);
 

@@ -11,7 +11,7 @@ class ExamCurrentDetailsCubit extends Cubit<ExamCurrentDetailsState> {
 
   Future<void> getExamCurrentDetails({required int id}) async {
     emit(ExamCurrentDetailsLoading());
-    final response = await examRepo.getExamCurrentDetails(5);
+    final response = await examRepo.getExamCurrentDetails(id);
     if (isClosed) {
       return;
     }
