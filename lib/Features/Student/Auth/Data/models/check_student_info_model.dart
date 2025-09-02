@@ -40,6 +40,7 @@ class Data {
   String? address;
   String? fatherName;
   String? motherName;
+  String? classLevel;
   String? createdAt;
 
   Data({
@@ -53,6 +54,7 @@ class Data {
     this.address,
     this.fatherName,
     this.motherName,
+    this.classLevel,
     this.createdAt,
   });
 
@@ -67,6 +69,7 @@ class Data {
     address = json["address"];
     fatherName = json["father_name"];
     motherName = json["mother_name"];
+    classLevel = json["class_level"];
     createdAt = json["created_at"];
   }
 
@@ -86,6 +89,7 @@ class Data {
     _data["address"] = address;
     _data["father_name"] = fatherName;
     _data["mother_name"] = motherName;
+    _data["class_level"] = classLevel;
     _data["created_at"] = createdAt;
     return _data;
   }
@@ -101,6 +105,7 @@ class Data {
     String? address,
     String? fatherName,
     String? motherName,
+    String? classLevel,
     String? createdAt,
   }) => Data(
     id: id ?? this.id,
@@ -113,6 +118,7 @@ class Data {
     address: address ?? this.address,
     fatherName: fatherName ?? this.fatherName,
     motherName: motherName ?? this.motherName,
+    classLevel: classLevel ?? this.classLevel,
     createdAt: createdAt ?? this.createdAt,
   );
 }

@@ -12,6 +12,9 @@ class MyCoursesCubit extends Cubit<MyCoursesState> {
   Future<void> getMyCoursesDetails() async {
     emit(MyCoursesLoading());
     final response = await profileRepo.getMyCourses();
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(MyCoursesFailure(errMsg: err.errorMessage)),
       (myCourses) => emit(MyCoursesSuccess(myCoursesModel: myCourses)),

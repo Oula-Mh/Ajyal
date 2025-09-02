@@ -11,7 +11,10 @@ class ExamCurrentDetailsCubit extends Cubit<ExamCurrentDetailsState> {
 
   Future<void> getExamCurrentDetails({required int id}) async {
     emit(ExamCurrentDetailsLoading());
-    final response = await examRepo.getExamCurrentDetails(id);
+    final response = await examRepo.getExamCurrentDetails(5);
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(ExamCurrentDetailsFailure(errMsg: err.errorMessage)),
       (exam) => emit(ExamCurrentDetailsSuccess(examCurrentDetailsModel: exam)),

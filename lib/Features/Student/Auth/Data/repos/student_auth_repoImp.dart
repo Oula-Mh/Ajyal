@@ -50,10 +50,8 @@ class StudentAuthRepoimp implements StudentAuthRepo {
   Future<Either<Failure, String>> login(Map data) async {
     try {
       final response = await api.post(EndPoints.login, data);
-      print("login in repo implement\n");
-      print(response);
+
       String token = response['data']['token'];
-      print("token : $token\n");
       await getit<TokenHandler>().saveToken(
         TokenHandler.studentTokenKey,
         token,
@@ -73,6 +71,11 @@ class StudentAuthRepoimp implements StudentAuthRepo {
       final response = await api.post(EndPoints.register, data);
       print(response);
       print("register Done !!");
+      String token = response['data']['token'];
+      await getit<TokenHandler>().saveToken(
+        TokenHandler.studentTokenKey,
+        token,
+      );
       return Right("register Done !!");
     } on Exception catch (e) {
       if (e is DioException) {

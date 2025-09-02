@@ -39,7 +39,9 @@ class ServerFailure extends Failure {
     if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
       return ServerFailure(response['message']);
     } else if (statusCode == 404) {
-      return ServerFailure('طلبك غير موجود يرجى المحاولة مرة أخرى');
+      return ServerFailure(response['message']);
+    } else if (statusCode == 422) {
+      return ServerFailure(response['message']);
     } else if (statusCode == 500) {
       return ServerFailure("خطأ في الخادم الداخلي يرجى المحاولة مرة أخرى");
     } else {

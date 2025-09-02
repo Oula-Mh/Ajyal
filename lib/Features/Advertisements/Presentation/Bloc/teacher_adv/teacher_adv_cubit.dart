@@ -11,6 +11,9 @@ class TeacherAdvCubit extends Cubit<TeacherAdvState> {
   Future<void> getTeacherAdv({int page = 1}) async {
     emit(TeacherAdvLoading());
     final response = await advRepo.getAllTeacherAdv();
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(TeacherAdvFailure(errMssg: err.errorMessage)),
       (advs) => emit(TeacherAdvSuccess(model: advs)),

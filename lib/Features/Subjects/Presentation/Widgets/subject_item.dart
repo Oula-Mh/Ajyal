@@ -43,7 +43,7 @@ class SubjectCard extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             Text(
-              subject.description!,
+              subject.description ?? "...",
               style: TextStyle(fontSize: 12, color: Colors.grey[600]),
             ),
             ElevatedButton(

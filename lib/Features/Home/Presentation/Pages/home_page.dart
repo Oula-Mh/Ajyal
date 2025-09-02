@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
               key: "selectedCourseId",
             );
             return SubjectCubit(SubjectRepoimp(DioConsumer(Dio())))
-              ..fetchSubjects(selectedId.id);
+              ..fetchSubjects(selectedId);
           },
         ),
         BlocProvider(

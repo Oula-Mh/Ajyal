@@ -16,6 +16,9 @@ class DetailsExamParentCubit extends Cubit<DetailsExamParentState> {
       idStudent,
       idSubject,
     );
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(DetailsExamParentFailure(errMsg: err.errorMessage)),
       (exam) => emit(DetailsExamParentSuccess(examDetailsParentModel: exam)),

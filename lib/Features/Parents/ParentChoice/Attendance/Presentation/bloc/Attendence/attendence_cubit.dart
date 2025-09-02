@@ -11,6 +11,9 @@ class AttendenceCubit extends Cubit<AttendenceState> {
   Future<void> getStudentAbsence() async {
     emit(Loading());
     var response = await attendenceRepo.getStudentAbsence();
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(GetAttendenceFail(errMessage: err.errorMessage)),
       (model) => emit(GetAllAttendenceDays(model: model)),

@@ -11,6 +11,9 @@ class CourseAdvCubit extends Cubit<CourseAdvState> {
   Future<void> getCourseAdv({int page = 1}) async {
     emit(AdvLoading());
     final response = await advRepo.getAllCourseAdv();
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(AdvFailure(errMssg: err.errorMessage)),
       (advs) => emit(CourseAdvSuccess(model: advs)),

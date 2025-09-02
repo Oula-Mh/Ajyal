@@ -20,6 +20,9 @@ class PdfFileCubit extends Cubit<PdfFileState> {
   Future<void> getSubjectPdfFile(int id) async {
     emit(PdfFileLoading());
     var response = await pdfRepo.getPdfFile(id);
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(PdfFileFail(errMessage: err.errorMessage)),
       (model) => emit(PdfFileSuccess(model: model)),

@@ -10,6 +10,9 @@ class StudentAllStddevCubit extends Cubit<StudentAllStddevState> {
   Future<void> getStddevBySubject(int subjectId) async {
     emit(StudentAllStddevLoading());
     final response = await analysisRepo.getStddevBySubject(subjectId);
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(StudentAllStddevFail(errMessage: err.errorMessage)),
       (result) => emit(StudentAllStddevSuccess(model: result)),

@@ -12,6 +12,9 @@ class SubjectCubit extends Cubit<SubjectState> {
   Future<void> subjectForTeacher(int id) async {
     emit(SubjectLoading());
     var response = await subjectRepo.getSubjectForTeacher(id);
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(SubjectError(err.errorMessage)),
       (subjects) => emit(SubjectLoadedSuccess(subjects: subjects)),
@@ -22,6 +25,9 @@ class SubjectCubit extends Cubit<SubjectState> {
     emit(SubjectLoading());
     var response = await subjectRepo.getSubjects(courseId);
     print("second loading=======");
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(SubjectError(err.errorMessage)),
       (subjects) => emit(SubjectLoadedSuccess(subjects: subjects)),

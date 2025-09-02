@@ -14,6 +14,9 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> getStudentProfile() async {
     emit(ProfileLoading());
     var response = await studentRepo.getStudentProfile();
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(ProfileFail(errorMessage: err.errorMessage)),
       (model) => emit(StudentProfileSuccess(model: model)),
@@ -23,6 +26,9 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> getTeacherProfile(int id) async {
     emit(ProfileLoading());
     var response = await studentRepo.getTeacherProfile(id);
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(ProfileFail(errorMessage: err.errorMessage)),
       (model) => emit(TeacherProfileSuccess(model: model)),
@@ -31,6 +37,9 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> logout() async {
     var response = await studentRepo.logout();
+    if (isClosed) {
+      return;
+    }
     response.fold((err) => "Fail to logout", (done) => emit(LogoutDone()));
   }
 }

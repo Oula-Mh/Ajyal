@@ -10,6 +10,9 @@ class AllQuizzCubitCubit extends Cubit<AllQuizzCubitState> {
   Future<void> getQuizzesForAnalysis(int subjectId) async {
     emit(AllQuizzLoading());
     final response = await analysisRepo.getQuizForAnalyis(subjectId);
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(AllQuizzFail(errMessage: err.errorMessage)),
       (result) => emit(AllQuizzSuccess(model: result)),

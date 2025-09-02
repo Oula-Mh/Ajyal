@@ -11,6 +11,9 @@ class StripeLinkCubit extends Cubit<StripeLinkState> {
   Future<void> payment() async {
     emit(Loading());
     var response = await repoimp.payment();
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(Fail(errMessage: err.errorMessage)),
       (model) => emit(Success(model)),

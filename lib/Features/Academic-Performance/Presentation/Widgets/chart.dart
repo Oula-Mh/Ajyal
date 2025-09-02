@@ -40,7 +40,12 @@ class ExamLineChartPage extends StatelessWidget {
               LineChartData(
                 minY: 0,
                 maxY: maxScore + 10,
-                gridData: FlGridData(show: true),
+                gridData: FlGridData(
+                  show: true,
+                  drawVerticalLine: true,
+                  drawHorizontalLine: true,
+                  horizontalInterval: 20, // 👈 نفس قيمة interval في محور Y
+                ),
                 borderData: FlBorderData(
                   show: true,
                   border: Border.all(color: Colors.grey),

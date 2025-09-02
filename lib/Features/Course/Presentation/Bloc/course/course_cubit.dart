@@ -16,29 +16,57 @@ class CourseCubit extends Cubit<CourseState> {
   CourseModel? selectedCourse;
   List<CourseModel> coursesList = [];
 
+  // Future<void> getAllCourse() async {
+  //   emit(CourseLoading());
+  //   var response = await courseRepo.getAllCourses();
+  //   if (isClosed) {
+  //     // If it's closed, do nothing. Just exit the function.
+  //     return;
+  //   }
+  //   response.fold((err) => emit(CourseFail(errMsg: err.errorMessage)), (
+  //     courses,
+  //   ) {
+  //     ///  selectedCourse = courses[0];
+
+  //     final savedId = getit<CacheHelper>().getData(key: "selectedCourseId");
+  //     coursesList = courses;
+  //     final foundCourse = courses.firstWhere(
+  //       (c) => c.id == savedId,
+  //       orElse: () => courses.first,
+  //     );
+
+  //     selectedCourse = foundCourse;
+  //     selectedCourse = courses.first;
+
+  //     emit(CourseSuccess(allcourses: courses));
+  //   });
+  // }
+
   Future<void> getAllCourse() async {
     emit(CourseLoading());
-    var response = await courseRepo.getAllCourses();
-    if (isClosed) {
-      // If it's closed, do nothing. Just exit the function.
-      return;
-    }
-    response.fold((err) => emit(CourseFail(errMsg: err.errorMessage)), (
-      courses,
-    ) {
-      ///  selectedCourse = courses[0];
+    final result = await courseRepo.getAllCourses();
 
-      final savedId = getit<CacheHelper>().getData(key: "selectedCourseId");
+    if (isClosed) return;
+
+    result.fold((failure) => emit(CourseFail(errMsg: failure.errorMessage)), (
+      courses,
+    ) async {
       coursesList = courses;
+
+      final savedCourseId = getit<CacheHelper>().getData(
+        key: "selectedCourseId",
+      );
+
+      // محاولة إيجاد الكورس المحفوظ
       final foundCourse = courses.firstWhere(
-        (c) => c.id == savedId,
+        (course) => course.id == savedCourseId,
         orElse: () => courses.first,
       );
 
+      // تعيين الكورس المختار (مرة واحدة فقط)
       selectedCourse = foundCourse;
-      selectedCourse = courses.first;
 
-      emit(CourseSuccess(allcourses: courses));
+      emit(CourseSuccess(allcourses: coursesList));
     });
   }
 

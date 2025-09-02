@@ -12,6 +12,9 @@ class InvoicesCubit extends Cubit<InvoicesState> {
   Future<void> getinvoices({required int idStudent}) async {
     emit(InvoicesLoading());
     final response = await profileRepo.getInvoices(idStudent);
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(InvoicesFailure(errMsg: err.errorMessage)),
       (invoices) => emit(InvoicesSuccess(invoicesModel: invoices)),

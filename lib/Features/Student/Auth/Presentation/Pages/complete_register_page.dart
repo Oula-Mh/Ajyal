@@ -1,7 +1,9 @@
+import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/styles/app_text_style.dart';
 import 'package:ajyal/Core/utils/Function/functions.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Custom/Custom_ui.dart/gradient_background_widget.dart';
 import 'package:ajyal/Custom/Custom_widgets/auth/custom_auth_bttn.dart';
 import 'package:ajyal/Features/Student/Auth/Data/models/check_student_info_model.dart';
@@ -55,9 +57,16 @@ class CompleteRegisterPage extends StatelessWidget {
                             Navigator.of(context).pop();
                           });
                         } else if (state is RegisterSuccess) {
+                          getit<CacheHelper>().saveData(
+                            key: "role",
+                            value: "Student",
+                          );
                           GoRouter.of(
                             context,
-                          ).pushReplacement(AppRouter.loginPage);
+                          ).pushReplacement(AppRouter.configPage);
+                          GoRouter.of(
+                            context,
+                          ).pushReplacement(AppRouter.configPage);
                         }
                       },
                       builder: (context, state) {
@@ -73,7 +82,6 @@ class CompleteRegisterPage extends StatelessWidget {
                                   ? Center(child: CircularProgressIndicator())
                                   : CustomAuthBttn(
                                     onPressed: () {
-                                      print("object");
                                       cubit.register(
                                         model.data!.userId.toString(),
                                         model.data!.accessCode.toString(),

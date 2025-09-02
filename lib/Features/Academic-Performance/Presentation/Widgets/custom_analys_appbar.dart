@@ -1,6 +1,5 @@
 import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
-import 'package:ajyal/Features/Course/Data/Model/course_model.dart';
 import 'package:flutter/material.dart';
 
 class CustomAnalysAppbar extends StatelessWidget {
@@ -22,10 +21,6 @@ class CustomAnalysAppbar extends StatelessWidget {
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
-        ),
-        IconButton(
-          onPressed: onPressed,
-          icon: Icon(Icons.menu, color: Colors.white),
         ),
       ],
     );

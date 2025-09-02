@@ -91,7 +91,7 @@ class _AnalysPerfBodyState extends State<AnalysPerfBody> {
                           ),
                           //====== الاختبارات
                           const SizedBox(height: 24),
-                          // QuizListWidget(currentTabIndex: currentTabIndex),
+                          QuizListWidget(currentTabIndex: currentTabIndex),
                           const SizedBox(height: 24),
                           //====== الرسم البياني
                           ChartWidget(

@@ -11,7 +11,10 @@ class ExamPreCubit extends Cubit<ExamPreState> {
 
   Future<void> getExamPre({required int id}) async {
     emit(ExamPreLoading());
-    final response = await examRepo.getExamPre(id);
+    final response = await examRepo.getExamPre(5);
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(ExamPreFailure(errMsg: err.errorMessage)),
       (exam) => emit(ExamPreSuccess(examPreModel: exam)),

@@ -15,6 +15,9 @@ class UnPaidInvoicesCubit extends Cubit<UnPaidInvoicesState> {
   }) async {
     emit(UnPaidInvoicesLoading());
     final response = await profileRepo.getunPaidInvoices(idStdent, idCourse);
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(UnPaidInvoicesFailure(errMsg: err.errorMessage)),
       (unPaid) => emit(UnPaidInvoicesSuccess(unpaidInvoicesModel: unPaid)),

@@ -11,6 +11,9 @@ class GeneralAdvCubit extends Cubit<GeneralAdvState> {
   Future<void> getGeneralAdv({int page = 1}) async {
     emit(GeneralAdvLoading());
     final response = await advRepo.getAllGeneralAdv();
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(GeneralAdvFailure(errMssg: err.errorMessage)),
       (advs) => emit(GeneralAdvSuccess(model: advs)),

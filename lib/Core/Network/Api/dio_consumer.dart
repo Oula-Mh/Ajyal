@@ -12,6 +12,8 @@ class DioConsumer implements Api {
     _dio = dio;
     _dio.options = BaseOptions(
       baseUrl: EndPoints.baseUrl,
+      connectTimeout: const Duration(seconds: 30), // 👈 not zero
+      receiveTimeout: const Duration(seconds: 30),
       receiveDataWhenStatusError: true,
       headers: {
         'Content-Type': 'application/json',

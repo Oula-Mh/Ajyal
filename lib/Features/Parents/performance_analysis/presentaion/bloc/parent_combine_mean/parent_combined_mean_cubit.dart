@@ -26,7 +26,9 @@ class ParentCombinedMeanCubit extends Cubit<ParentCombinedMeanState> {
       final subjectMeanResponse =
           responses[0] as Either<Failure, List<SubjectMeanParentModel>>;
       final totalMeanResponse = responses[1] as Either<Failure, double>;
-
+      if (isClosed) {
+        return;
+      }
       subjectMeanResponse.fold(
         (err) => emit(ParentCombinedMeanFailure(errMsg: err.errorMessage)),
         (subjects) {

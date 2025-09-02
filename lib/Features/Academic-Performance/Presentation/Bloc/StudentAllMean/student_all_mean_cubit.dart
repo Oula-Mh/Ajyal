@@ -10,6 +10,9 @@ class StudentAllMeanCubit extends Cubit<StudentAllMeanState> {
   Future<void> getAverageBySubject(int subjectId) async {
     emit(StudentAllMeanLoading());
     final response = await analysisRepo.getAverageBySubject(subjectId);
+    if (isClosed) {
+      return;
+    }
     response.fold(
       (err) => emit(StudentAllMeanFail(errMessage: err.errorMessage)),
       (result) => emit(StudentAllMeanSuccess(model: result)),

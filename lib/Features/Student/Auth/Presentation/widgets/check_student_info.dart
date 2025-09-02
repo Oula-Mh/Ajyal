@@ -25,7 +25,7 @@ class CheckStudentInfo extends StatelessWidget {
           ],
         ),
         Text(
-          "الصف : الثالث الثانوي / علمي",
+          "الصف : ${model.data!.classLevel}",
           style: Styles.meduimWhite.copyWith(color: AppColor.black1),
         ),
         SizedBox(height: 20),

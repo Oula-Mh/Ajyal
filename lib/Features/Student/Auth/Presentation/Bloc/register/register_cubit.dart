@@ -48,7 +48,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     emit(RegisterLoading());
     final response = await studentRepo.register({
       "user_id": userId,
-      "access_code": codeController.text,
+      "access_code": acccessCode,
       "password": passWordController.text,
       "password_confirmation": rePassWordController.text,
     });
