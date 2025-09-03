@@ -278,6 +278,145 @@
 //   }
 // }
 
+// import 'dart:async';
+// import 'package:ajyal/Core/routes/route_constant.dart';
+// import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_current/exam_nav_bar.dart';
+// import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_current/header_widget.dart';
+// import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_current/questions_page_view.dart';
+// import 'package:ajyal/Features/Exam/utils/question_utils.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:go_router/go_router.dart';
+// import '../Bloc/exam_current_details/exam_current_details_cubit.dart';
+
+// class ExamCurrentPage extends StatefulWidget {
+//   final int totalTime;
+//   final int initialTime;
+//   final String name;
+//   const ExamCurrentPage({
+//     super.key,
+//     required this.totalTime,
+//     required this.initialTime,
+//     required this.name,
+//   });
+
+//   @override
+//   State<ExamCurrentPage> createState() => _ExamCurrentPageState();
+// }
+
+// class _ExamCurrentPageState extends State<ExamCurrentPage>
+//     with TickerProviderStateMixin {
+//   final PageController _pageController = PageController();
+//   late final int totalTime;
+//   late int timeLeft;
+//   late final AnimationController _controller;
+//   Timer? _timer;
+//   bool _examEnded = false;
+//   int _currentPage = 0;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     totalTime = widget.totalTime;
+//     timeLeft = widget.initialTime.clamp(0, totalTime);
+
+//     _controller = AnimationController(
+//       vsync: this,
+//       duration: Duration(seconds: totalTime),
+//     )..forward(from: 1 - timeLeft / totalTime);
+
+//     _startTimer();
+//   }
+
+//   void _startTimer() {
+//     _timer?.cancel();
+//     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+//       if (timeLeft > 0) {
+//         setState(() => timeLeft--);
+//       } else {
+//         _endExam();
+//       }
+//     });
+//   }
+
+//   void _endExam() {
+//     if (_examEnded) return;
+//     _examEnded = true;
+
+//     final state = context.read<ExamCurrentDetailsCubit>().state;
+//     if (state is ExamCurrentDetailsSuccess) {
+//       GoRouter.of(
+//         context,
+//       ).go(AppRouter.submitExamPage, extra: state.examCurrentDetailsModel);
+//     }
+//   }
+
+//   @override
+//   void dispose() {
+//     _timer?.cancel();
+//     _controller.dispose();
+//     _pageController.dispose();
+//     super.dispose();
+//   }
+
+//   List<Map<String, dynamic>> get _allSubQuestions {
+//     final state = context.read<ExamCurrentDetailsCubit>().state;
+//     return state is ExamCurrentDetailsSuccess
+//         ? buildAllSubQuestions(state.examCurrentDetailsModel.questions)
+//         : [];
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return WillPopScope(
+//       onWillPop: () async {
+//         final shouldExit = await showConfirmDialog(
+//           context: context,
+//           title: "تأكيد الخروج",
+//           content: "هل تريد إنهاء الامتحان والخروج؟",
+//           confirmText: "نعم",
+//           cancelText: "لا",
+//         );
+//         if (shouldExit) _endExam();
+//         return false;
+//       },
+//       child: Scaffold(
+//         backgroundColor: Colors.white,
+//         body: SafeArea(
+//           child: Column(
+//             children: [
+//               HeaderCurrentExam(
+//                 name: widget.name,
+//                 controller: _controller,
+//                 timeLeft: timeLeft,
+//                 totalTime: totalTime,
+//                 onSubmit: _endExam,
+//               ),
+//               Expanded(
+//                 child: QuestionsPageView(
+//                   pageController: _pageController,
+//                   allSubQuestions: _allSubQuestions,
+//                   timeLeft: timeLeft,
+//                   onOptionSelected:
+//                       (sub, index) =>
+//                           setState(() => sub.userSelectedIndex = index),
+//                   onPageChanged:
+//                       (index) => setState(() => _currentPage = index),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//         bottomNavigationBar: ExamNavBar(
+//           currentPage: _currentPage,
+//           pageController: _pageController,
+//           allSubQuestions: _allSubQuestions,
+//         ),
+//       ),
+//     );
+//   }
+// }
+
 import 'dart:async';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_current/exam_nav_bar.dart';
@@ -287,12 +426,14 @@ import 'package:ajyal/Features/Exam/utils/question_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 import '../Bloc/exam_current_details/exam_current_details_cubit.dart';
 
 class ExamCurrentPage extends StatefulWidget {
   final int totalTime;
   final int initialTime;
   final String name;
+
   const ExamCurrentPage({
     super.key,
     required this.totalTime,
@@ -359,13 +500,6 @@ class _ExamCurrentPageState extends State<ExamCurrentPage>
     super.dispose();
   }
 
-  List<Map<String, dynamic>> get _allSubQuestions {
-    final state = context.read<ExamCurrentDetailsCubit>().state;
-    return state is ExamCurrentDetailsSuccess
-        ? buildAllSubQuestions(state.examCurrentDetailsModel.questions)
-        : [];
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -383,35 +517,79 @@ class _ExamCurrentPageState extends State<ExamCurrentPage>
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
-          child: Column(
-            children: [
-              HeaderCurrentExam(
-                name: widget.name,
-                controller: _controller,
-                timeLeft: timeLeft,
-                totalTime: totalTime,
-                onSubmit: _endExam,
-              ),
-              Expanded(
-                child: QuestionsPageView(
-                  pageController: _pageController,
-                  allSubQuestions: _allSubQuestions,
-                  timeLeft: timeLeft,
-                  onOptionSelected:
-                      (sub, index) =>
-                          setState(() => sub.userSelectedIndex = index),
-                  onPageChanged:
-                      (index) => setState(() => _currentPage = index),
-                ),
-              ),
-            ],
+          child: BlocBuilder<ExamCurrentDetailsCubit, ExamCurrentDetailsState>(
+            builder: (context, state) {
+              if (state is ExamCurrentDetailsLoading) {
+                return Center(
+                  child: Lottie.asset(
+                    'assets/lottie/Loading Dots Blue.json',
+                    repeat: true,
+                  ),
+                );
+              } else if (state is ExamCurrentDetailsFailure) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.error, color: Colors.red, size: 40),
+                      const SizedBox(height: 8),
+                      Text(
+                        state.errMsg,
+                        style: const TextStyle(fontSize: 14),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                );
+              } else if (state is ExamCurrentDetailsSuccess) {
+                final allSubQuestions = buildAllSubQuestions(
+                  state.examCurrentDetailsModel.questions,
+                );
+
+                return Column(
+                  children: [
+                    HeaderCurrentExam(
+                      name: widget.name,
+                      controller: _controller,
+                      timeLeft: timeLeft,
+                      totalTime: totalTime,
+                      onSubmit: _endExam,
+                    ),
+                    Expanded(
+                      child: QuestionsPageView(
+                        pageController: _pageController,
+                        allSubQuestions: allSubQuestions,
+                        timeLeft: timeLeft,
+                        onOptionSelected:
+                            (sub, index) =>
+                                setState(() => sub.userSelectedIndex = index),
+                        onPageChanged:
+                            (index) => setState(() => _currentPage = index),
+                      ),
+                    ),
+                  ],
+                );
+              }
+              return const SizedBox.shrink();
+            },
           ),
         ),
-        bottomNavigationBar: ExamNavBar(
-          currentPage: _currentPage,
-          pageController: _pageController,
-          allSubQuestions: _allSubQuestions,
-        ),
+        bottomNavigationBar:
+            BlocBuilder<ExamCurrentDetailsCubit, ExamCurrentDetailsState>(
+              builder: (context, state) {
+                if (state is ExamCurrentDetailsSuccess) {
+                  final allSubQuestions = buildAllSubQuestions(
+                    state.examCurrentDetailsModel.questions,
+                  );
+                  return ExamNavBar(
+                    currentPage: _currentPage,
+                    pageController: _pageController,
+                    allSubQuestions: allSubQuestions,
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
       ),
     );
   }
