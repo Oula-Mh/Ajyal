@@ -13,6 +13,6 @@ class SubmitExamFailure extends SubmitExamState {
 }
 
 class SubmitExamSuccess extends SubmitExamState {
-  final int message;
+  final double message;
   SubmitExamSuccess(this.message);
 }

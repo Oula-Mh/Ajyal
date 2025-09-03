@@ -67,3 +67,44 @@ Future<bool> showConfirmDialog({
       ) ??
       false;
 }
+
+/* ********************************************* */
+
+/// صياغة الوقت "دقائق:ثواني"
+String formatTime(int seconds) {
+  int minutes = seconds ~/ 60;
+  int secs = seconds % 60;
+  return "$minutes:${secs.toString().padLeft(2, '0')}";
+}
+
+/// لون المؤقت بناءً على الوقت المتبقي
+Color getTimerColor(int totalTime, int timeLeft) {
+  final halfTime = totalTime / 2;
+  final quarterTime = totalTime / 4;
+
+  if (timeLeft <= quarterTime) {
+    return Colors.red;
+  } else if (timeLeft <= halfTime) {
+    return Colors.orange;
+  } else {
+    return const Color.fromARGB(255, 184, 138, 168);
+  }
+}
+
+/// تجهيز جميع الأسئلة الفرعية والفرعية-الرئيسية
+List<Map<String, dynamic>> buildAllSubQuestions(
+  List<QuestionCurrentModel> questions,
+) {
+  final allSubQuestions = <Map<String, dynamic>>[];
+
+  for (var q in questions) {
+    if (q.children.isEmpty && q.parentQuestionId == null) {
+      allSubQuestions.add({"main": q, "sub": q});
+    } else {
+      for (var child in q.children) {
+        allSubQuestions.add({"main": q, "sub": child});
+      }
+    }
+  }
+  return allSubQuestions;
+}

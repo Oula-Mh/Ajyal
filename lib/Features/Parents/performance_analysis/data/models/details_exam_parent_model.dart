@@ -31,7 +31,7 @@ class ExamParentModel {
   final String quizName;
   final String examDate;
   final double? result;
-  final double maxScore;
+  final int maxScore;
 
   ExamParentModel({
     required this.id,
@@ -48,7 +48,7 @@ class ExamParentModel {
       curriculumId: json['curriculum_id'],
       quizName: json['quiz_name'],
       examDate: json['exam_date'],
-      result: json['result'],
+      result: (json['result'] as num).toDouble(),
       maxScore: json['max_score'],
     );
   }

@@ -19,7 +19,7 @@ class QuestionCurrentModel {
   final int? parentQuestionId;
   final String mark;
   final String questionText;
-  final String hint;
+  final String? hint;
   final String? image;
   final List<ChoiceCurrentModel> choices;
   final List<QuestionCurrentModel> children;
@@ -31,7 +31,7 @@ class QuestionCurrentModel {
     this.parentQuestionId,
     required this.mark,
     required this.questionText,
-    required this.hint,
+    this.hint,
     this.image,
     required this.choices,
     required this.children,
@@ -46,7 +46,12 @@ class QuestionCurrentModel {
       mark: json['mark'],
       questionText: json['question_text'],
       hint: json['hint'],
-      image: json['image'],
+      image:
+          json['image'] == null
+              ? null
+              : (json['image'] is Map
+                  ? json['image']['path'].toString()
+                  : json['image'].toString()),
       choices:
           (json['choices'] as List? ?? [])
               .map((c) => ChoiceCurrentModel.fromJson(c))

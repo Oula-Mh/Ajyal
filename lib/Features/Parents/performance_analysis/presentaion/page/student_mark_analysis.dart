@@ -1,3 +1,5 @@
+import 'package:ajyal/Cache/cache_helper.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Parents/performance_analysis/presentaion/bloc/parent_combine_mean/parent_combined_mean_cubit.dart';
 import 'package:ajyal/Features/Parents/performance_analysis/presentaion/widgets/%D8%A7ighlight_row.dart';
 import 'package:ajyal/Features/Parents/performance_analysis/presentaion/widgets/main_card_widget.dart';
@@ -77,9 +79,11 @@ class _StudentMarkAnalysisState extends State<StudentMarkAnalysis> {
   @override
   void initState() {
     super.initState();
-    // final idStudent = getit<CacheHelper>().getData(key: "studentId");
 
-    context.read<ParentCombinedMeanCubit>().fetchAll(1, 1);
+    context.read<ParentCombinedMeanCubit>().fetchAll(
+      int.parse(getit<CacheHelper>().getData(key: "studentId")),
+      1,
+    );
   }
 
   @override
@@ -94,7 +98,7 @@ class _StudentMarkAnalysisState extends State<StudentMarkAnalysis> {
         if (state is ParentCombinedMeanLoading) {
           return const ShimmerLoadingWidget();
         } else if (state is ParentCombinedMeanFailure) {
-          return Center(child: Text("خطأ: ${state.errMsg}"));
+          return Scaffold(body: Center(child: Text("خطأ: ${state.errMsg}")));
         } else if (state is ParentCombinedMeanSuccess) {
           final subjects = state.subjects;
           final average = state.totalMean;

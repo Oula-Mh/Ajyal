@@ -206,8 +206,10 @@ import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/in
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// ignore: must_be_immutable
 class InvoicesPage extends StatefulWidget {
-  const InvoicesPage({super.key});
+  InvoicesPage({required this.idStudent, super.key});
+  int idStudent;
 
   @override
   State<InvoicesPage> createState() => _InvoicesPageState();
@@ -238,7 +240,9 @@ class _InvoicesPageState extends State<InvoicesPage> {
   void initState() {
     super.initState();
     // جلب البيانات أول ما تفتح الصفحة
-    context.read<InvoicesCubit>().getinvoices(idStudent: 1); // حط id الطالب
+    context.read<InvoicesCubit>().getinvoices(
+      idStudent: widget.idStudent,
+    ); // حط id الطالب
   }
 
   @override
@@ -252,7 +256,7 @@ class _InvoicesPageState extends State<InvoicesPage> {
             textScale: textScale,
           ); // Shimmer ضمن Scaffold كامل
         } else if (state is InvoicesFailure) {
-          return Center(child: Text("خطأ: ${state.errMsg}"));
+          return Scaffold(body: Center(child: Text("خطأ: ${state.errMsg}")));
         } else if (state is InvoicesSuccess) {
           final coursesData = state.invoicesModel.data; // ✅ البيانات من الباك
 
@@ -297,9 +301,6 @@ class _InvoicesPageState extends State<InvoicesPage> {
               }
             }
           }
-
-          // ترتيب حسب التاريخ
-          //transactions.sort((a, b) => b["date"].compareTo(a["date"]));
 
           return Scaffold(
             backgroundColor: Colors.white,

@@ -1,3 +1,4 @@
+import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/Network/Errors/failure_handle.dart';
 import 'package:ajyal/Core/Network/token_handle.dart';
 import 'package:ajyal/Core/Network/Api/api_consumer.dart';
@@ -52,6 +53,11 @@ class StudentAuthRepoimp implements StudentAuthRepo {
       final response = await api.post(EndPoints.login, data);
 
       String token = response['data']['token'];
+      String id = (response['data']['student']['id']).toString();
+      await getit<CacheHelper>().saveData(key: "studentIdbase", value: id);
+
+      print("😎token : $token\n");
+      // TokenHandle().setToken(token);
       await getit<TokenHandler>().saveToken(
         TokenHandler.studentTokenKey,
         token,

@@ -386,6 +386,7 @@ abstract class Routing {
             child: ExamCurrentPage(
               initialTime: data['initialTime'] as int,
               totalTime: data['totalTime'] as int,
+              name: data['name'] as String,
             ),
           );
         },
@@ -505,13 +506,14 @@ abstract class Routing {
 
       GoRoute(
         path: AppRouter.invoicesPage,
-        builder:
-            (context, state) => BlocProvider(
-              create:
-                  (context) =>
-                      InvoicesCubit(ProfileRepoimp(DioConsumer(Dio()))),
-              child: InvoicesPage(),
-            ),
+        builder: (context, state) {
+          final id = state.extra as int;
+          return BlocProvider(
+            create:
+                (context) => InvoicesCubit(ProfileRepoimp(DioConsumer(Dio()))),
+            child: InvoicesPage(idStudent: id),
+          );
+        },
       ),
 
       GoRoute(

@@ -37,6 +37,7 @@ class CurrentExamListWidget extends StatelessWidget {
                           exam.durationMinutes * 60 -
                           DateTime.now().difference(exam.startTime).inSeconds,
                       'totalTime': exam.durationMinutes * 60,
+                      'name': exam.name,
                     },
                   );
                 },

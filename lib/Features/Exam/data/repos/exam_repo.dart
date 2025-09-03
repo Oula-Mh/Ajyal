@@ -13,5 +13,5 @@ abstract class ExamRepo {
   Future<Either<Failure, ExamCurrentDetailsModel>> getExamCurrentDetails(
     int id,
   );
-  Future<Either<Failure, int>> submitExam(Map data);
+  Future<Either<Failure, double>> submitExam(Map data);
 }

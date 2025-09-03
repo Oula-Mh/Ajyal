@@ -1,3 +1,4 @@
+import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/Network/token_handle.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
@@ -44,6 +45,7 @@ class ListProfileField extends StatelessWidget {
           isNeedArrow: true,
         ),
         SizedBox(height: 10),
+
         ProfileField(
           onTap: () {
             GoRouter.of(context).push(AppRouter.myCoursesPage);
@@ -54,15 +56,22 @@ class ListProfileField extends StatelessWidget {
           isNeedArrow: true,
         ),
         SizedBox(height: 10),
+
         ProfileField(
           onTap: () {
-            GoRouter.of(context).push(AppRouter.invoicesPage);
+            GoRouter.of(context).push(
+              AppRouter.invoicesPage,
+              extra: int.parse(
+                getit<CacheHelper>().getData(key: "studentIdbase"),
+              ),
+            );
           },
           text: "المدفوعات",
           iconData: Icons.receipt_long,
           color: AppColor.primaryColor,
           isNeedArrow: true,
         ),
+
         SizedBox(height: 10),
         BlocListener<ProfileCubit, ProfileState>(
           listener: (context, state) {
