@@ -6,47 +6,16 @@ import 'package:ajyal/Features/Parents/Home/Presentation/widgets/student_check_l
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AllStudentLinked extends StatefulWidget {
-  const AllStudentLinked({super.key});
-
-  @override
-  State<AllStudentLinked> createState() => _AllStudentLinkedState();
-}
-
-class _AllStudentLinkedState extends State<AllStudentLinked> {
-  //  bool selectedList = false;
+class SelectStudentLogin extends StatelessWidget {
+  const SelectStudentLogin({super.key});
 
   @override
   Widget build(BuildContext context) {
-    List<ParentStudentModell> students = [
-      ParentStudentModell(
-        id: 1,
-        firstName: "Dameon",
-        lastName: "Dicki",
-        classLevel: "البكالوريا العلمية",
-      ),
-      ParentStudentModell(
-        id: 2,
-        firstName: "Alice",
-        lastName: "Johnson",
-        classLevel: "الثانوية العامة",
-      ),
-      ParentStudentModell(
-        id: 3,
-        firstName: "Mohammed",
-        lastName: "Ali",
-        classLevel: "الصف الحادي عشر",
-      ),
-      ParentStudentModell(
-        id: 4,
-        firstName: "Sara",
-        lastName: "Smith",
-        classLevel: "الصف العاشر",
-      ),
-    ];
-
     return Scaffold(
-      appBar: customAppBar(context, "جميع الطلاب"),
+      appBar: AppBar(
+        title: Text("اختيار طالب", style: TextStyle(color: Colors.white)),
+        backgroundColor: AppColor.primaryColor,
+      ),
       body: BlocBuilder<StudentLinkCubit, StudentLinkState>(
         builder: (context, state) {
           return Column(
@@ -70,7 +39,7 @@ class _AllStudentLinkedState extends State<AllStudentLinked> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Text(
-                  "*  يمكنك التبديل بين الطلاب عن طريق اختيار أحد الطلاب في حال وجود أكثر من طالب  ضمن معهدنا",
+                  "* اضغط اختيار طالب للاختيار ",
                   style: TextStyle(color: AppColor.borderTextField),
                 ),
               ),
@@ -78,9 +47,7 @@ class _AllStudentLinkedState extends State<AllStudentLinked> {
               state is LoadingState
                   ? Center(child: CircularProgressIndicator())
                   : state is AllParentStuentLoaded
-                  ? state.listModel.length == 1
-                      ? SingleStudentItem(student: state.listModel[0])
-                      : StudentCheckList(students: [])
+                  ? StudentCheckList(students: state.listModel)
                   : state is FailState
                   ? Center(child: Text(state.errMessage))
                   : Center(child: Text("حدث خطأ ما !!")),

@@ -26,6 +26,7 @@ class StudentLinkCubit extends Cubit<StudentLinkState> {
   Future<void> getAllParentStudent() async {
     emit(LoadingState());
     var result = await studentLinkRepo.getAllParentStudent();
+    if (isClosed) return;
     result.fold(
       (fail) {
         emit(FailState(errMessage: fail.errorMessage));

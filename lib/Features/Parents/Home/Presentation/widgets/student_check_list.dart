@@ -1,11 +1,14 @@
 import 'package:ajyal/Cache/cache_helper.dart';
+import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
+import 'package:ajyal/Features/Parents/Home/Data/models/parent_student_model.dart';
 import 'package:ajyal/Features/Parents/Home/Presentation/widgets/select_student_bttn.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class StudentCheckList extends StatefulWidget {
-  final List<ParentStudentModell> students;
+  final List<ParentStudentModel> students;
   const StudentCheckList({super.key, required this.students});
 
   @override
@@ -39,6 +42,10 @@ class _StudentCheckListState extends State<StudentCheckList> {
                 value: tempClass,
               );
             });
+
+            !selectedList
+                ? GoRouter.of(context).pushReplacement(AppRouter.parentHome)
+                : null;
           },
         ),
         ListView.builder(
@@ -86,7 +93,7 @@ class _StudentCheckListState extends State<StudentCheckList> {
                                   selectedIndex = index;
                                   tempName =
                                       "${student.firstName} ${student.lastName}";
-                                  tempClass = student.classLevel;
+                                  tempClass = student.classLevel!;
                                   tempId = student.id.toString();
                                   print("$tempName $tempClass $tempId");
                                 });

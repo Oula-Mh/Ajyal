@@ -50,7 +50,7 @@ class LoginForm extends StatelessWidget {
             context,
           ).showSnackBar(SnackBar(content: Text("تم تسجيل الدخول بنجاح")));
           getit<CacheHelper>().saveData(key: "role", value: "Parent");
-          GoRouter.of(context).go(AppRouter.parentHome);
+          GoRouter.of(context).go(AppRouter.selectStudentLogin);
         } else if (state is LoginParentFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("فشل تسجيل الدخول: ${state.errMessage}")),

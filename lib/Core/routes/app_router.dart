@@ -47,6 +47,7 @@ import 'package:ajyal/Features/Parents/Home/Presentation/bloc/StudentLink/studen
 import 'package:ajyal/Features/Parents/Home/Presentation/pages/parent_home.dart';
 import 'package:ajyal/Features/Parents/Home/Presentation/widgets/all_student_linked.dart';
 import 'package:ajyal/Features/Parents/Home/Presentation/widgets/link_student_scanner.dart';
+import 'package:ajyal/Features/Parents/Home/Presentation/widgets/select_login_student.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Data/Repo/attendence_repo.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Data/Repo/attendence_repoimpl.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Presentation/bloc/Attendence/attendence_cubit.dart';
@@ -467,6 +468,17 @@ abstract class Routing {
                       StudentLinkCubit(getit<HomeParentRepoImp>())
                         ..getAllParentStudent(),
               child: const AllStudentLinked(),
+            ),
+      ),
+      GoRoute(
+        path: AppRouter.selectStudentLogin,
+        builder:
+            (context, state) => BlocProvider(
+              create:
+                  (context) =>
+                      StudentLinkCubit(getit<HomeParentRepoImp>())
+                        ..getAllParentStudent(),
+              child: const SelectStudentLogin(),
             ),
       ),
       GoRoute(

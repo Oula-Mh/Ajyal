@@ -24,8 +24,8 @@ class LabeledDateBox extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(1),
       child: Container(
-        height: 75,
-        width: 90,
+        height: 90,
+        width: 100,
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           border: Border.all(color: AppColor.secondaryColor, width: 2),

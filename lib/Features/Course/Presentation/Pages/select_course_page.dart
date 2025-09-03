@@ -5,6 +5,7 @@ import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Course/Data/Model/course_model.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
 import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
+import 'package:ajyal/Features/Home/Presentation/Widgets/course_adv_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -61,7 +62,24 @@ class SelectCoursePage extends StatelessWidget {
                           height: 2,
                         ),
                       ),
-                      SizedBox(height: 50),
+                      SizedBox(height: 30),
+                      BlocBuilder<CourseCubit, CourseState>(
+                        builder: (context, state) {
+                          int id = getit<CacheHelper>().getData(
+                            key: "selectedCourseId",
+                          );
+                          return state is CourseSuccess
+                              ? Text(
+                                "الكورس الحالي : ${state.allcourses.firstWhere((course) => course.id == id).name}",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColor.purple,
+                                  fontSize: 15,
+                                ),
+                              )
+                              : Container();
+                        },
+                      ),
                       BlocConsumer<CourseCubit, CourseState>(
                         listener: (context, state) {
                           if (state is CourseSuccess) {
@@ -91,9 +109,10 @@ class SelectCoursePage extends StatelessWidget {
                                         key: "selectedCourseName",
                                         value: course.name,
                                       );
-                                      GoRouter.of(
-                                        context,
-                                      ).push(AppRouter.homePage);
+                                      GoRouter.of(context).pop();
+                                      // GoRouter.of(
+                                      //   context,
+                                      // ).push(AppRouter.homePage);
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(

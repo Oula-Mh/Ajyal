@@ -1,5 +1,7 @@
+import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/styles/app_text_style.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_cubit.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_state.dart';
@@ -16,19 +18,21 @@ class SubjectPage extends StatefulWidget {
 }
 
 class _SubjectPageState extends State<SubjectPage> {
-  @override
-  void initState() {
-    super.initState();
-    Future.microtask(() async {
-      final courseCubit = context.read<CourseCubit>();
-      await courseCubit.getAllCourse();
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Future.microtask(() async {
+  //     final courseCubit = context.read<CourseCubit>();
+  //     await courseCubit.getAllCourse();
 
-      final selected = courseCubit.selectedCourse;
-      if (selected != null && mounted) {
-        context.read<SubjectCubit>().fetchSubjects(selected.id);
-      }
-    });
-  }
+  //     final selected = courseCubit.selectedCourse;
+  //     if (selected != null && mounted) {
+  //       context.read<SubjectCubit>().fetchSubjects(
+  //         getit<CacheHelper>().getData(key: "selectedCourseId"),
+  //       );
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +45,20 @@ class _SubjectPageState extends State<SubjectPage> {
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CourseDropDown(),
+            //CourseDropDown(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+              child: Text(
+                getit<CacheHelper>().getData(key: "selectedCourseName"),
+                style: TextStyle(
+                  color: AppColor.primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+            ),
             BlocBuilder<SubjectCubit, SubjectState>(
               builder: (context, subjectState) {
                 if (subjectState is SubjectLoading) {

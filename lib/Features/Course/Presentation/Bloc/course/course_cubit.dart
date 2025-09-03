@@ -58,13 +58,13 @@ class CourseCubit extends Cubit<CourseState> {
       );
 
       // محاولة إيجاد الكورس المحفوظ
-      final foundCourse = courses.firstWhere(
-        (course) => course.id == savedCourseId,
-        orElse: () => courses.first,
-      );
+      // final foundCourse = courses.firstWhere(
+      //   (course) => course.id == savedCourseId,
+      //   orElse: () => courses.first,
+      // );
 
       // تعيين الكورس المختار (مرة واحدة فقط)
-      selectedCourse = foundCourse;
+      // selectedCourse = foundCourse;
 
       emit(CourseSuccess(allcourses: coursesList));
     });

@@ -62,7 +62,11 @@ class _HomePageState extends State<HomePage> {
           create: (context) => CourseCubit(CourseRepoimp(DioConsumer(Dio()))),
         ),
         BlocProvider(
-          create: (context) => SubjectCubit(SubjectRepoimp(DioConsumer(Dio()))),
+          create:
+              (context) => SubjectCubit(SubjectRepoimp(DioConsumer(Dio())))
+                ..fetchSubjects(
+                  getit<CacheHelper>().getData(key: "selectedCourseId"),
+                ),
         ),
       ],
       child: SubjectPage(),

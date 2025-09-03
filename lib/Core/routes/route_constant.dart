@@ -27,6 +27,7 @@ class AppRouter {
   static const submitExamPage = "/SubmitExamPage";
   static const attendecePage = "/attendecePage";
   static const allStudentLinked = "/allStudentLinked";
+  static const selectStudentLogin = "/selectStudentLogin";
   static const linkStudentScanner = "/linkStudentScanner";
   static const parentHome = "/parentHome";
   static const myCoursesPage = "/MyCoursesPage";
