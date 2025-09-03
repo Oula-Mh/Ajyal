@@ -150,16 +150,23 @@ abstract class Routing {
         builder: (context, state) {
           final data = state.extra as Map<String, dynamic>;
           final courseId = data['id'];
-          final images = data['images'];
+          // final images = data['images'];
+          final showButton =
+              data['showButton'] as bool? ?? true; // <- الباراميتر الجديد
+
           return BlocProvider(
             create:
                 (context) =>
                     CourseCubit(CourseRepoimp(DioConsumer(Dio())))
                       ..getCourseDetails(courseId),
-            child: CourseDetailsPage(images: images),
+            child: CourseDetailsPage(
+              // images: images,
+              showEnrollButton: showButton,
+            ),
           );
         },
       ),
+
       GoRoute(
         path: AppRouter.studentProfilePage,
         builder: (context, state) {

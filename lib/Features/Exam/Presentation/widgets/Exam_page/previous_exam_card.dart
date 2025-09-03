@@ -196,20 +196,15 @@ class PreviousExamCard extends StatelessWidget {
               content: Text(
                 message,
                 style: const TextStyle(
-                  color: Color.fromARGB(255, 50, 158, 246),
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              backgroundColor: const Color.fromARGB(
-                255,
-                194,
-                225,
-                250,
-              ), // لون هادئ مناسب
+              backgroundColor: AppColor.primaryColor,
               duration: const Duration(seconds: 2),
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12), // حواف مدورة
+                borderRadius: BorderRadius.circular(12),
               ),
               margin: const EdgeInsets.symmetric(
                 horizontal: 20,

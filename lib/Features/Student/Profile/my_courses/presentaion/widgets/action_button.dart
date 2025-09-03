@@ -25,9 +25,14 @@ class ActionButtons extends StatelessWidget {
         const SizedBox(width: 20),
         _StyledButton(
           text: "تفاصيل أكثر",
-          backgroundColor: AppColor.primaryColor,
-          foregroundColor: Colors.white,
-          onPressed: () {},
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black87,
+          onPressed: () {
+            GoRouter.of(context).push(
+              AppRouter.courseDetailsPage,
+              extra: {'id': courseId, 'showButton': false},
+            );
+          },
         ),
       ],
     );

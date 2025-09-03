@@ -4,6 +4,7 @@ import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_page/current_exam_
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 
 class CurrentExamListWidget extends StatelessWidget {
   const CurrentExamListWidget({super.key});
@@ -47,7 +48,12 @@ class CurrentExamListWidget extends StatelessWidget {
         } else if (state is ExamCurrentFailure) {
           return Center(child: Text(state.errMsg));
         } else {
-          return const Center(child: CircularProgressIndicator());
+          return Center(
+            child: Lottie.asset(
+              'assets/lottie/Loading Dots Blue.json',
+              repeat: true,
+            ),
+          );
         }
       },
     );

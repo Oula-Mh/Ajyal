@@ -4,6 +4,7 @@ import 'package:ajyal/Features/Exam/Presentation/widgets/exam_navigation_bar.dar
 import 'package:ajyal/Features/Exam/data/model/exam_pre_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import '../widgets/Exam_Previous/question_grid_dialog_pre.dart';
 
 class PreviousExamPage extends StatefulWidget {
@@ -50,7 +51,12 @@ class _PreviousExamPageState extends State<PreviousExamPage> {
       body: BlocBuilder<ExamPreDetailsCubit, ExamPreDetailsState>(
         builder: (context, state) {
           if (state is ExamPreDetailsLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+              child: Lottie.asset(
+                'assets/lottie/Loading Dots Blue.json',
+                repeat: true,
+              ),
+            );
           } else if (state is ExamPreDetailsSuccess) {
             final questions = state.examPreDetailsModel.questions;
 

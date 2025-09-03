@@ -1,6 +1,7 @@
+import 'package:ajyal/Core/Network/token_handle.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Custom/Custom_widgets/custom_app_bar.dart';
-import 'package:ajyal/Features/Advertisements/Data/model/course_adv_model.dart';
 import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
 import 'package:ajyal/Features/Course/Presentation/Widget/custom_subject_list.dart';
 import 'package:ajyal/Features/Course/Presentation/Widget/enroll_widget.dart';
@@ -10,11 +11,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CourseDetailsPage extends StatelessWidget {
-  List<Images>? images;
-  CourseDetailsPage({super.key, @required this.images});
+  final bool showEnrollButton; // باراميتر جديد
+
+  CourseDetailsPage({super.key, this.showEnrollButton = true});
 
   @override
   Widget build(BuildContext context) {
+    // تحقق إذا الطالب مو زائر (عنده توكن)
+    final hasToken = getit<TokenHandler>().hasToken(
+      TokenHandler.studentTokenKey,
+    );
+
     return Scaffold(
       backgroundColor: AppColor.white1,
       appBar: customAppBar(context, "تفاصيل الكورس"),
@@ -25,10 +32,8 @@ class CourseDetailsPage extends StatelessWidget {
             builder: (context, state) {
               return state is GetDetailsSuccess
                   ? Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //ImageSlider(imageUrls: images!),
                       SizedBox(height: 15),
                       Container(
                         width: double.infinity,
@@ -76,7 +81,8 @@ class CourseDetailsPage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 70),
-                      EnrollBttn(),
+
+                      if (showEnrollButton && hasToken) EnrollBttn(),
                     ],
                   )
                   : Center(child: CircularProgressIndicator());

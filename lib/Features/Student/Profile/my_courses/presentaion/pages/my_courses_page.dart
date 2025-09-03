@@ -1,3 +1,4 @@
+import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/Bloc/my_courses/my_courses_cubit.dart';
 import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/animated_course_card.dart';
 import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/course_card_shimmer.dart';
@@ -34,8 +35,9 @@ class _MyCoursesPageState extends State<MyCoursesPage> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColor.primaryColor,
         elevation: 0,
+        foregroundColor: Colors.white,
       ),
       body: BlocBuilder<MyCoursesCubit, MyCoursesState>(
         builder: (context, state) {

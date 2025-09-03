@@ -11,14 +11,6 @@ class EndPoints {
   // static const String baseUrl = 'http://192.168.1.2:8000/api/';
   // static const String fileBaseUrl = 'http://192.168.1.2:8000/';
 
-  // static const String baseUrl = 'http://192.168.1.3:8000/api/';
-  // static const String fileBaseUrl = 'http://192.168.1.3:8000/';
-
-  // static const String baseUrl = 'http://10.70.226.94:8000/api/';
-  // static const String fileBaseUrl = 'http://10.70.226.94:8000/';
-
-  // static const String baseUrl = 'https://e2e578a51c24.ngrok-free.app/api/ ';
-  // static const String fileBaseUrl = 'https://e2e578a51c24.ngrok-free.app';
   // ngrok
   // static const String baseUrl = 'https://71c3a0641fef.ngrok-free.app/api/';
   // static const String fileBaseUrl = 'https://71c3a0641fef.ngrok-free.app';

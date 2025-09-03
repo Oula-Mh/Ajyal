@@ -4,6 +4,7 @@ import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Features/Exam/Presentation/widgets/Exam_page/previous_exam_card.dart';
 import 'package:ajyal/Features/Exam/data/model/exam_pre_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 class PreviousExamListWidget extends StatelessWidget {
   const PreviousExamListWidget({super.key});
@@ -65,7 +66,12 @@ class PreviousExamListWidget extends StatelessWidget {
         } else if (state is ExamPreFailure) {
           return Center(child: Text(state.errMsg));
         } else {
-          return const Center(child: CircularProgressIndicator());
+          return Center(
+            child: Lottie.asset(
+              'assets/lottie/Loading Dots Blue.json',
+              repeat: true,
+            ),
+          );
         }
       },
     );
