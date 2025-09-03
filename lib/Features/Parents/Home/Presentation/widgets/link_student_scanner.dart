@@ -24,8 +24,8 @@ class _QRScanPageState extends State<LinkStudentScanner> {
         if (state is StudentLinkSuccessfully) {
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(SnackBar(content: Text("تم الربط بنجاح")));
-          Future.delayed(Duration(seconds: 2), () {
+          ).showSnackBar(SnackBar(content: Text(state.message)));
+          Future.delayed(Duration(seconds: 1), () {
             GoRouter.of(context).push(AppRouter.allStudentLinked);
           });
         } else if (state is FailState) {
@@ -81,7 +81,8 @@ class _QRScanPageState extends State<LinkStudentScanner> {
                                   isScanned = true;
                                 });
                                 //print(code);
-                                cubit.linkStudent({'student_id': code});
+                                print("✅✅✅ scannde doneee  ${code}");
+                                //cubit.linkStudent({'student_id': code});
                                 // cubit.register(
                                 //   code,
                                 //   widget.name,

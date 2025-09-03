@@ -7,7 +7,12 @@ import 'package:flutter/material.dart';
 
 class CourseAdvListView extends StatelessWidget {
   final List<AdvModel> mylist;
-  const CourseAdvListView({super.key, required this.mylist});
+  final bool isItGuest;
+  const CourseAdvListView({
+    super.key,
+    required this.mylist,
+    required this.isItGuest,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +33,10 @@ class CourseAdvListView extends StatelessWidget {
                     child: Card(
                       elevation: 1,
                       child: Container(
-                        width: MediaQuery.of(context).size.width * 0.54,
+                        width:
+                            isItGuest
+                                ? MediaQuery.of(context).size.width * 0.8
+                                : MediaQuery.of(context).size.width * 0.54,
                         decoration: BoxDecoration(
                           color: AppColor.fillTextField,
                           border: Border.all(color: Colors.grey.shade300),

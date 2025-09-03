@@ -52,6 +52,10 @@ class EndPoints {
   static const String payment = "payment/students/";
   static const String invoices = "/courses/payments/invoices";
   static const String myCoursesDetails = "student/my-courses-with-details";
+  static const String normalIssue = "issue/get-normal-issues/";
+  static const String fqaIssue = "issue/get-is-fqa-issues/";
+  static const String myissue = "issue/get-my-issues/";
+  static const String addIssue = "issue/add-issue";
 
   // Parent
   static const String loginParent = 'parent/login';

@@ -71,8 +71,15 @@ class _HomePageState extends State<HomePage> {
       ],
       child: SubjectPage(),
     ),
+    BlocProvider(
+      create:
+          (context) => SubjectCubit(SubjectRepoimp(DioConsumer(Dio())))
+            ..fetchSubjects(
+              getit<CacheHelper>().getData(key: "selectedCourseId"),
+            ),
+      child: CommunityQuestionPage(),
+    ),
 
-    CommunityQuestionPage(),
     MultiBlocProvider(
       providers: [
         BlocProvider(

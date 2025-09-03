@@ -1,4 +1,6 @@
+import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Parents/Home/Presentation/widgets/linked_student_list.dart';
 import 'package:ajyal/Features/Parents/Home/Presentation/widgets/link_student.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +29,7 @@ class StudentInfoCard extends StatelessWidget {
           children: [
             // اسم الطالب والصف
             Text(
-              "اسم الطالب : $studentName",
+              "اسم الطالب : ${getit<CacheHelper>().getData(key: "studentName")}",
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -36,7 +38,7 @@ class StudentInfoCard extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Text(
-              "الصف : $studentClass",
+              "الصف : ${getit<CacheHelper>().getData(key: "studentClass")}",
               style: const TextStyle(
                 fontSize: 15,
                 color: AppColor.primaryColor,

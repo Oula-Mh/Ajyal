@@ -18,6 +18,9 @@ import 'package:ajyal/Features/Advertisements/Presentation/Pages/all_generaladv_
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/all_teacheradv_page.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/home_adv_page.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/teacher_adv_page.dart';
+import 'package:ajyal/Features/Community/Data/repo/issue_repoimp.dart';
+import 'package:ajyal/Features/Community/Presentation/Bloc/issue_list_cubit/issue_list_cubit.dart';
+import 'package:ajyal/Features/Community/Presentation/Pages/add_issue_page.dart';
 import 'package:ajyal/Features/Community/Presentation/Pages/all_question_page.dart';
 import 'package:ajyal/Features/Community/Presentation/Pages/my_questions_page.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
@@ -128,7 +131,7 @@ abstract class Routing {
               create:
                   (context) =>
                       StripeLinkCubit(PaymentRepoimp(DioConsumer(Dio())))
-                        ..payment(),
+                        ..payment("invoicePay"),
               // ..payment(),
               child: const PaymentStripe(),
             ),
@@ -583,13 +586,24 @@ abstract class Routing {
       GoRoute(
         path: AppRouter.allQuestionPage,
         builder: (context, state) {
-          return AllQuestionPage();
+          var subjectId = state.extra as int;
+          return AllQuestionPage(subjectId: subjectId);
         },
       ),
       GoRoute(
         path: AppRouter.slectedCoursePage,
         builder: (context, state) {
           return SelectCoursePage();
+        },
+      ),
+      GoRoute(
+        path: AppRouter.addIssuePage,
+        builder: (context, state) {
+          var sId = state.extra as int;
+          return BlocProvider(
+            create: (context) => IssueListCubit(getit<IssueRepoImpl>()),
+            child: AddIssuePage(curriculum_id: sId),
+          );
         },
       ),
     ],

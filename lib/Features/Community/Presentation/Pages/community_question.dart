@@ -1,8 +1,11 @@
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/styles/app_text_style.dart';
+import 'package:ajyal/Features/Subjects/Data/model/subject_model.dart';
+import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_cubit.dart';
+import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_state.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class CommunityQuestionPage extends StatelessWidget {
@@ -52,45 +55,66 @@ class CommunityQuestionPage extends StatelessWidget {
             SizedBox(height: 20),
 
             /// GridView للمواد
-            Expanded(
-              child: GridView.builder(
-                itemCount: subjects.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // قسمين
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
-                  childAspectRatio: 2.5, // للتحكم بشكل الـ Container
-                ),
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      GoRouter.of(context).push(AppRouter.allQuestionPage);
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(18),
-                        border: Border(
-                          bottom: BorderSide(
-                            color: AppColor.primaryColor.withAlpha(100),
-                            width: 2,
-                          ),
-                        ),
-                      ),
-                      child: Text(
-                        subjects[index],
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: AppColor.primaryColor,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
+            BlocBuilder<SubjectCubit, SubjectState>(
+              builder: (context, subjectState) {
+                if (subjectState is SubjectLoading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (subjectState is SubjectLoadedSuccess) {
+                  return CustomSubjectWidget(subjects: subjectState.subjects);
+                } else if (subjectState is SubjectError) {
+                  return Center(child: Text("فشل تحميل المواد"));
+                } else {
+                  return Container();
+                }
+              },
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class CustomSubjectWidget extends StatelessWidget {
+  final List<SubjectModel> subjects;
+  const CustomSubjectWidget({super.key, required this.subjects});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: GridView.builder(
+        itemCount: subjects.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // قسمين
+          mainAxisSpacing: 12,
+          crossAxisSpacing: 12,
+          childAspectRatio: 2.5, // للتحكم بشكل الـ Container
+        ),
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              GoRouter.of(
+                context,
+              ).push(AppRouter.allQuestionPage, extra: subjects[index].id);
+            },
+            child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(18),
+                border: Border(
+                  bottom: BorderSide(
+                    color: AppColor.primaryColor.withAlpha(100),
+                    width: 2,
+                  ),
+                ),
+              ),
+              child: Text(
+                subjects[index].name!,
+                style: TextStyle(fontSize: 16, color: AppColor.primaryColor),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

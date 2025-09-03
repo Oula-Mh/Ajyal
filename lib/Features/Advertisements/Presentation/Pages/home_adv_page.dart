@@ -58,6 +58,59 @@ class HomeAdvPage extends StatelessWidget {
                             SizedBox(height: 5),
                             BlocBuilder<CourseAdvCubit, CourseAdvState>(
                               builder: (context, state) {
+                                final hasToken = getit<TokenHandler>().hasToken(
+                                  TokenHandler.studentTokenKey,
+                                );
+
+                                if (!hasToken) {
+                                  // 🚀 ما في توكن → عرض الكورسات بشكل عامودي (كل الشاشة)
+                                  if (state is CourseAdvSuccess) {
+                                    return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "الكورسات المتاحة",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        // عرض عامودي
+                                        ListView.separated(
+                                          shrinkWrap: true,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          itemCount: state.model.data!.length,
+                                          separatorBuilder:
+                                              (_, __) => SizedBox(height: 12),
+                                          itemBuilder: (context, index) {
+                                            final item =
+                                                state.model.data![index];
+                                            return CourseAdvListView(
+                                              mylist: [item],
+                                              isItGuest: true,
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  } else {
+                                    // شيمر للتحميل بالطول
+                                    return Column(
+                                      children: List.generate(
+                                        3,
+                                        (_) => Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 8.0,
+                                          ),
+                                          child: CourseAdvShimmer(),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                }
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -86,6 +139,7 @@ class HomeAdvPage extends StatelessWidget {
                                     state is CourseAdvSuccess
                                         ? CourseAdvListView(
                                           mylist: state.model.data!,
+                                          isItGuest: false,
                                         )
                                         : SizedBox(
                                           height: 260,

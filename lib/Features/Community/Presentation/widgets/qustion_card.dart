@@ -1,11 +1,11 @@
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
-import 'package:ajyal/Features/Community/Presentation/Pages/all_question_page.dart';
+import 'package:ajyal/Features/Community/Data/model/issue_list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class QuestionCard extends StatelessWidget {
-  final Question question;
+  final IssueModel question;
 
   const QuestionCard({super.key, required this.question});
 
@@ -41,7 +41,7 @@ class QuestionCard extends StatelessWidget {
                     // النص
                     Expanded(
                       child: Text(
-                        question.text,
+                        question.body,
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.w500,
