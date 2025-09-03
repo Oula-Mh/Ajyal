@@ -58,16 +58,16 @@ class _AttendanceCalendarState extends State<AttendanceClalenderPage> {
         }
       },
       builder: (context, state) {
-        return state is GetAllAttendenceDays
-            ? Scaffold(
-              backgroundColor: AppColor.primaryColor,
-              appBar: AppBar(
-                title: Text(DateFormat.yMMMM('ar').format(currentMonth)),
-                centerTitle: true,
-                backgroundColor: AppColor.primaryColor,
-                titleTextStyle: Styles.largeWhite,
-                actions: [
-                  IconButton(
+        return Scaffold(
+          backgroundColor: AppColor.primaryColor,
+          appBar: AppBar(
+            title: Text(DateFormat.yMMMM('ar').format(currentMonth)),
+            centerTitle: true,
+            backgroundColor: AppColor.primaryColor,
+            titleTextStyle: Styles.largeWhite,
+            actions: [
+              state is GetAllAttendenceDays
+                  ? IconButton(
                     icon: const Icon(Icons.arrow_forward, color: Colors.white),
                     onPressed: () {
                       if (currentMonth.isBefore(
@@ -86,167 +86,194 @@ class _AttendanceCalendarState extends State<AttendanceClalenderPage> {
                         });
                       }
                     },
+                  )
+                  : IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.arrow_forward,
+                      color: AppColor.primaryColor,
+                    ),
                   ),
-                ],
-                leading: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.white),
-                  onPressed: () {
-                    if (currentMonth.isAfter(
-                      DateTime(
-                        state.model.course.startDate.year,
-                        state.model.course.startDate.month,
-                        1,
+            ],
+            leading:
+                state is GetAllAttendenceDays
+                    ? IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Colors.white),
+                      onPressed: () {
+                        if (currentMonth.isAfter(
+                          DateTime(
+                            state.model.course.startDate.year,
+                            state.model.course.startDate.month,
+                            1,
+                          ),
+                        )) {
+                          setState(() {
+                            currentMonth = DateTime(
+                              currentMonth.year,
+                              currentMonth.month - 1,
+                              1,
+                            );
+                          });
+                        }
+                      },
+                    )
+                    : IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.arrow_forward,
+                        color: AppColor.primaryColor,
                       ),
-                    )) {
-                      setState(() {
-                        currentMonth = DateTime(
-                          currentMonth.year,
-                          currentMonth.month - 1,
-                          1,
-                        );
-                      });
-                    }
-                  },
-                ),
+                    ),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColor.white1,
+                borderRadius: BorderRadius.circular(25),
               ),
-              body: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColor.white1,
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                    children: [
-                      // صف أيام الأسبوع
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children:
-                              weekDays
-                                  .map(
-                                    (d) => Expanded(
-                                      child: Center(
+              padding: const EdgeInsets.all(12),
+              child:
+                  state is Loading
+                      ? Center(child: CircularProgressIndicator())
+                      : state is GetAllAttendenceDays
+                      ? Column(
+                        children: [
+                          // صف أيام الأسبوع
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children:
+                                  weekDays
+                                      .map(
+                                        (d) => Expanded(
+                                          child: Center(
+                                            child: Text(
+                                              d,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          // الشبكة
+                          Expanded(
+                            child: GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 7, // 7 أيام الأسبوع
+                                    mainAxisSpacing: 8,
+                                    crossAxisSpacing: 8,
+                                  ),
+                              itemCount: daysInMonth + firstWeekdayOfMonth,
+                              itemBuilder: (context, index) {
+                                if (index < firstWeekdayOfMonth) {
+                                  // فراغ قبل بداية الشهر
+                                  return const SizedBox.shrink();
+                                }
+
+                                int day = index - firstWeekdayOfMonth + 1;
+                                DateTime thisDay = DateTime(
+                                  currentMonth.year,
+                                  currentMonth.month,
+                                  day,
+                                );
+
+                                bool isFuture = thisDay.isAfter(DateTime.now());
+                                bool isAbsent = absenceDays.contains(day);
+                                bool isOutOfRange =
+                                    thisDay.isBefore(
+                                      state.model.course.startDate,
+                                    ) ||
+                                    thisDay.isAfter(state.model.course.endDate);
+
+                                // محتوى الوسط
+                                Widget centerChild = const SizedBox.shrink();
+                                if (!isOutOfRange) {
+                                  if (isFuture) {
+                                    centerChild =
+                                        const SizedBox.shrink(); // فاضي
+                                  } else if (isAbsent) {
+                                    centerChild = const Icon(
+                                      Icons.close,
+                                      color: Colors.red,
+                                    );
+                                  } else {
+                                    centerChild = const Icon(
+                                      Icons.check,
+                                      color: Colors.green,
+                                    );
+                                  }
+                                }
+
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    color:
+                                        isOutOfRange
+                                            ? Colors.grey.shade200
+                                            : Colors.white,
+                                    border: Border.all(
+                                      color: Colors.grey.shade400,
+                                    ),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      // رقم اليوم في الزاوية
+                                      Positioned(
+                                        top: 4,
+                                        left: 4,
                                         child: Text(
-                                          d,
-                                          style: const TextStyle(fontSize: 12),
+                                          "$day",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color:
+                                                isOutOfRange
+                                                    ? Colors.grey
+                                                    : Colors.black,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  )
-                                  .toList(),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      // الشبكة
-                      Expanded(
-                        child: GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 7, // 7 أيام الأسبوع
-                                mainAxisSpacing: 8,
-                                crossAxisSpacing: 8,
-                              ),
-                          itemCount: daysInMonth + firstWeekdayOfMonth,
-                          itemBuilder: (context, index) {
-                            if (index < firstWeekdayOfMonth) {
-                              // فراغ قبل بداية الشهر
-                              return const SizedBox.shrink();
-                            }
-
-                            int day = index - firstWeekdayOfMonth + 1;
-                            DateTime thisDay = DateTime(
-                              currentMonth.year,
-                              currentMonth.month,
-                              day,
-                            );
-
-                            bool isFuture = thisDay.isAfter(DateTime.now());
-                            bool isAbsent = absenceDays.contains(day);
-                            bool isOutOfRange =
-                                thisDay.isBefore(
-                                  state.model.course.startDate,
-                                ) ||
-                                thisDay.isAfter(state.model.course.endDate);
-
-                            // محتوى الوسط
-                            Widget centerChild = const SizedBox.shrink();
-                            if (!isOutOfRange) {
-                              if (isFuture) {
-                                centerChild = const SizedBox.shrink(); // فاضي
-                              } else if (isAbsent) {
-                                centerChild = const Icon(
-                                  Icons.close,
-                                  color: Colors.red,
-                                );
-                              } else {
-                                centerChild = const Icon(
-                                  Icons.check,
-                                  color: Colors.green,
-                                );
-                              }
-                            }
-
-                            return Container(
-                              decoration: BoxDecoration(
-                                color:
-                                    isOutOfRange
-                                        ? Colors.grey.shade200
-                                        : Colors.white,
-                                border: Border.all(color: Colors.grey.shade400),
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Stack(
-                                children: [
-                                  // رقم اليوم في الزاوية
-                                  Positioned(
-                                    top: 4,
-                                    left: 4,
-                                    child: Text(
-                                      "$day",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color:
-                                            isOutOfRange
-                                                ? Colors.grey
-                                                : Colors.black,
+                                      // محتوى الوسط (صح/خطأ/فاضي)
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Center(child: centerChild),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                  // محتوى الوسط (صح/خطأ/فاضي)
-                                  Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Center(child: centerChild),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      Divider(color: Colors.grey.shade400),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          // border: Border.all(color: AppColor.purple),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          "عدد أيام الغياب الكلي : 10",
-                          style: TextStyle(color: AppColor.primaryColor),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            )
-            : Scaffold();
+                                );
+                              },
+                            ),
+                          ),
+                          Divider(color: Colors.grey.shade400),
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            width: double.infinity,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              // border: Border.all(color: AppColor.purple),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              "عدد أيام الغياب الكلي : ${state.model.absenceDays.length}",
+                              style: TextStyle(color: AppColor.primaryColor),
+                            ),
+                          ),
+                        ],
+                      )
+                      : state is GetAttendenceFail
+                      ? Center(child: Text(state.errMessage))
+                      : Container(),
+            ),
+          ),
+        );
       },
     );
   }

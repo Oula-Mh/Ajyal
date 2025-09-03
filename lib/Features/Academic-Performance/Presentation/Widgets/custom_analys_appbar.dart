@@ -18,8 +18,9 @@ class CustomAnalysAppbar extends StatelessWidget {
           "     تقدمي في $selectedName ",
           style: TextStyle(
             color: Colors.white,
-            fontSize: 18,
+            fontSize: 19,
             fontWeight: FontWeight.bold,
+            height: 2,
           ),
         ),
       ],

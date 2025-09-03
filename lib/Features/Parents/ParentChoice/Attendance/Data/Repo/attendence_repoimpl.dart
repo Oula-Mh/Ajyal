@@ -1,5 +1,4 @@
 import 'package:ajyal/Core/Network/Api/api_consumer.dart';
-import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
 import 'package:ajyal/Core/Network/Errors/failure_handle.dart';
 import 'package:ajyal/Core/utils/Function/functions.dart';
 import 'package:ajyal/Core/utils/constants/end_pointS.dart';
@@ -12,10 +11,12 @@ class AttendenceRepoimpl implements AttendenceRepo {
 
   AttendenceRepoimpl(this.api);
   @override
-  Future<Either<Failure, CourseAbsenceModel>> getStudentAbsence() async {
+  Future<Either<Failure, CourseAbsenceModel>> getStudentAbsence(
+    String id,
+  ) async {
     try {
-      final response = await api.get(EndPoints.absenceDay);
-      final absenceDay = response['data'];
+      final response = await api.get(EndPoints.absenceDay + id);
+      final absenceDay = CourseAbsenceModel.fromJson(response);
       return Right(absenceDay);
     } on Exception catch (e) {
       return Left(handleException(e));

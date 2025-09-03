@@ -3,5 +3,5 @@ import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Data/Model/attend
 import 'package:dartz/dartz.dart';
 
 abstract class AttendenceRepo {
-  Future<Either<Failure, CourseAbsenceModel>> getStudentAbsence();
+  Future<Either<Failure, CourseAbsenceModel>> getStudentAbsence(String id);
 }

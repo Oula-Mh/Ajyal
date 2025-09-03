@@ -8,9 +8,9 @@ class AttendenceCubit extends Cubit<AttendenceState> {
   final AttendenceRepo attendenceRepo;
   AttendenceCubit(this.attendenceRepo) : super(AttendenceInitial());
 
-  Future<void> getStudentAbsence() async {
+  Future<void> getStudentAbsence(String id) async {
     emit(Loading());
-    var response = await attendenceRepo.getStudentAbsence();
+    var response = await attendenceRepo.getStudentAbsence(id);
     if (isClosed) {
       return;
     }

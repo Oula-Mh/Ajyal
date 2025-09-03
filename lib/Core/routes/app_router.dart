@@ -1,3 +1,4 @@
+import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
@@ -448,9 +449,11 @@ abstract class Routing {
         builder:
             (context, state) => BlocProvider(
               create:
-                  (context) =>
-                      AttendenceCubit(AttendenceRepoimpl(DioConsumer(Dio())))
-                        ..getStudentAbsence(),
+                  (context) => AttendenceCubit(
+                    AttendenceRepoimpl(DioConsumer(Dio())),
+                  )..getStudentAbsence(
+                    getit<CacheHelper>().getData(key: "studentId").toString(),
+                  ),
               child: const AttendanceClalenderPage(),
             ),
       ),
