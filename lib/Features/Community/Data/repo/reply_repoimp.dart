@@ -1,8 +1,8 @@
 import 'package:ajyal/Core/Network/Api/api_consumer.dart';
 import 'package:ajyal/Core/Network/Errors/failure_handle.dart';
 import 'package:ajyal/Core/utils/constants/end_points.dart';
+import 'package:ajyal/Features/Community/Data/repo/reply_repo.dart';
 import 'package:ajyal/Features/Community/data/models/replies_model.dart';
-import 'package:ajyal/Features/Community/data/repo/community_repo.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 

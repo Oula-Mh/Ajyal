@@ -397,7 +397,7 @@
 // }
 import 'dart:io';
 import 'package:ajyal/Core/utils/constants/end_points.dart';
-import 'package:ajyal/Features/Community/Presentation/bloc/replies/replies_cubit.dart';
+import 'package:ajyal/Features/Community/Presentation/Bloc/replies/replies_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';

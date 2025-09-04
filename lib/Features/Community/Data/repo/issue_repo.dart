@@ -8,6 +8,6 @@ abstract class IssueRepo {
   Future<Either<Failure, List<IssueModel>>> getAllIssues(int id);
   Future<Either<Failure, List<IssueModel>>> getMyIssues(int id);
   Future<Either<Failure, String>> addIssue(Map data);
-  Future<Either<Failure, RepliesModel>> getReplies(int issueId);
-  Future<Either<Failure, Reply>> addReply(Map<String, dynamic> body);
+  // Future<Either<Failure, RepliesModel>> getReplies(int issueId);
+  // Future<Either<Failure, Reply>> addReply(Map<String, dynamic> body);
 }

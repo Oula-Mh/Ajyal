@@ -19,12 +19,12 @@ import 'package:ajyal/Features/Advertisements/Presentation/Pages/all_teacheradv_
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/home_adv_page.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/teacher_adv_page.dart';
 import 'package:ajyal/Features/Community/Data/repo/issue_repoimp.dart';
+import 'package:ajyal/Features/Community/Data/repo/reply_repoimp.dart';
 import 'package:ajyal/Features/Community/Presentation/Bloc/issue_list_cubit/issue_list_cubit.dart';
 import 'package:ajyal/Features/Community/Presentation/Pages/add_issue_page.dart';
 import 'package:ajyal/Features/Community/Presentation/Pages/all_question_page.dart';
 import 'package:ajyal/Features/Community/Presentation/Pages/my_questions_page.dart';
 import 'package:ajyal/Features/Community/Presentation/bloc/replies/replies_cubit.dart';
-import 'package:ajyal/Features/Community/data/repo/community_repoimp.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
 import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
 import 'package:ajyal/Features/Course/Presentation/Pages/course_details.dart';
@@ -53,7 +53,6 @@ import 'package:ajyal/Features/Parents/Home/Presentation/pages/parent_home.dart'
 import 'package:ajyal/Features/Parents/Home/Presentation/widgets/all_student_linked.dart';
 import 'package:ajyal/Features/Parents/Home/Presentation/widgets/link_student_scanner.dart';
 import 'package:ajyal/Features/Parents/Home/Presentation/widgets/select_login_student.dart';
-import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Data/Repo/attendence_repo.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Data/Repo/attendence_repoimpl.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Presentation/bloc/Attendence/attendence_cubit.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Presentation/pages/attendance_page.dart';
@@ -126,18 +125,18 @@ abstract class Routing {
           );
         },
       ),
-      GoRoute(
-        path: "/pay",
-        builder:
-            (context, state) => BlocProvider(
-              create:
-                  (context) =>
-                      StripeLinkCubit(PaymentRepoimp(DioConsumer(Dio())))
-                        ..payment("invoicePay"),
-              // ..payment(),
-              child: const PaymentStripe(),
-            ),
-      ),
+      // GoRoute(
+      //   path: "/pay",
+      //   builder:
+      //       (context, state) => BlocProvider(
+      //         create:
+      //             (context) =>
+      //                 StripeLinkCubit(PaymentRepoimp(DioConsumer(Dio())))
+      //                   ..payment("invoicePay"),
+      //         // ..payment(),
+      //         child: const PaymentStripe(),
+      //       ),
+      // ),
       GoRoute(
         path: AppRouter.advPage,
         builder: (context, state) => const HomeAdvPage(),
@@ -617,7 +616,7 @@ abstract class Routing {
         builder: (context, state) {
           return BlocProvider(
             create:
-                (context) => RepliesCubit(IssueRepoImpl(DioConsumer(Dio()))),
+                (context) => RepliesCubit(CommunityRepoimp(DioConsumer(Dio()))),
             child: MyQuestionPage(),
           );
         },

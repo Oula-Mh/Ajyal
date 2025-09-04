@@ -13,7 +13,7 @@ class PaymentRepoimp {
   Future<Either<Failure, StripeLinkModel>> payment(Map data) async {
     try {
       final response = await api.post(
-        "${EndPoints.fileBaseUrl}stripe/session",
+        "${EndPoints.baseUrl}stripe/session",
         data,
       );
       final model = StripeLinkModel.fromJson(response);

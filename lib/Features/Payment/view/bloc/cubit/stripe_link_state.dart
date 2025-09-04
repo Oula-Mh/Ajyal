@@ -4,7 +4,7 @@ sealed class StripeLinkState {}
 
 final class StripeLinkInitial extends StripeLinkState {}
 
-final class Loading extends StripeLinkState {}
+final class LoadingPay extends StripeLinkState {}
 
 final class Success extends StripeLinkState {
   final StripeLinkModel stripeLink;

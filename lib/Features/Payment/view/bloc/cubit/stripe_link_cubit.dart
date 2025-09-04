@@ -9,8 +9,8 @@ class StripeLinkCubit extends Cubit<StripeLinkState> {
   StripeLinkCubit(this.repoimp) : super(StripeLinkInitial());
 
   Future<void> payment(String invoice) async {
-    emit(Loading());
-    var response = await repoimp.payment({"invoice": invoice});
+    emit(LoadingPay());
+    var response = await repoimp.payment({"invoice_id": invoice});
     if (isClosed) {
       return;
     }

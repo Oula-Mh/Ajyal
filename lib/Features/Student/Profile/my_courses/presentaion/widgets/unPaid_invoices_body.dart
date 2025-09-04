@@ -52,8 +52,8 @@ class UnpaidInvoicesBody extends StatelessWidget {
                 amount: double.parse(invoice.value),
                 dueDate: DateTime.parse(invoice.dueDate),
                 // numInvoices: index,
-                isPayable: index == 0 + 1,
-                onPay: () => onPayInvoice,
+                isPayable: index == 0,
+                onPay: () => onPayInvoice(invoice),
               );
             },
           );

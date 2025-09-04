@@ -4,12 +4,12 @@ class EndPoints {
   // static const String fileBaseUrl = 'http://10.0.2.2:8000/';
 
   // with mobile sarah
-  static const String baseUrl = 'https://cdb8d142add9.ngrok-free.app/api/';
-  static const String fileBaseUrl = 'https://cdb8d142add9.ngrok-free.app/';
+  // static const String baseUrl = 'https://cdb8d142add9.ngrok-free.app/api/';
+  // static const String fileBaseUrl = 'https://cdb8d142add9.ngrok-free.app/';
 
   // with mobile oula
-  // static const String baseUrl = 'http://192.168.59.1:8000/api/';
-  // static const String fileBaseUrl = 'http://192.168.59.1:8000/';
+  static const String baseUrl = 'https://cfefe7d20356.ngrok-free.app/api/';
+  static const String fileBaseUrl = 'https://cfefe7d20356.ngrok-free.app/';
 
   // ngrok
   // static const String baseUrl = 'https://71c3a0641fef.ngrok-free.app/api/';
