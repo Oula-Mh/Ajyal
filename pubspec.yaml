@@ -63,6 +63,7 @@ dependencies:
   firebase_messaging: ^16.0.0
   carousel_slider: ^5.1.1
   image_picker: ^1.2.0
+  simple_animations: ^5.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

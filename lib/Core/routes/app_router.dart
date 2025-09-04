@@ -23,6 +23,8 @@ import 'package:ajyal/Features/Community/Presentation/Bloc/issue_list_cubit/issu
 import 'package:ajyal/Features/Community/Presentation/Pages/add_issue_page.dart';
 import 'package:ajyal/Features/Community/Presentation/Pages/all_question_page.dart';
 import 'package:ajyal/Features/Community/Presentation/Pages/my_questions_page.dart';
+import 'package:ajyal/Features/Community/Presentation/bloc/replies/replies_cubit.dart';
+import 'package:ajyal/Features/Community/data/repo/community_repoimp.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
 import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
 import 'package:ajyal/Features/Course/Presentation/Pages/course_details.dart';
@@ -587,10 +589,6 @@ abstract class Routing {
       ),
 
       GoRoute(
-        path: AppRouter.myQuestionPage,
-        builder: (context, state) => const MyQuestionPage(),
-      ),
-      GoRoute(
         path: AppRouter.allQuestionPage,
         builder: (context, state) {
           var subjectId = state.extra as int;
@@ -610,6 +608,17 @@ abstract class Routing {
           return BlocProvider(
             create: (context) => IssueListCubit(getit<IssueRepoImpl>()),
             child: AddIssuePage(curriculum_id: sId),
+          );
+        },
+      ),
+
+      GoRoute(
+        path: AppRouter.myQuestionPage,
+        builder: (context, state) {
+          return BlocProvider(
+            create:
+                (context) => RepliesCubit(IssueRepoImpl(DioConsumer(Dio()))),
+            child: MyQuestionPage(),
           );
         },
       ),

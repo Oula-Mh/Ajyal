@@ -1,3 +1,4 @@
+import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/about_insitute_page.dart';
 import 'package:flutter/material.dart';
 
@@ -161,9 +162,9 @@ class HeaderWidget extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [
-            AppColors.primaryColor,
-            AppColors.gradientLight,
-            AppColors.secondaryColor,
+            AppColor.primaryColor,
+            AppColor.gradientLight,
+            AppColor.secondaryColor,
           ],
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,

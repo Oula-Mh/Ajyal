@@ -112,7 +112,9 @@
 //     );
 //   }
 // }
+import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Student/Profile/my_courses/data/models/unpaid_invoice_model.dart';
 import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/Bloc/unPaid_invoices/unPaid_invoices_cubit.dart';
 import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/unPaid_invoices_body.dart';
@@ -132,7 +134,7 @@ class _UnPaidInvoicesPageState extends State<UnPaidInvoicesPage> {
   void initState() {
     super.initState();
     context.read<UnPaidInvoicesCubit>().getunPaidInvoices(
-      idStdent: 1,
+      idStdent: int.parse(getit<CacheHelper>().getData(key: "studentIdbase")),
       idCourse: widget.idCourse,
     );
   }

@@ -48,31 +48,31 @@
 
 class UnpaidInvoicesModel {
   final int id;
-  final int courseId;
+  // final int courseId;
   final String value;
   final String dueDate;
-  final String createdAt;
-  final String updatedAt;
+  // final String createdAt;
+  // final String updatedAt;
   final List<dynamic> payments;
 
   UnpaidInvoicesModel({
     required this.id,
-    required this.courseId,
+    // required this.courseId,
     required this.value,
     required this.dueDate,
-    required this.createdAt,
-    required this.updatedAt,
+    // required this.createdAt,
+    // required this.updatedAt,
     required this.payments,
   });
 
   factory UnpaidInvoicesModel.fromJson(Map<String, dynamic> json) {
     return UnpaidInvoicesModel(
       id: json['id'],
-      courseId: json['course_id'],
+      // courseId: json['course_id'],
       value: json['value'],
       dueDate: json['due_date'],
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
+      // createdAt: json['created_at'],
+      // updatedAt: json['updated_at'],
       payments: json['payments'] ?? [],
     );
   }
@@ -80,11 +80,11 @@ class UnpaidInvoicesModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'course_id': courseId,
+      // 'course_id': courseId,
       'value': value,
       'due_date': dueDate,
-      'created_at': createdAt,
-      'updated_at': updatedAt,
+      // 'created_at': createdAt,
+      // 'updated_at': updatedAt,
       'payments': payments,
     };
   }

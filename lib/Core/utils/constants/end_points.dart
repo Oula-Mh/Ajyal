@@ -8,8 +8,8 @@ class EndPoints {
   static const String fileBaseUrl = 'https://cdb8d142add9.ngrok-free.app/';
 
   // with mobile oula
-  // static const String baseUrl = 'http://192.168.1.2:8000/api/';
-  // static const String fileBaseUrl = 'http://192.168.1.2:8000/';
+  // static const String baseUrl = 'http://192.168.59.1:8000/api/';
+  // static const String fileBaseUrl = 'http://192.168.59.1:8000/';
 
   // ngrok
   // static const String baseUrl = 'https://71c3a0641fef.ngrok-free.app/api/';
@@ -44,6 +44,8 @@ class EndPoints {
   static const String payment = "payment/students/";
   static const String invoices = "/courses/payments/invoices";
   static const String myCoursesDetails = "student/my-courses-with-details";
+  static const String getReplies = "reply/get-replies/";
+  static const String addReply = "reply/add-reply";
   static const String normalIssue = "issue/get-normal-issues/";
   static const String fqaIssue = "issue/get-is-fqa-issues/";
   static const String myissue = "issue/get-my-issues/";
