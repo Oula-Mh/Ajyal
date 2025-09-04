@@ -67,7 +67,7 @@ class HomeAdvPage extends StatelessWidget {
                                   if (state is CourseAdvSuccess) {
                                     return Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Text(
                                           "الكورسات المتاحة",

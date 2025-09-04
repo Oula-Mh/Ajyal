@@ -121,6 +121,17 @@ class _AllQuestionPageState extends State<AllQuestionPage>
       onPressed: () {
         GoRouter.of(context).push(AppRouter.addIssuePage, extra: id);
       },
+      color: AppColor.primaryColor, // 🎨 لون الخلفية
+      textColor: Colors.white, // لون النص أو الأيقونة
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12), // 🔲 حواف ناعمة
+      ),
+      elevation: 3, // ظل بسيط
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
+      child: const Text(
+        "إضافة سؤال",
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      ),
     );
   }
 }
