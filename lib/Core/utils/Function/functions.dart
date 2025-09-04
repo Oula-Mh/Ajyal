@@ -1,5 +1,6 @@
 import 'package:ajyal/Core/Network/Errors/failure_handle.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
+import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Data/Model/attendence_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -192,20 +193,17 @@ void showVarianceDialog(BuildContext context, double variancePercentage) {
   );
 }
 
-Map<int, List<int>> buildAbsenceDaysPerMonth(List<dynamic> absenceDaysJson) {
+Map<int, List<int>> buildAbsenceDaysPerMonth(List<AbsenceDay> absenceDays) {
   final Map<int, List<int>> absenceDaysPerMonth = {};
 
-  for (var item in absenceDaysJson) {
-    final String dateStr = item['absence_date'];
-    final DateTime date = DateTime.parse(dateStr);
-
-    final int month = date.month;
-    final int day = date.day;
+  for (var day in absenceDays) {
+    final int month = day.absenceDate.month;
+    final int dayNum = day.absenceDate.day;
 
     if (!absenceDaysPerMonth.containsKey(month)) {
       absenceDaysPerMonth[month] = [];
     }
-    absenceDaysPerMonth[month]!.add(day);
+    absenceDaysPerMonth[month]!.add(dayNum);
   }
 
   return absenceDaysPerMonth;

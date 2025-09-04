@@ -18,33 +18,6 @@ class _AllStudentLinkedState extends State<AllStudentLinked> {
 
   @override
   Widget build(BuildContext context) {
-    List<ParentStudentModell> students = [
-      ParentStudentModell(
-        id: 1,
-        firstName: "Dameon",
-        lastName: "Dicki",
-        classLevel: "البكالوريا العلمية",
-      ),
-      ParentStudentModell(
-        id: 2,
-        firstName: "Alice",
-        lastName: "Johnson",
-        classLevel: "الثانوية العامة",
-      ),
-      ParentStudentModell(
-        id: 3,
-        firstName: "Mohammed",
-        lastName: "Ali",
-        classLevel: "الصف الحادي عشر",
-      ),
-      ParentStudentModell(
-        id: 4,
-        firstName: "Sara",
-        lastName: "Smith",
-        classLevel: "الصف العاشر",
-      ),
-    ];
-
     return Scaffold(
       appBar: customAppBar(context, "جميع الطلاب"),
       body: BlocBuilder<StudentLinkCubit, StudentLinkState>(
@@ -80,7 +53,7 @@ class _AllStudentLinkedState extends State<AllStudentLinked> {
                   : state is AllParentStuentLoaded
                   ? state.listModel.length == 1
                       ? SingleStudentItem(student: state.listModel[0])
-                      : StudentCheckList(students: [])
+                      : StudentCheckList(students: state.listModel)
                   : state is FailState
                   ? Center(child: Text(state.errMessage))
                   : Center(child: Text("حدث خطأ ما !!")),

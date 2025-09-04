@@ -124,6 +124,7 @@ import 'package:ajyal/Features/Student/Profile/my_courses/presentaion/widgets/un
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UnPaidInvoicesPage extends StatefulWidget {
@@ -249,7 +250,7 @@ class _PaymentProcessPageState extends State<PaymentProcessPage> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         openLink(state.stripeLink.link);
                       },
                     ),

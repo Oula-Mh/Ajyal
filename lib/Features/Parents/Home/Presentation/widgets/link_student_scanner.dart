@@ -82,7 +82,7 @@ class _QRScanPageState extends State<LinkStudentScanner> {
                                 });
                                 //print(code);
                                 print("✅✅✅ scannde doneee  ${code}");
-                                //cubit.linkStudent({'student_id': code});
+                                cubit.linkStudent({'student_id': code});
                                 // cubit.register(
                                 //   code,
                                 //   widget.name,

@@ -123,9 +123,12 @@ class _StudentMarkAnalysisState extends State<StudentMarkAnalysis> {
                     chartHeight: screenHeight * 0.3,
                   ),
                   if (highlightCards.isNotEmpty)
-                    HighlightCardsRow(
-                      highlightCards: highlightCards,
-                      cardWidth: screenWidth * 0.4,
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: HighlightCardsRow(
+                        highlightCards: highlightCards,
+                        cardWidth: screenWidth * 0.4,
+                      ),
                     ),
                   ViewDetailsCard(subjects: subjects),
                 ],

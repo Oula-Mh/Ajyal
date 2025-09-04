@@ -15,16 +15,17 @@ class SubjectSelectorBar extends StatelessWidget {
   });
 
   final Map<String, IconData> subjectIcons = const {
-    "رياضيات": Icons.calculate,
-    "فيزياء": Icons.science,
-    "كيمياء": Icons.bubble_chart,
-    "علوم": Icons.biotech,
-    "عربي": Icons.menu_book,
-    "إنكليزي": Icons.language,
-    "فلسفة": Icons.psychology,
-    "ديانة": Icons.mosque,
-    "تاريخ": Icons.history_edu,
-    "جغرافيا": Icons.public,
+    "الرياضيات": Icons.calculate,
+    "الفيزياء": Icons.science,
+    "الكيمياء": Icons.bubble_chart,
+    "العلوم": Icons.biotech,
+    "العربية": Icons.menu_book,
+    "الإنكليزي": Icons.language,
+    "الفرنسي": Icons.language,
+    "الفلسفة": Icons.psychology,
+    "الديانة": Icons.mosque,
+    "التاريخ": Icons.history_edu,
+    "الجغرافيا": Icons.public,
   };
 
   @override

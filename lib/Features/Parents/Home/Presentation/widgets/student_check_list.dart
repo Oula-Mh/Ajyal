@@ -154,17 +154,3 @@ class _StudentCheckListState extends State<StudentCheckList> {
     );
   }
 }
-
-class ParentStudentModell {
-  final int id;
-  final String firstName;
-  final String lastName;
-  final String classLevel;
-
-  ParentStudentModell({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.classLevel,
-  });
-}

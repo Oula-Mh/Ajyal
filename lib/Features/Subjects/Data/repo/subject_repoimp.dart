@@ -19,7 +19,7 @@ class SubjectRepoimp implements SubjectRepo {
       final subjectsList = response['data']['curriculums'];
       List<SubjectModel> subjects =
           (subjectsList as List)
-              .map((curriculum) => SubjectModel.fromJson(curriculum['subject']))
+              .map((curriculum) => SubjectModel.fromJson(curriculum))
               .toList();
 
       return Right(subjects);

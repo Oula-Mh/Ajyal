@@ -48,7 +48,12 @@ class QuestionPreModel {
       mark: json['mark'],
       questionText: json['question_text'],
       hint: json['hint'],
-      image: json['image'],
+      image:
+          json['image'] == null
+              ? null
+              : (json['image'] is Map
+                  ? json['image']['path'].toString()
+                  : json['image'].toString()),
       choices:
           (json['choices'] as List)
               .map((c) => ChoicePreModel.fromJson(c))

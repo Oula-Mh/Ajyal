@@ -1,9 +1,13 @@
 import 'package:ajyal/Core/Network/Api/dio_logger_interceptors.dart';
 import 'package:ajyal/Core/Network/token_handle.dart';
 import 'package:ajyal/Core/Network/Api/api_consumer.dart';
+import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Core/utils/constants/end_pointS.dart';
+import 'package:ajyal/main.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DioConsumer implements Api {
   late Dio _dio;
@@ -12,7 +16,7 @@ class DioConsumer implements Api {
     _dio = dio;
     _dio.options = BaseOptions(
       baseUrl: EndPoints.baseUrl,
-      connectTimeout: const Duration(seconds: 30), // 👈 not zero
+      connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
       receiveDataWhenStatusError: true,
       headers: {
@@ -35,6 +39,23 @@ class DioConsumer implements Api {
           }
           return handler.next(options);
         },
+        onError: (DioError error, handler) async {
+          // إذا كان الرد 401 يعني التوكن منتهي الصلاحية
+          if (error.response?.statusCode == 401) {
+            // مسح التوكن من الـ cache
+            getit<TokenHandler>().clearToken(TokenHandler.parentTokenKey);
+            getit<TokenHandler>().clearToken(TokenHandler.studentTokenKey);
+
+            // إعادة التوجيه لواجهة تسجيل الدخول
+            if (navigatorKey.currentContext != null) {
+              GoRouter.of(
+                navigatorKey.currentContext!,
+              ).pushReplacement(AppRouter.loginPage);
+            }
+          }
+
+          return handler.next(error);
+        },
       ),
     );
 
@@ -43,29 +64,13 @@ class DioConsumer implements Api {
 
   @override
   Future<Map<String, dynamic>> get(String endPoint) async {
-    //   try {
     final response = await _dio.get(endPoint);
     return response.data;
-    // } on DioException catch (error) {
-    //   //throw ServerFailure.fromDioError(error);
-    // } catch (error, stackTrace) {
-    //   // log to crashlytics or console
-    //   print("Error: $error\nStackTrace: $stackTrace");
-    //   // throw ServerFailure("Unexpected error: $error");
-    // }
   }
 
   @override
   Future<Map<String, dynamic>> post(String endPoint, Map data) async {
-    //  try {
     final response = await _dio.post(endPoint, data: data);
     return response.data;
-    // }
-    //  on DioException catch (e) {
-    //   handleDioExceptions(e);
-    //   //throw ServerFailure.fromDioError(error);
-    // } catch (error, stackTrace) {
-    //   print("Error: $error\nStackTrace: $stackTrace");
-    // }
   }
 }
