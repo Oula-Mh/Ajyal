@@ -3,7 +3,7 @@ class ExamCurrentModel {
   final String name;
   final DateTime startTime;
   final int durationMinutes;
-  final bool isAvailable;
+  final bool? isAvailable;
 
   ExamCurrentModel({
     required this.id,

@@ -240,7 +240,7 @@ class QuestionCardPre extends StatelessWidget {
               const SizedBox(height: 16),
               OptionsListPre(subQuestion: subQuestion),
               const SizedBox(height: 20),
-              if (subQuestion.hint.isNotEmpty)
+              if (subQuestion.hint != null)
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
@@ -257,7 +257,7 @@ class QuestionCardPre extends StatelessWidget {
                       const SizedBox(width: 10),
                       Expanded(
                         child: Text(
-                          subQuestion.hint,
+                          subQuestion.hint!,
                           style: const TextStyle(fontSize: 14),
                         ),
                       ),

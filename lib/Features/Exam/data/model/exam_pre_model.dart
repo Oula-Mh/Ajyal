@@ -1,15 +1,15 @@
 class ExamPreModel {
   final int id;
-  final int curriculumTeacherId;
-  final int curriculumId;
+  final int? curriculumTeacherId;
+  final int? curriculumId;
   final int? topicId;
   final String name;
-  final String type;
-  final int available;
+  final String? type;
+  final int? available;
   final String startTime;
   final String duration;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
   final StudentQuiz studentQuiz;
 
   ExamPreModel({
@@ -46,10 +46,10 @@ class ExamPreModel {
 }
 
 class StudentQuiz {
-  final int studentId;
-  final int quizId;
+  final int? studentId;
+  final int? quizId;
   final double? result;
-  final int isSubmit;
+  final int? isSubmit;
 
   StudentQuiz({
     required this.studentId,

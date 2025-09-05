@@ -15,11 +15,11 @@ class ExamPreDetailsModel {
 
 class QuestionPreModel {
   final int id;
-  final int quizId;
+  final int? quizId;
   final int? parentQuestionId;
-  final String mark;
+  final String? mark;
   final String questionText;
-  final String hint;
+  final String? hint;
   final String? image;
   final List<ChoicePreModel> choices;
   final ChoicePreModel? correctChoice;
