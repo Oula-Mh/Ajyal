@@ -1,13 +1,24 @@
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
-import 'package:ajyal/Features/Community/Data/model/issue_list_model.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
+import 'package:ajyal/Features/Community/Data/models/issue_list_model.dart';
+import 'package:ajyal/Features/Community/Data/repo/community_repoimpl.dart';
+import 'package:ajyal/Features/Community/Presentation/Bloc/replies/replies_cubit.dart';
+import 'package:ajyal/Features/Community/Presentation/Bloc/send_reply/send_reply_cubit.dart';
+import 'package:ajyal/Features/Community/Presentation/Pages/my_questions_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class QuestionCard extends StatelessWidget {
   final IssueModel question;
+  final int tybeBar;
 
-  const QuestionCard({super.key, required this.question});
+  const QuestionCard({
+    super.key,
+    required this.question,
+    required this.tybeBar,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +77,34 @@ class QuestionCard extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: GestureDetector(
                 onTap: () {
-                  GoRouter.of(context).push(AppRouter.myQuestionPage);
+                  tybeBar == 2
+                      ? Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) {
+                            return MultiBlocProvider(
+                              providers: [
+                                BlocProvider(
+                                  create:
+                                      (context) => RepliesCubit(
+                                        getit<CommunityRepoimp>(),
+                                      )..fetchReplies(question.id),
+                                ),
+                                BlocProvider(
+                                  create:
+                                      (context) => SendReplyCubit(
+                                        getit<CommunityRepoimp>(),
+                                      ),
+                                ),
+                              ],
+                              child: MyQuestionPage(issueId: question.id),
+                            );
+                          },
+                        ),
+                      )
+                      : GoRouter.of(
+                        context,
+                      ).push(AppRouter.myQuestionPage, extra: question.id);
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 5),

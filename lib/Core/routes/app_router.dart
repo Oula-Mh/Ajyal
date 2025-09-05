@@ -18,12 +18,12 @@ import 'package:ajyal/Features/Advertisements/Presentation/Pages/all_generaladv_
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/all_teacheradv_page.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/home_adv_page.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/teacher_adv_page.dart';
-import 'package:ajyal/Features/Community/Data/repo/issue_repoimp.dart';
-import 'package:ajyal/Features/Community/Data/repo/reply_repoimp.dart';
+import 'package:ajyal/Features/Community/Data/repo/community_repoimpl.dart';
 import 'package:ajyal/Features/Community/Presentation/Bloc/issue_list_cubit/issue_list_cubit.dart';
 import 'package:ajyal/Features/Community/Presentation/Pages/add_issue_page.dart';
 import 'package:ajyal/Features/Community/Presentation/Pages/all_question_page.dart';
 import 'package:ajyal/Features/Community/Presentation/Pages/my_questions_page.dart';
+import 'package:ajyal/Features/Community/Presentation/Pages/puplic_question.dart';
 import 'package:ajyal/Features/Community/Presentation/bloc/replies/replies_cubit.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
 import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
@@ -65,9 +65,6 @@ import 'package:ajyal/Features/Parents/performance_analysis/presentaion/bloc/det
 import 'package:ajyal/Features/Parents/performance_analysis/presentaion/bloc/parent_combine_mean/parent_combined_mean_cubit.dart';
 import 'package:ajyal/Features/Parents/performance_analysis/presentaion/page/student_mark_analysis.dart';
 import 'package:ajyal/Features/Parents/performance_analysis/presentaion/page/student_subject_details.dart';
-import 'package:ajyal/Features/Payment/Data/repo/payment_repoimp.dart';
-import 'package:ajyal/Features/Payment/view/bloc/cubit/stripe_link_cubit.dart';
-import 'package:ajyal/Features/Payment/view/payment.dart';
 import 'package:ajyal/Features/Student/Auth/Data/models/check_student_info_model.dart';
 import 'package:ajyal/Features/Student/Auth/Data/models/student_profile_model.dart';
 import 'package:ajyal/Features/Student/Auth/Data/repos/student_auth_repoImp.dart';
@@ -605,8 +602,8 @@ abstract class Routing {
         builder: (context, state) {
           var sId = state.extra as int;
           return BlocProvider(
-            create: (context) => IssueListCubit(getit<IssueRepoImpl>()),
-            child: AddIssuePage(curriculum_id: sId),
+            create: (context) => IssueListCubit(getit<CommunityRepoimp>()),
+            child: AddIssuePage(curriculumId: sId),
           );
         },
       ),
@@ -614,10 +611,14 @@ abstract class Routing {
       GoRoute(
         path: AppRouter.myQuestionPage,
         builder: (context, state) {
+          var issueId = state.extra as int;
+
           return BlocProvider(
             create:
-                (context) => RepliesCubit(CommunityRepoimp(DioConsumer(Dio()))),
-            child: MyQuestionPage(),
+                (context) =>
+                    RepliesCubit(getit<CommunityRepoimp>())
+                      ..fetchReplies(issueId),
+            child: PublicQuestionPage(issueId: issueId),
           );
         },
       ),
