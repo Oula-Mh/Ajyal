@@ -37,16 +37,16 @@ class SubjectCubit extends Cubit<SubjectState> {
 
 Widget getIconForSubject(String name) {
   switch (name) {
-    case 'اللغة العربية':
+    case 'العربية':
       return getSvg(AppImages.arabic);
-    case 'اللغة الإنكليزية':
+    case 'الإنكليزية':
     case 'إنكليزي':
       return getSvg(AppImages.english);
-    case 'اللغة الفرنسية':
+    case 'الفرنسي':
       return getSvg(AppImages.paris);
-    case 'رياضيات':
+    case 'الرياضيات':
       return getSvg(AppImages.math);
-    case 'علم الأحياء':
+    case 'العلوم':
       return getSvg(AppImages.sience);
     case 'الفيزياء':
       return getSvg(AppImages.physics);

@@ -3,6 +3,7 @@ import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Notification/Presentation/Widget/notification_bell.dart';
+import 'package:ajyal/Features/Subjects/Data/global.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,8 +17,8 @@ class ParentPageChoice extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: () {
-              getit<CacheHelper>().removeData(key: "notiCount");
+            onTap: () async {
+              await resetNotiCountInPrefs();
               GoRouter.of(context).push(AppRouter.parentNotification);
             },
             child: Container(

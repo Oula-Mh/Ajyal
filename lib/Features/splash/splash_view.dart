@@ -3,6 +3,7 @@ import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Notification/Presentation/Bloc/notification/notification_cubit.dart';
 import 'package:ajyal/Features/Notification/firebase_config.dart';
+import 'package:ajyal/Features/Subjects/Data/global.dart';
 import 'package:ajyal/Features/splash/splash_animation_widget.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class SplashView extends StatefulWidget {
   State<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<SplashView> {
+class _SplashViewState extends State<SplashView> with WidgetsBindingObserver {
   void _navigateWithTransition(BuildContext context, String route) {
     GoRouter.of(context).pushReplacement(route);
   }
@@ -24,15 +25,23 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
-    // استدعاء خدمة الإشعارات هنا
-    print("استدعاء خدمة الإشعارات هنا");
-    // FirebaseConfig.initialize(context);
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   final cubit = BlocProvider.of<NotificationCubit>(context, listen: false);
-    //   FirebaseMessaging.onMessage.listen((message) {
-    //     cubit.increase();
-    //   });
-    // });
+    WidgetsBinding.instance.addObserver(this);
+    // قِم بتحميل القيمة (تمت بالفعل في main، لكن لا مانع)
+    loadNotiCountFromPrefs();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // لو زاد العدد أثناء الخلفية، نقرأه الآن ونحدّث notifier
+      loadNotiCountFromPrefs();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override

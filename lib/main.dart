@@ -2,6 +2,7 @@ import 'package:ajyal/Core/routes/app_router.dart';
 import 'package:ajyal/Core/styles/app_theme.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Notification/firebase_config.dart';
+import 'package:ajyal/Features/Subjects/Data/global.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -12,8 +13,11 @@ import 'package:firebase_core/firebase_core.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+
   setUpAppService();
+  await Firebase.initializeApp();
+  await FirebaseService.requestNotificationPermission();
+  await loadNotiCountFromPrefs();
   await FirebaseService.init();
 
   runApp(const MyApp());

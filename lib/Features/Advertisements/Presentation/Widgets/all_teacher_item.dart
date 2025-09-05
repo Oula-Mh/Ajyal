@@ -56,6 +56,7 @@ class AllTeacherItem extends StatelessWidget {
                               id: course.advertisableId!,
                               images: course.images!,
                               isGeneral: false,
+                              isCourse: false,
                             ),
                           ),
                         ],

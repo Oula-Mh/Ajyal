@@ -93,6 +93,7 @@ import 'package:ajyal/Features/Subjects/Presentation/Pages/pdf_page.dart';
 import 'package:ajyal/Features/role_page.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Pages/register_view.dart';
 import 'package:ajyal/Features/splash/splash_view.dart';
+import 'package:ajyal/main.dart';
 import 'package:ajyal/test.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -101,6 +102,7 @@ import 'package:go_router/go_router.dart';
 
 abstract class Routing {
   static final router = GoRouter(
+    navigatorKey: navigatorKey,
     routes: [
       GoRoute(
         path: "/",

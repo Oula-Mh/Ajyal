@@ -1,7 +1,9 @@
+import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/Network/token_handle.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Notification/Presentation/Widget/notification_bell.dart';
+import 'package:ajyal/Features/Subjects/Data/global.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
@@ -17,7 +19,8 @@ class HeaderRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
-            onTap: () {
+            onTap: () async {
+              await resetNotiCountInPrefs();
               GoRouter.of(context).push(AppRouter.parentNotification);
             },
             child: Padding(

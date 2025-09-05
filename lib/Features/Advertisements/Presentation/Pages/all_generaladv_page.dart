@@ -54,6 +54,7 @@ class AllGeneraladvPage extends StatelessWidget {
                       itemCount: state.model.data!.length,
                       courses: state.model.data!,
                       isGeneral: true,
+                      isCourse: false,
                     ),
                   )
                   : state is GeneralAdvFailure

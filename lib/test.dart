@@ -54,6 +54,7 @@ class TestPage extends StatelessWidget {
                       itemCount: state.model.data!.length,
                       courses: state.model.data!,
                       isGeneral: false,
+                      isCourse: true,
                     ),
                   )
                   : state is AdvFailure

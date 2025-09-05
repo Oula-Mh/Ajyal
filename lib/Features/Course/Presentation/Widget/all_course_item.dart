@@ -8,11 +8,13 @@ class AllCourseItem extends StatelessWidget {
   final int itemCount;
   final List<AdvModel> courses;
   final bool isGeneral;
+  final bool isCourse;
   const AllCourseItem({
     super.key,
     required this.itemCount,
     required this.courses,
     required this.isGeneral,
+    required this.isCourse,
   });
 
   @override
@@ -59,11 +61,13 @@ class AllCourseItem extends StatelessWidget {
                                     ? ShowCourseBttn(
                                       images: course.images!,
                                       isGeneral: isGeneral,
+                                      isCourse: isCourse,
                                     )
                                     : ShowCourseBttn(
                                       id: course.advertisableId!,
                                       images: course.images!,
                                       isGeneral: isGeneral,
+                                      isCourse: isCourse,
                                     ),
                           ),
                         ],

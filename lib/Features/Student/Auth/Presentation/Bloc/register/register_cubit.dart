@@ -1,3 +1,5 @@
+import 'package:ajyal/Cache/cache_helper.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Student/Auth/Data/models/check_student_info_model.dart';
 import 'package:ajyal/Features/Student/Auth/Data/repos/student_auth_repo.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +53,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       "access_code": acccessCode,
       "password": passWordController.text,
       "password_confirmation": rePassWordController.text,
+      "fcm_token": getit<CacheHelper>().getData(key: "fcm") ?? "",
     });
     if (isClosed) return;
 

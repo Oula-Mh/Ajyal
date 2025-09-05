@@ -1,3 +1,5 @@
+import 'package:ajyal/Cache/cache_helper.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Student/Auth/Data/repos/student_auth_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,7 @@ class LoginCubit extends Cubit<LoginState> {
       final response = await studentRepo.login({
         "password": passWordController.text,
         "access_code": codeController.text,
+        "fcm_token": getit<CacheHelper>().getData(key: "fcm") ?? "",
       });
       if (isClosed) return;
 

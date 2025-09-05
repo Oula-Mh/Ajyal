@@ -1,3 +1,5 @@
+import 'package:ajyal/Cache/cache_helper.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Parents/Auth/data/repos/register/register_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,6 +34,7 @@ class RegisterParentCubit extends Cubit<RegisterParentState> {
       "password": password,
       "password_confirmation": rePassword,
       "student_id_qr": studentIdQr,
+      "fcm_token": getit<CacheHelper>().getData(key: "fcm") ?? "",
     });
     result.fold(
       (failure) {

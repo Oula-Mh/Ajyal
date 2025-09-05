@@ -1,17 +1,27 @@
 import 'package:ajyal/Cache/cache_helper.dart';
-import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
-import 'package:ajyal/Features/Course/Data/Model/course_model.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
 import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
-import 'package:ajyal/Features/Home/Presentation/Widgets/course_adv_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class SelectCoursePage extends StatelessWidget {
+class SelectCoursePage extends StatefulWidget {
   const SelectCoursePage({super.key});
+
+  @override
+  State<SelectCoursePage> createState() => _SelectCoursePageState();
+}
+
+class _SelectCoursePageState extends State<SelectCoursePage> {
+  int? selectedCourseId;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedCourseId = getit<CacheHelper>().getData(key: "selectedCourseId");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +50,7 @@ class SelectCoursePage extends StatelessWidget {
                 height: MediaQuery.sizeOf(context).height / 1.1,
                 decoration: BoxDecoration(
                   color: AppColor.white1,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(25),
                     topRight: Radius.circular(25),
                   ),
@@ -53,120 +63,160 @@ class SelectCoursePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "قم باختيار الكورس المناسب لتكمل رحلتك التعليمة ضمن هذا الكورس",
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: AppColor.primaryColor,
                           height: 2,
                         ),
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       BlocBuilder<CourseCubit, CourseState>(
                         builder: (context, state) {
-                          int id = getit<CacheHelper>().getData(
-                            key: "selectedCourseId",
-                          );
-                          return state is CourseSuccess
-                              ? Text(
-                                "الكورس الحالي : ${state.allcourses.firstWhere((course) => course.id == id).name}",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColor.purple,
-                                  fontSize: 15,
-                                ),
-                              )
-                              : Container();
+                          if (state is CourseSuccess &&
+                              selectedCourseId != null) {
+                            final currentCourse = state.allcourses.firstWhere(
+                              (course) => course.id == selectedCourseId,
+                              orElse: () => state.allcourses.first,
+                            );
+                            return Text(
+                              "الكورس الحالي : ${currentCourse.name}",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.purple,
+                                fontSize: 15,
+                              ),
+                            );
+                          }
+                          return Container();
                         },
                       ),
+                      const SizedBox(height: 20),
                       BlocConsumer<CourseCubit, CourseState>(
-                        listener: (context, state) {
-                          if (state is CourseSuccess) {
-                            List<CourseModel> list = state.allcourses;
-                          }
-                        },
+                        listener: (context, state) {},
                         builder: (context, state) {
                           if (state is CourseSuccess) {
                             final courses = state.allcourses;
 
                             return Expanded(
-                              child: ListView.separated(
-                                itemCount: courses.length,
-                                separatorBuilder:
-                                    (context, index) =>
-                                        const SizedBox(height: 16),
-                                itemBuilder: (context, index) {
-                                  final course = courses[index];
-                                  return InkWell(
-                                    onTap: () async {
-                                      // حفظ البيانات
-                                      await getit<CacheHelper>().saveData(
-                                        key: "selectedCourseId",
-                                        value: course.id,
-                                      );
-                                      await getit<CacheHelper>().saveData(
-                                        key: "selectedCourseName",
-                                        value: course.name,
-                                      );
-                                      GoRouter.of(context).pop();
-                                      // GoRouter.of(
-                                      //   context,
-                                      // ).push(AppRouter.homePage);
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 20,
-                                        horizontal: 16,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(
-                                          color: AppColor.primaryColor,
-                                          width: 1.5,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.2),
-                                            blurRadius: 5,
-                                            offset: Offset(0, 3),
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: ListView.separated(
+                                      itemCount: courses.length,
+                                      separatorBuilder:
+                                          (context, index) =>
+                                              const SizedBox(height: 16),
+                                      itemBuilder: (context, index) {
+                                        final course = courses[index];
+                                        bool isSelected =
+                                            course.id == selectedCourseId;
+
+                                        return Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 12,
+                                            horizontal: 16,
                                           ),
-                                        ],
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.book,
-                                            color: AppColor.primaryColor,
-                                          ),
-                                          const SizedBox(width: 12),
-                                          Expanded(
-                                            child: Text(
-                                              course.name,
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.grey.shade700,
-                                              ),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                              color:
+                                                  isSelected
+                                                      ? AppColor.purple
+                                                      : AppColor.primaryColor,
+                                              width: 1.5,
                                             ),
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey.withOpacity(
+                                                  0.2,
+                                                ),
+                                                blurRadius: 5,
+                                                offset: const Offset(0, 3),
+                                              ),
+                                            ],
                                           ),
-                                          Icon(
-                                            Icons.check,
-                                            size: 19,
-                                            color: AppColor.primaryColor,
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  course.name,
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.grey.shade700,
+                                                  ),
+                                                ),
+                                              ),
+                                              Checkbox(
+                                                value: isSelected,
+                                                activeColor: AppColor.purple,
+                                                onChanged: (value) async {
+                                                  setState(() {
+                                                    selectedCourseId =
+                                                        course.id;
+                                                  });
+                                                  await getit<CacheHelper>()
+                                                      .saveData(
+                                                        key: "selectedCourseId",
+                                                        value: course.id,
+                                                      );
+                                                  await getit<CacheHelper>()
+                                                      .saveData(
+                                                        key:
+                                                            "selectedCourseName",
+                                                        value: course.name,
+                                                      );
+                                                },
+                                              ),
+                                            ],
                                           ),
-                                        ],
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColor.primaryColor,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 50,
+                                        vertical: 15,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                     ),
-                                  );
-                                },
+                                    onPressed: () {
+                                      if (selectedCourseId != null) {
+                                        GoRouter.of(context).pop();
+                                        // أو للتوجه مباشرة للـ Home:
+                                        // GoRouter.of(context).push(AppRouter.homePage);
+                                      }
+                                    },
+                                    child: const Text(
+                                      "تم",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             );
                           }
 
                           if (state is CourseFail) {
-                            return Center(child: Text("فشل تحميل الكورسات "));
+                            return const Center(
+                              child: Text("فشل تحميل الكورسات"),
+                            );
                           }
 
                           return const Center(

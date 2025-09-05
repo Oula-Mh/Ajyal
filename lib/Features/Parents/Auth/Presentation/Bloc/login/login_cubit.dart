@@ -1,3 +1,5 @@
+import 'package:ajyal/Cache/cache_helper.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Parents/Auth/data/repos/login/login_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,7 @@ class LoginParentCubit extends SafeCubit<LoginParentState> {
       var result = await loginParentRepo.login({
         "phone_number": phone.text,
         "password": password.text,
+        "fcm_token": getit<CacheHelper>().getData(key: "fcm") ?? "",
       });
       result.fold(
         (failure) {

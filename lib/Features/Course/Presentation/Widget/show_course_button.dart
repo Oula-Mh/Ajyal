@@ -9,11 +9,13 @@ class ShowCourseBttn extends StatelessWidget {
   final int? id;
   final List<Images> images;
   final bool isGeneral;
+  final bool isCourse;
   const ShowCourseBttn({
     super.key,
     @required this.id,
     required this.images,
     required this.isGeneral,
+    required this.isCourse,
   });
 
   @override
@@ -26,7 +28,7 @@ class ShowCourseBttn extends StatelessWidget {
               ? Container()
               : GestureDetector(
                 onTap: () {
-                  isGeneral
+                  isCourse
                       ? GoRouter.of(context).push(
                         AppRouter.courseDetailsPage,
                         extra: {'id': id, 'images': images},
