@@ -1,5 +1,7 @@
 import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
+import 'package:ajyal/Core/Network/token_handle.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Pages/teacher_adv_page.dart';
 import 'package:ajyal/Features/Advertisements/Presentation/Widgets/teache_subject_widget.dart';
 import 'package:ajyal/Features/Student/Auth/Presentation/Bloc/profile/profile_cubit.dart';
@@ -77,32 +79,40 @@ class BottonTeacherPart extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 25),
-                        Text(
-                          "المواد التي يدرسها : ",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            height: 1.5,
-                          ),
-                        ),
-                        SizedBox(height: 13),
-                        BlocProvider(
-                          create:
-                              (context) => SubjectCubit(
-                                SubjectRepoimp(DioConsumer(Dio())),
+                        getit<TokenHandler>().hasToken(
+                              TokenHandler.studentTokenKey,
+                            )
+                            ? Text(
+                              "المواد التي يدرسها : ",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                height: 1.5,
                               ),
-                          child: Builder(
-                            builder: (context) {
-                              // في شوية تأخير هون لسبب انو بدي استعدي ال cubit كامل بعدها استخدمه
-                              final cubit = BlocProvider.of<SubjectCubit>(
-                                context,
-                              );
-                              cubit.subjectForTeacher(state.model.id!);
-                              return TeacherSubject();
-                            },
-                          ),
-                        ),
+                            )
+                            : Container(),
+                        SizedBox(height: 13),
+                        getit<TokenHandler>().hasToken(
+                              TokenHandler.studentTokenKey,
+                            )
+                            ? BlocProvider(
+                              create:
+                                  (context) => SubjectCubit(
+                                    SubjectRepoimp(DioConsumer(Dio())),
+                                  ),
+                              child: Builder(
+                                builder: (context) {
+                                  // في شوية تأخير هون لسبب انو بدي استعدي ال cubit كامل بعدها استخدمه
+                                  final cubit = BlocProvider.of<SubjectCubit>(
+                                    context,
+                                  );
+                                  cubit.subjectForTeacher(state.model.id!);
+                                  return TeacherSubject();
+                                },
+                              ),
+                            )
+                            : Container(),
                       ],
                     )
                     : Center(child: CircularProgressIndicator());
