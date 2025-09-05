@@ -1,7 +1,7 @@
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
-import 'package:ajyal/Features/Community/Data/repo/issue_repoimp.dart';
+import 'package:ajyal/Features/Community/Data/repo/community_repoimpl.dart';
 import 'package:ajyal/Features/Community/Presentation/Bloc/issue_list_cubit/issue_list_cubit.dart';
 import 'package:ajyal/Features/Community/Presentation/widgets/faq_tab_view.dart';
 import 'package:ajyal/Features/Community/Presentation/widgets/question_list_view.dart';
@@ -26,7 +26,7 @@ class _AllQuestionPageState extends State<AllQuestionPage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    _issueListCubit = IssueListCubit(getit<IssueRepoImpl>());
+    _issueListCubit = IssueListCubit(getit<CommunityRepoimp>());
 
     // تحميل أول تاب افتراضيًا
     _issueListCubit.fetchFaqQuestions(widget.subjectId);
@@ -71,10 +71,12 @@ class _AllQuestionPageState extends State<AllQuestionPage>
               fontSize: 17,
               fontWeight: FontWeight.w600,
               color: Colors.white,
+              fontFamily: "Cairo",
             ),
             unselectedLabelStyle: const TextStyle(
               fontSize: 17,
               color: Colors.white,
+              fontFamily: "Cairo",
             ),
             tabs: const [
               Tab(text: 'المتكررة'),
@@ -97,6 +99,7 @@ class _AllQuestionPageState extends State<AllQuestionPage>
                         child: QuestionListView(
                           questions: state.issues,
                           id: widget.subjectId,
+                          tybeBar: _tabController.index,
                         ),
                       ),
                       _buildEnterQuestionBar(widget.subjectId),
@@ -118,15 +121,19 @@ class _AllQuestionPageState extends State<AllQuestionPage>
 
   Widget _buildEnterQuestionBar(int id) {
     return MaterialButton(
-      onPressed: () {
-        GoRouter.of(context).push(AppRouter.addIssuePage, extra: id);
+      onPressed: () async {
+        final result = await GoRouter.of(
+          context,
+        ).push(AppRouter.addIssuePage, extra: id);
+        if (result == true) {
+          // رجع من إضافة سؤال، لازم نعيد تحميل الأسئلة
+          _issueListCubit.fetchMyQuestions(widget.subjectId);
+        }
       },
-      color: AppColor.primaryColor, // 🎨 لون الخلفية
-      textColor: Colors.white, // لون النص أو الأيقونة
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12), // 🔲 حواف ناعمة
-      ),
-      elevation: 3, // ظل بسيط
+      color: AppColor.primaryColor,
+      textColor: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 3,
       padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
       child: const Text(
         "إضافة سؤال",

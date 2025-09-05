@@ -1,4 +1,4 @@
-import 'package:ajyal/Features/Community/Data/repo/reply_repo.dart';
+import 'package:ajyal/Features/Community/Data/repo/community_repo.dart';
 import 'package:ajyal/Features/Community/data/models/replies_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

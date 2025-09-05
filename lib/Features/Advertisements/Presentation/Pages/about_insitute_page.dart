@@ -57,21 +57,8 @@ class AboutInstitutePage extends StatelessWidget {
 
   // The fixed header background
   Widget _buildHeaderBackground() {
-    return Container(
+    return SizedBox(
       height: 250,
-      decoration: BoxDecoration(
-        // You can replace this with an actual image
-        image: DecorationImage(
-          image: const AssetImage(
-            "assets/images/header_bg.png",
-          ), // IMPORTANT: Add a background image here
-          fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(0.3),
-            BlendMode.darken,
-          ),
-        ),
-      ),
       child: Center(
         child: Image.asset(
           "assets/images/logo_withoutText.png", // Your logo

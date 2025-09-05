@@ -2,14 +2,11 @@ import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/Network/Api/dio_consumer.dart';
 import 'package:ajyal/Core/Network/token_handle.dart';
 import 'package:ajyal/Features/Academic-Performance/Data/Repo/analysis_repoimp.dart';
-import 'package:ajyal/Features/Community/Data/repo/issue_repoimp.dart';
-import 'package:ajyal/Features/Course/Data/Model/course_model.dart';
+import 'package:ajyal/Features/Community/Data/repo/community_repoimpl.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
-import 'package:ajyal/Features/Parents/Home/Data/repos/home_parent_repo.dart';
 import 'package:ajyal/Features/Parents/Home/Data/repos/home_parent_repoimp.dart';
 import 'package:ajyal/Features/Subjects/Data/repo/subject_repoimp.dart';
 import 'package:dio/dio.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 
 final getit = GetIt.instance;
@@ -30,7 +27,7 @@ void setUpAppService() async {
   getit.registerLazySingleton(() => CourseRepoimp(getit.get<DioConsumer>()));
   getit.registerLazySingleton(() => AnalysisRepoimp(getit.get<DioConsumer>()));
   getit.registerLazySingleton(() => SubjectRepoimp(getit.get<DioConsumer>()));
-  getit.registerLazySingleton(() => IssueRepoImpl(getit.get<DioConsumer>()));
+  getit.registerLazySingleton(() => CommunityRepoimp(getit.get<DioConsumer>()));
   getit.registerLazySingleton(
     () => HomeParentRepoImp(getit.get<DioConsumer>()),
   );

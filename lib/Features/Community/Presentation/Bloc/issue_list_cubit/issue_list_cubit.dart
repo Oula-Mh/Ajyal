@@ -1,13 +1,16 @@
-import 'package:ajyal/Features/Community/Data/model/issue_list_model.dart';
-import 'package:ajyal/Features/Community/Data/repo/issue_repo.dart';
+import 'dart:io';
+
+import 'package:ajyal/Features/Community/Data/models/issue_list_model.dart';
+import 'package:ajyal/Features/Community/Data/repo/community_repo.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 part 'issue_list_state.dart';
 
 class IssueListCubit extends Cubit<IssueListState> {
-  final IssueRepo issueRepo;
+  final CommunityRepo communityRepo;
 
-  IssueListCubit(this.issueRepo) : super(IssueListInitial());
+  IssueListCubit(this.communityRepo) : super(IssueListInitial());
 
   static IssueListCubit get(BuildContext context) => BlocProvider.of(context);
 
@@ -15,7 +18,7 @@ class IssueListCubit extends Cubit<IssueListState> {
 
   Future<void> fetchFaqQuestions(int id) async {
     emit(IssueListLoading());
-    final response = await issueRepo.getFaqIssues(id);
+    final response = await communityRepo.getFaqIssues(id);
     if (isClosed) return;
     response.fold(
       (err) => emit(IssueListFailure(errMessage: err.errorMessage)),
@@ -26,7 +29,7 @@ class IssueListCubit extends Cubit<IssueListState> {
 
   Future<void> fetchAllQuestions(int id) async {
     emit(IssueListLoading());
-    final response = await issueRepo.getAllIssues(id);
+    final response = await communityRepo.getAllIssues(id);
     if (isClosed) return;
     response.fold(
       (err) => emit(IssueListFailure(errMessage: err.errorMessage)),
@@ -37,7 +40,7 @@ class IssueListCubit extends Cubit<IssueListState> {
 
   Future<void> fetchMyQuestions(int id) async {
     emit(IssueListLoading());
-    final response = await issueRepo.getMyIssues(id);
+    final response = await communityRepo.getMyIssues(id);
     if (isClosed) return;
     response.fold(
       (err) => emit(IssueListFailure(errMessage: err.errorMessage)),
@@ -45,12 +48,20 @@ class IssueListCubit extends Cubit<IssueListState> {
     );
   }
 
-  Future<void> addIssue(int id, String body) async {
+  Future<void> addIssue(int id, String body, File? image) async {
     emit(IssueListLoading());
-    final response = await issueRepo.addIssue({
+
+    final formData = FormData.fromMap({
       "curriculum_id": id,
       "body": body,
+      if (image != null)
+        "image": await MultipartFile.fromFile(
+          image.path,
+          filename: image.path.split('/').last,
+        ),
     });
+
+    final response = await communityRepo.addIssue(formData);
     if (isClosed) return;
     response.fold(
       (err) => emit(IssueListFailure(errMessage: err.errorMessage)),

@@ -69,7 +69,7 @@ class DioConsumer implements Api {
   }
 
   @override
-  Future<Map<String, dynamic>> post(String endPoint, Map data) async {
+  Future<Map<String, dynamic>> post(String endPoint, dynamic data) async {
     final response = await _dio.post(endPoint, data: data);
     return response.data;
   }

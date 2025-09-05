@@ -15,9 +15,9 @@ class ExamCurrentDetailsModel {
 
 class QuestionCurrentModel {
   final int id;
-  final int quizId;
+  final int? quizId;
   final int? parentQuestionId;
-  final String mark;
+  final String? mark;
   final String questionText;
   final String? hint;
   final String? image;
