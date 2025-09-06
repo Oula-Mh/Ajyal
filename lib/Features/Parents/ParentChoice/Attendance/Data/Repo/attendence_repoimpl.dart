@@ -15,7 +15,9 @@ class AttendenceRepoimpl implements AttendenceRepo {
     String id,
   ) async {
     try {
-      final response = await api.get(EndPoints.absenceDay + id);
+      final response = await api.get(
+        EndPoints.absenceDay + id + EndPoints.absenceDay2,
+      );
       final absenceDay = CourseAbsenceModel.fromJson(response);
       return Right(absenceDay);
     } on Exception catch (e) {

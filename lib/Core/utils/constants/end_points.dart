@@ -24,7 +24,7 @@ class EndPoints {
   static const String teacherProfile = "student/profile/";
   static const String logout = "student/logout";
   static const String pdf = "course/get-files/";
-  static const String myCourse = "student/my-courses";
+  static const String myCourse = "student/my-courses/";
   static const String courseSubjects = "course/curricula-course/";
   static const String allCourseAdv = "advertisement/courseAdvertisements";
   static const String allTeacherAdv = "advertisement/teacherAdvertisements";
@@ -62,4 +62,5 @@ class EndPoints {
   static const String totalMeanParent = '/total-mean/';
   static const String subjectMarks = '/curriculum/';
   static const String absenceDay = '/absence/get-absence/';
+  static const String absenceDay2 = '/course/1';
 }

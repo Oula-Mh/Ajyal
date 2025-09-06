@@ -4,6 +4,6 @@ import 'package:ajyal/Features/Course/Data/Model/course_model.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class CourseRepo {
-  Future<Either<Failure, List<CourseModel>>> getAllCourses();
+  Future<Either<Failure, List<CourseModel>>> getAllCourses(int id);
   Future<Either<Failure, CourseDetailsModel>> getCourseDetails(int courseId);
 }
