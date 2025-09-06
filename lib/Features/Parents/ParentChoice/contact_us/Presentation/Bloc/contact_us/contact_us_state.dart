@@ -4,16 +4,25 @@ sealed class ContactUsState {}
 
 final class ContactUsInitial extends ContactUsState {}
 
-final class ContactUsLoading extends ContactUsState {}
+// --- States لجلب اسم ولي الأمر ---
+final class ContactUsParentLoading extends ContactUsState {}
 
-final class ContactUsFail extends ContactUsState {
-  final String errMessage;
-
-  ContactUsFail({required this.errMessage});
+final class ContactUsParentSuccess extends ContactUsState {
+  final String name;
+  ContactUsParentSuccess({required this.name});
 }
 
-final class ContactUsSuccess extends ContactUsState {
-  final String name;
+final class ContactUsParentFail extends ContactUsState {
+  final String errMessage;
+  ContactUsParentFail({required this.errMessage});
+}
 
-  ContactUsSuccess({required this.name});
+// --- States لإرسال الرسالة ---
+final class ContactUsMessageLoading extends ContactUsState {}
+
+final class ContactUsMessageSuccess extends ContactUsState {}
+
+final class ContactUsMessageFail extends ContactUsState {
+  final String errMessage;
+  ContactUsMessageFail({required this.errMessage});
 }

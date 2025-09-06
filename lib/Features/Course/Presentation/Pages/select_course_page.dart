@@ -206,7 +206,9 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
                                             ? GoRouter.of(
                                               context,
                                             ).push(AppRouter.homePage)
-                                            : GoRouter.of(context).pop();
+                                            : GoRouter.of(
+                                              context,
+                                            ).push(AppRouter.parentHome);
                                         // أو للتوجه مباشرة للـ Home:
                                         // GoRouter.of(context).push(AppRouter.homePage);
                                       } else {

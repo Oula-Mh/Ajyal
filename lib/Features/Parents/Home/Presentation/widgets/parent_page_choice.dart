@@ -25,6 +25,48 @@ class ParentPageChoice extends StatelessWidget {
             child: Row(
               children: [
                 // زر الإشعارات
+                // Expanded(
+                //   child: InkWell(
+                //     onTap: () async {
+                //       await resetNotiCountInPrefs();
+                //       GoRouter.of(context).push(AppRouter.parentNotification);
+                //     },
+                //     child: Padding(
+                //       padding: const EdgeInsets.symmetric(vertical: 14),
+                //       child: Center(
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.center,
+                //           children: [
+                //             Text(
+                //               "الإشعارات",
+                //               style: TextStyle(
+                //                 fontSize: 15.5,
+                //                 fontWeight: FontWeight.w600,
+                //                 color: AppColor.primaryColor,
+                //               ),
+                //             ),
+                //             SizedBox(width: 10),
+                //             Badge(
+                //               label: Padding(
+                //                 padding: const EdgeInsets.all(1.5),
+                //                 child: Text(
+                //                   "2",
+                //                   style: const TextStyle(color: Colors.white),
+                //                 ),
+                //               ),
+                //               backgroundColor: const Color.fromARGB(
+                //                 255,
+                //                 245,
+                //                 106,
+                //                 96,
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 Expanded(
                   child: InkWell(
                     onTap: () async {
@@ -34,19 +76,50 @@ class ParentPageChoice extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       child: Center(
-                        child: Text(
-                          "الإشعارات",
-                          style: TextStyle(
-                            fontSize: 15.5,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.primaryColor,
-                          ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "الإشعارات",
+                              style: TextStyle(
+                                fontSize: 15.5,
+                                fontWeight: FontWeight.w600,
+                                color: AppColor.primaryColor,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+
+                            // هنا نطبق ValueListenableBuilder
+                            ValueListenableBuilder<int>(
+                              valueListenable: notiCountNotifier,
+                              builder: (context, count, _) {
+                                return count == 0
+                                    ? const SizedBox.shrink() // لا نعرض Badge إذا صفر
+                                    : Badge(
+                                      label: Padding(
+                                        padding: const EdgeInsets.all(1.5),
+                                        child: Text(
+                                          count.toString(),
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      backgroundColor: const Color.fromARGB(
+                                        255,
+                                        245,
+                                        106,
+                                        96,
+                                      ),
+                                    );
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
                 ),
-
                 // Divider عمودي
                 Container(width: 1, height: 40, color: Colors.blue.shade300),
 

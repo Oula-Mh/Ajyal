@@ -17,7 +17,7 @@ class AnalysisRepoimp implements AnalysisRepo {
   Future<Either<Failure, double>> getTotalMean(int courseId) async {
     try {
       final response = await api.get(EndPoints.totalmean + courseId.toString());
-      final double result = response['data']['result'] as double;
+      final double result = (response['data']['result'] as num).toDouble();
       return Right(result.toDouble());
     } on Exception catch (e) {
       return left(handleException(e));

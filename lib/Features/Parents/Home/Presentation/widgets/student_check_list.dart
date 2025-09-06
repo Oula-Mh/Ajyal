@@ -68,7 +68,7 @@ class _StudentCheckListState extends State<StudentCheckList> {
                 extra: {
                   "id":
                       getit<CacheHelper>().getData(key: "studentId").toString(),
-                  "isParent": false,
+                  "isParent": true,
                 },
               );
             }

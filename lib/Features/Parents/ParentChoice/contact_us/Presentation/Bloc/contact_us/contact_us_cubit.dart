@@ -13,36 +13,26 @@ class ContactUsCubit extends Cubit<ContactUsState> {
 
   TextEditingController messageController = TextEditingController();
 
+  // --- جلب اسم ولي الأمر ---
   Future<void> getParentName() async {
-    emit(ContactUsLoading());
+    emit(ContactUsParentLoading());
     var result = await contactUsRepo.getParentInfo();
     result.fold(
-      (fail) {
-        emit(ContactUsFail(errMessage: fail.errorMessage));
-      },
-      (success) {
-        emit(ContactUsSuccess(name: success));
-      },
+      (fail) => emit(ContactUsParentFail(errMessage: fail.errorMessage)),
+      (success) => emit(ContactUsParentSuccess(name: success)),
     );
   }
 
+  // --- إرسال الرسالة ---
   Future<void> sendMessage() async {
-    emit(ContactUsLoading());
+    emit(ContactUsMessageLoading());
     var result = await contactUsRepo.sendMessage({
       'content': messageController.text,
       'student_id': getit<CacheHelper>().getData(key: "studentId"),
     });
     result.fold(
-      (fail) {
-        emit(ContactUsFail(errMessage: fail.errorMessage));
-      },
-      (success) {
-        emit(ContactUsSuccess(name: success));
-      },
+      (fail) => emit(ContactUsMessageFail(errMessage: fail.errorMessage)),
+      (success) => emit(ContactUsMessageSuccess()),
     );
-  }
-
-  printsS() {
-    print(messageController.text);
   }
 }
