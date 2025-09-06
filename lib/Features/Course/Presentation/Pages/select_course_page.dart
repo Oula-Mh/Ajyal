@@ -28,7 +28,9 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
     return Scaffold(
       body: BlocProvider(
         create:
-            (context) => CourseCubit(getit<CourseRepoimp>())..getAllCourse(),
+            (context) => CourseCubit(
+              getit<CourseRepoimp>(),
+            )..getAllCourse(getit<CacheHelper>().getData(key: "studentIdbase")),
         child: Center(
           child: Container(
             decoration: const BoxDecoration(

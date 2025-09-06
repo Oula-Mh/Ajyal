@@ -1,3 +1,5 @@
+import 'package:ajyal/Cache/cache_helper.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Course/Data/Model/course_model.dart';
 import 'package:ajyal/Features/Course/Presentation/Bloc/course/course_cubit.dart';
 import 'package:ajyal/Features/Subjects/Presentation/Bloc/subject/subject_cubit.dart';
@@ -18,7 +20,9 @@ class _CourseSelectorWidgetState extends State<CourseSelectorWidget> {
   @override
   void initState() {
     super.initState();
-    context.read<CourseCubit>().getAllCourse();
+    context.read<CourseCubit>().getAllCourse(
+      getit<CacheHelper>().getData(key: "studentIdbase"),
+    );
   }
 
   @override

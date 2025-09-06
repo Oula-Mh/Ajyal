@@ -42,9 +42,9 @@ class CourseCubit extends Cubit<CourseState> {
   //   });
   // }
 
-  Future<void> getAllCourse() async {
+  Future<void> getAllCourse(int id) async {
     emit(CourseLoading());
-    final result = await courseRepo.getAllCourses();
+    final result = await courseRepo.getAllCourses(id);
 
     if (isClosed) return;
 

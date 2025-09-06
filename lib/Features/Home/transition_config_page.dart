@@ -19,7 +19,9 @@ class TransitionConfigPage extends StatelessWidget {
       backgroundColor: AppColor.white1,
       body: BlocProvider(
         create:
-            (context) => CourseCubit(getit<CourseRepoimp>())..getAllCourse(),
+            (context) => CourseCubit(
+              getit<CourseRepoimp>(),
+            )..getAllCourse(getit<CacheHelper>().getData(key: "studentIdbase")),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
