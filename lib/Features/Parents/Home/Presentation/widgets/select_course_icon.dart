@@ -27,7 +27,7 @@ class SelectCourseIcon extends StatelessWidget {
                 extra: {
                   "id":
                       getit<CacheHelper>().getData(key: "studentId").toString(),
-                  "isParent": false,
+                  "isParent": true,
                 },
               );
             },
