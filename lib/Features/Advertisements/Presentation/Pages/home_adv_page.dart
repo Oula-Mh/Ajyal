@@ -76,7 +76,7 @@ class HomeAdvPage extends StatelessWidget {
                                             fontSize: 18,
                                           ),
                                         ),
-                                        SizedBox(height: 10),
+                                        // SizedBox(height: 10),
                                         // عرض عامودي
                                         ListView.separated(
                                           shrinkWrap: true,

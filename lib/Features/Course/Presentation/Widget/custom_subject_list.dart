@@ -43,7 +43,11 @@ class _CustomSubjectListState extends State<CustomSubjectList> {
                       color: AppColor.primaryColor,
                     ),
                   ),
-                  Text(widget.model.subject?.description ?? "لا يوجد وصف"),
+                  Expanded(
+                    child: Text(
+                      widget.model.subject?.description ?? "لا يوجد وصف",
+                    ),
+                  ),
                 ],
               ),
             ),

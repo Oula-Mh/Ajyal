@@ -1,5 +1,6 @@
 import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
+import 'package:ajyal/Core/utils/Function/functions.dart';
 import 'package:ajyal/Core/utils/Function/validation.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Custom/Custom_ui.dart/gradient_background_widget.dart';
@@ -46,15 +47,21 @@ class LoginForm extends StatelessWidget {
     return BlocConsumer<LoginParentCubit, LoginParentState>(
       listener: (context, state) {
         if (state is LoginParentSuccess) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text("تم تسجيل الدخول بنجاح")));
+          // customAlert(context, state., () {
+          //   Navigator.of(context).pop();
+          // });
+          // ScaffoldMessenger.of(
+          //   context,
+          // ).showSnackBar(SnackBar(content: Text("تم تسجيل الدخول بنجاح")));
           getit<CacheHelper>().saveData(key: "role", value: "Parent");
           GoRouter.of(context).go(AppRouter.selectStudentLogin);
         } else if (state is LoginParentFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("فشل تسجيل الدخول: ${state.errMessage}")),
-          );
+          customAlert(context, state.errMessage, () {
+            Navigator.of(context).pop();
+          });
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(content: Text("فشل تسجيل الدخول: ${state.errMessage}")),
+          // );
         }
       },
       builder: (context, state) {

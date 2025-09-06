@@ -3,6 +3,7 @@ import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Notification/Presentation/Bloc/notification/notification_cubit.dart';
 import 'package:ajyal/Features/Notification/firebase_config.dart';
+import 'package:ajyal/Features/Parents/Auth/Presentation/Pages/login_view.dart';
 import 'package:ajyal/Features/Subjects/Data/global.dart';
 import 'package:ajyal/Features/splash/splash_animation_widget.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -48,8 +49,14 @@ class _SplashViewState extends State<SplashView> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final route =
         getit<CacheHelper>().getData(key: "role") == "Parent"
-            ? AppRouter.parentHome
+            ? getit<CacheHelper>().getData(key: "studentId") == "" &&
+                    getit<CacheHelper>().getData(key: "selectedCourseId") != ""
+                ? AppRouter.parentLogin
+                : AppRouter.parentHome
             : AppRouter.homePage;
+    print(
+      "student id ${getit<CacheHelper>().getData(key: "studentId").toString()} \n CourseStudentId ${getit<CacheHelper>().getData(key: "selectedCourseId").toString()}",
+    );
     return Scaffold(
       body: Container(
         width: double.infinity,

@@ -24,7 +24,7 @@ class ContactUsRepoimp implements ContactUsRepo {
   @override
   Future<Either<Failure, String>> sendMessage(Map body) async {
     try {
-      var data = await api.post(EndPoints.linkStudent, body);
+      var data = await api.post(EndPoints.addComplaint, body);
       String message = data['message'];
       return Right(message);
     } on Exception catch (e) {

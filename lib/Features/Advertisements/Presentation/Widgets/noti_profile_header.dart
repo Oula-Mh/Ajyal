@@ -18,16 +18,18 @@ class HeaderRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          GestureDetector(
-            onTap: () async {
-              await resetNotiCountInPrefs();
-              GoRouter.of(context).push(AppRouter.parentNotification);
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: NotificationIcon(isStudent: true),
-            ),
-          ),
+          getit<TokenHandler>().hasToken(TokenHandler.studentTokenKey)
+              ? GestureDetector(
+                onTap: () async {
+                  await resetNotiCountInPrefs();
+                  GoRouter.of(context).push(AppRouter.parentNotification);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: NotificationIcon(isStudent: true),
+                ),
+              )
+              : Container(height: 55),
           getit<TokenHandler>().hasToken(TokenHandler.studentTokenKey)
               ? IconButton(
                 onPressed: () {

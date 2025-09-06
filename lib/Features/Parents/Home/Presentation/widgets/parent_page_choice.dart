@@ -1,8 +1,8 @@
 import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
+import 'package:ajyal/Core/utils/Function/functions.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
-import 'package:ajyal/Features/Notification/Presentation/Widget/notification_bell.dart';
 import 'package:ajyal/Features/Subjects/Data/global.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -16,45 +16,67 @@ class ParentPageChoice extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
         children: [
-          GestureDetector(
-            onTap: () async {
-              await resetNotiCountInPrefs();
-              GoRouter.of(context).push(AppRouter.parentNotification);
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.blue.shade50,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.blue.shade300),
-              ),
-              child: Center(
-                child: ListTile(
-                  title: Text(
-                    "    الإشعارات",
-                    style: TextStyle(
-                      fontSize: 15.5,
-                      fontWeight: FontWeight.w600,
-                      color: AppColor.primaryColor,
-                      height: 2.5,
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.blue.shade50,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.blue.shade300),
+            ),
+            child: Row(
+              children: [
+                // زر الإشعارات
+                Expanded(
+                  child: InkWell(
+                    onTap: () async {
+                      await resetNotiCountInPrefs();
+                      GoRouter.of(context).push(AppRouter.parentNotification);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      child: Center(
+                        child: Text(
+                          "الإشعارات",
+                          style: TextStyle(
+                            fontSize: 15.5,
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.primaryColor,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                  trailing: Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blue.shade300),
-                      shape: BoxShape.circle,
-                    ),
-                    child: NotificationIcon(isStudent: false),
-                    // child: Icon(
-                    //   Icons.notifications,
-                    //   color: AppColor.primaryColor,
-                    // ),
                   ),
                 ),
-              ),
+
+                // Divider عمودي
+                Container(width: 1, height: 40, color: Colors.blue.shade300),
+
+                // زر تسجيل الخروج
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      showLogoutDialogParent(context);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      child: Center(
+                        child: Text(
+                          "تسجيل خروج",
+                          style: TextStyle(
+                            fontSize: 15.5,
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.primaryColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          SizedBox(height: 17),
+
+          const SizedBox(height: 17),
+
           GridView.count(
             crossAxisCount: 2,
             crossAxisSpacing: 14,

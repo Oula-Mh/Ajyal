@@ -3,6 +3,7 @@ import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Parents/Home/Presentation/widgets/linked_student_list.dart';
 import 'package:ajyal/Features/Parents/Home/Presentation/widgets/link_student.dart';
+import 'package:ajyal/Features/Parents/Home/Presentation/widgets/select_course_icon.dart';
 import 'package:flutter/material.dart';
 
 class StudentInfoCard extends StatelessWidget {
@@ -52,6 +53,8 @@ class StudentInfoCard extends StatelessWidget {
                 LinkedStudentList(),
                 const SizedBox(width: 30),
                 LinkStudent(),
+                const SizedBox(width: 30),
+                SelectCourseIcon(),
               ],
             ),
           ],

@@ -43,7 +43,7 @@ class GetAndSendMessage extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                cubit.printsS();
+                cubit.sendMessage();
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -50,7 +50,7 @@ class DioConsumer implements Api {
             if (navigatorKey.currentContext != null) {
               GoRouter.of(
                 navigatorKey.currentContext!,
-              ).pushReplacement(AppRouter.loginPage);
+              ).pushReplacement(AppRouter.advPage);
             }
           }
 

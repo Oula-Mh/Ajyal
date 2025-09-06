@@ -5,6 +5,7 @@ import 'package:ajyal/Features/Academic-Performance/Data/Repo/analysis_repoimp.d
 import 'package:ajyal/Features/Community/Data/repo/community_repoimpl.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
 import 'package:ajyal/Features/Parents/Home/Data/repos/home_parent_repoimp.dart';
+import 'package:ajyal/Features/Student/Auth/Data/repos/student_auth_repoImp.dart';
 import 'package:ajyal/Features/Subjects/Data/repo/subject_repoimp.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -26,6 +27,9 @@ void setUpAppService() async {
   getit.registerLazySingleton<DioConsumer>(() => DioConsumer(getit.get<Dio>()));
   getit.registerLazySingleton(() => CourseRepoimp(getit.get<DioConsumer>()));
   getit.registerLazySingleton(() => AnalysisRepoimp(getit.get<DioConsumer>()));
+  getit.registerLazySingleton(
+    () => StudentAuthRepoimp(getit.get<DioConsumer>()),
+  );
   getit.registerLazySingleton(() => SubjectRepoimp(getit.get<DioConsumer>()));
   getit.registerLazySingleton(() => CommunityRepoimp(getit.get<DioConsumer>()));
   getit.registerLazySingleton(

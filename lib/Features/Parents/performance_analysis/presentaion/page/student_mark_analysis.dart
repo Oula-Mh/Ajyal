@@ -82,7 +82,7 @@ class _StudentMarkAnalysisState extends State<StudentMarkAnalysis> {
 
     context.read<ParentCombinedMeanCubit>().fetchAll(
       int.parse(getit<CacheHelper>().getData(key: "studentId")),
-      1,
+      getit<CacheHelper>().getData(key: "selectedCourseId"),
     );
   }
 

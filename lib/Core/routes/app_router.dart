@@ -39,6 +39,7 @@ import 'package:ajyal/Features/Exam/data/model/exam_current_details_model.dart';
 import 'package:ajyal/Features/Exam/data/repos/exam_repoImp.dart';
 import 'package:ajyal/Features/Home/Presentation/Pages/home_page.dart';
 import 'package:ajyal/Features/Home/transition_config_page.dart';
+import 'package:ajyal/Features/Notification/Data/repo/notification_repoimp.dart';
 import 'package:ajyal/Features/Notification/Presentation/Bloc/notification/notification_cubit.dart';
 import 'package:ajyal/Features/Notification/Presentation/Pages/parent_notification.dart';
 import 'package:ajyal/Features/Parents/Auth/Presentation/Bloc/login/login_cubit.dart';
@@ -101,14 +102,7 @@ abstract class Routing {
   static final router = GoRouter(
     navigatorKey: navigatorKey,
     routes: [
-      GoRoute(
-        path: "/",
-        builder:
-            (context, state) => BlocProvider(
-              create: (context) => NotificationCubit(),
-              child: const SplashView(),
-            ),
-      ),
+      GoRoute(path: "/", builder: (context, state) => const SplashView()),
       GoRoute(
         path: AppRouter.parentHome,
         builder: (context, state) => const ParentHome(),
@@ -540,7 +534,14 @@ abstract class Routing {
 
       GoRoute(
         path: AppRouter.parentNotification,
-        builder: (context, state) => const ParentNotification(),
+        builder:
+            (context, state) => BlocProvider(
+              create:
+                  (context) =>
+                      NotificationCubit(NotificationRepoimp(DioConsumer(Dio())))
+                        ..getNotifications(),
+              child: const ParentNotification(),
+            ),
       ),
       GoRoute(
         path: AppRouter.contactUsPage,
@@ -596,7 +597,11 @@ abstract class Routing {
       GoRoute(
         path: AppRouter.slectedCoursePage,
         builder: (context, state) {
-          return SelectCoursePage();
+          final data = state.extra as Map<String, dynamic>;
+          return SelectCoursePage(
+            id: data["id"] as String,
+            isParent: data["isParent"] as bool,
+          );
         },
       ),
       GoRoute(

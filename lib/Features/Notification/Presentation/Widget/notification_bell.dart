@@ -8,7 +8,6 @@ class NotificationIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("$notiCountNotifier ++++");
     return ValueListenableBuilder<int>(
       valueListenable: notiCountNotifier,
       builder: (context, count, _) {

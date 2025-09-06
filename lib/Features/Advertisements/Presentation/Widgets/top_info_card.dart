@@ -1,3 +1,4 @@
+import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/Network/token_handle.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
@@ -53,9 +54,15 @@ class TopInfoCard extends StatelessWidget {
                     getit<TokenHandler>().hasToken(TokenHandler.studentTokenKey)
                         ? TextButton(
                           onPressed: () {
-                            GoRouter.of(
-                              context,
-                            ).push(AppRouter.slectedCoursePage);
+                            GoRouter.of(context).push(
+                              AppRouter.slectedCoursePage,
+                              extra: {
+                                "id": getit<CacheHelper>().getData(
+                                  key: "studentIdbase",
+                                ),
+                                "isParent": false,
+                              },
+                            );
                           },
                           child: Text(
                             "اختيار كورس",

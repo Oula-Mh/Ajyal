@@ -30,8 +30,26 @@ class _StudentCheckListState extends State<StudentCheckList> {
         SelectStudentBttn(
           selectedList: selectedList,
           onPressed: () {
+            if (selectedList) {
+              // تحقق إذا القيم فاضية
+              if (tempName.isEmpty || tempClass.isEmpty || tempId.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      "الرجاء اختيار الطالب أولاً",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    backgroundColor: Colors.grey,
+                  ),
+                );
+                return; // إيقاف العملية
+              }
+            }
+
             setState(() {
               selectedList = !selectedList;
+
+              // تخزين البيانات
               getit<CacheHelper>().saveData(key: "studentId", value: tempId);
               getit<CacheHelper>().saveData(
                 key: 'studentName',
@@ -43,11 +61,20 @@ class _StudentCheckListState extends State<StudentCheckList> {
               );
             });
 
-            !selectedList
-                ? GoRouter.of(context).pushReplacement(AppRouter.parentHome)
-                : null;
+            // إذا false يروح على الصفحة
+            if (!selectedList) {
+              GoRouter.of(context).push(
+                AppRouter.slectedCoursePage,
+                extra: {
+                  "id":
+                      getit<CacheHelper>().getData(key: "studentId").toString(),
+                  "isParent": false,
+                },
+              );
+            }
           },
         ),
+
         ListView.builder(
           itemCount: widget.students.length,
           shrinkWrap: true,

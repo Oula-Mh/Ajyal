@@ -1,9 +1,13 @@
 import 'package:ajyal/Core/Network/Errors/failure_handle.dart';
+import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Data/Model/attendence_model.dart';
+import 'package:ajyal/Features/Student/Auth/Data/repos/student_auth_repoImp.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 void customAlert(BuildContext context, String mssg, Function()? onPressed) {
@@ -29,26 +33,33 @@ void showLogoutDialog(BuildContext context, Function()? onPressed) {
           "هل أنت متأكد أنك تريد تسجيل الخروج؟",
           textAlign: TextAlign.center,
         ),
-        actionsAlignment: MainAxisAlignment.spaceBetween,
+        actionsAlignment: MainAxisAlignment.center, // تغيير المحاذاة إلى الوسط
         actions: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+          Row(
+            // إضافة صف لتجميع الأزرار
+            mainAxisAlignment:
+                MainAxisAlignment.spaceEvenly, // توزيع متساوٍ مع مسافة متساوية
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: Navigator.of(context).pop,
+                child: Text("إلغاء", style: TextStyle(color: AppColor.black1)),
               ),
-            ),
-            onPressed: Navigator.of(context).pop,
-            child: Text("إلغاء", style: TextStyle(color: AppColor.black1)),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: onPressed,
+                child: Text("نعم", style: TextStyle(color: AppColor.white1)),
               ),
-            ),
-            onPressed: onPressed,
-            child: Text("نعم", style: TextStyle(color: AppColor.white1)),
+            ],
           ),
         ],
       );
@@ -207,4 +218,81 @@ Map<int, List<int>> buildAbsenceDaysPerMonth(List<AbsenceDay> absenceDays) {
   }
 
   return absenceDaysPerMonth;
+}
+
+void showLogoutDialogParent(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: const Text("تسجيل الخروج", textAlign: TextAlign.center),
+        content: const Text(
+          "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+          textAlign: TextAlign.center,
+        ),
+        actionsAlignment: MainAxisAlignment.center, // تم التعديل هنا
+        actions: [
+          Row(
+            // إضافة Row لتجميع الأزرار
+            mainAxisAlignment: MainAxisAlignment.spaceAround, // توزيع متساوي
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text("إلغاء", style: TextStyle(color: AppColor.black1)),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                  final repo = getit<StudentAuthRepoimp>();
+                  final result = await repo.logout();
+                  result.fold(
+                    (failure) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("خطأ: ${failure.errorMessage}")),
+                      );
+                    },
+                    (successMessage) {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text(successMessage)));
+                      GoRouter.of(
+                        context,
+                      ).pushReplacement(AppRouter.parentLogin);
+                    },
+                  );
+                },
+                child: Text("نعم", style: TextStyle(color: AppColor.white1)),
+              ),
+            ],
+          ),
+        ],
+      );
+    },
+  );
+}
+
+String timeAgo(DateTime date) {
+  final diff = DateTime.now().difference(date);
+
+  if (diff.inSeconds < 60) {
+    return "الآن";
+  } else if (diff.inMinutes < 60) {
+    return "${diff.inMinutes} دقيقة";
+  } else if (diff.inHours < 24) {
+    return "${diff.inHours} ساعة";
+  } else {
+    return "${diff.inDays} يوم";
+  }
 }

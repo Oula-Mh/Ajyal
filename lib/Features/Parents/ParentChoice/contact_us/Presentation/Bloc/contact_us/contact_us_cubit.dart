@@ -1,3 +1,5 @@
+import 'package:ajyal/Cache/cache_helper.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/contact_us/Data/repo/contact_us_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +29,8 @@ class ContactUsCubit extends Cubit<ContactUsState> {
   Future<void> sendMessage() async {
     emit(ContactUsLoading());
     var result = await contactUsRepo.sendMessage({
-      'message': messageController.text,
+      'content': messageController.text,
+      'student_id': getit<CacheHelper>().getData(key: "studentId"),
     });
     result.fold(
       (fail) {

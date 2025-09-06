@@ -1,4 +1,5 @@
 import 'package:ajyal/Cache/cache_helper.dart';
+import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Course/Data/Repos/course_repoimp.dart';
@@ -8,7 +9,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class SelectCoursePage extends StatefulWidget {
-  const SelectCoursePage({super.key});
+  final String id;
+  final bool isParent;
+  bool isItNull = false;
+  SelectCoursePage({super.key, required this.id, required this.isParent});
 
   @override
   State<SelectCoursePage> createState() => _SelectCoursePageState();
@@ -28,9 +32,8 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
     return Scaffold(
       body: BlocProvider(
         create:
-            (context) => CourseCubit(
-              getit<CourseRepoimp>(),
-            )..getAllCourse(getit<CacheHelper>().getData(key: "studentIdbase")),
+            (context) =>
+                CourseCubit(getit<CourseRepoimp>())..getAllCourse(widget.id),
         child: Center(
           child: Container(
             decoration: const BoxDecoration(
@@ -74,6 +77,7 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
                           height: 2,
                         ),
                       ),
+
                       const SizedBox(height: 30),
                       BlocBuilder<CourseCubit, CourseState>(
                         builder: (context, state) {
@@ -162,6 +166,8 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
                                                   setState(() {
                                                     selectedCourseId =
                                                         course.id;
+                                                    widget.isItNull =
+                                                        !widget.isItNull;
                                                   });
                                                   await getit<CacheHelper>()
                                                       .saveData(
@@ -196,9 +202,30 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
                                     ),
                                     onPressed: () {
                                       if (selectedCourseId != null) {
-                                        GoRouter.of(context).pop();
+                                        !widget.isParent
+                                            ? GoRouter.of(
+                                              context,
+                                            ).push(AppRouter.homePage)
+                                            : GoRouter.of(context).pop();
                                         // أو للتوجه مباشرة للـ Home:
                                         // GoRouter.of(context).push(AppRouter.homePage);
+                                      } else {
+                                        // setState(() {
+                                        //   widget.isItNull = !widget.isItNull;
+                                        // });
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                              "اختر كورس من أجل متابعة الطالب",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            backgroundColor: Colors.grey,
+                                          ),
+                                        );
                                       }
                                     },
                                     child: const Text(

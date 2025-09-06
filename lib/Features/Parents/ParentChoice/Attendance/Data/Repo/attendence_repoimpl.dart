@@ -1,6 +1,8 @@
+import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/Network/Api/api_consumer.dart';
 import 'package:ajyal/Core/Network/Errors/failure_handle.dart';
 import 'package:ajyal/Core/utils/Function/functions.dart';
+import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Core/utils/constants/end_pointS.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Data/Model/attendence_model.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Data/Repo/attendence_repo.dart';
@@ -16,7 +18,10 @@ class AttendenceRepoimpl implements AttendenceRepo {
   ) async {
     try {
       final response = await api.get(
-        EndPoints.absenceDay + id + EndPoints.absenceDay2,
+        EndPoints.absenceDay +
+            id +
+            EndPoints.absenceDay2 +
+            getit<CacheHelper>().getData(key: "selectedCourseId").toString(),
       );
       final absenceDay = CourseAbsenceModel.fromJson(response);
       return Right(absenceDay);
