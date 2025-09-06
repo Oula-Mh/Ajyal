@@ -12,7 +12,7 @@ class CourseRepoimp implements CourseRepo {
   CourseRepoimp(this.api);
 
   @override
-  Future<Either<Failure, List<CourseModel>>> getAllCourses(int id) async {
+  Future<Either<Failure, List<CourseModel>>> getAllCourses(String id) async {
     try {
       final response = await api.get(EndPoints.myCourse + id.toString());
       final courses = response['data'];
