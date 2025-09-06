@@ -8,12 +8,12 @@ class EndPoints {
   // static const String fileBaseUrl = 'https://cdb8d142add9.ngrok-free.app/';
 
   // with mobile oula
-  static const String baseUrl = 'https://c1293182cb06.ngrok-free.app/api/';
-  static const String fileBaseUrl = 'https://c1293182cb06.ngrok-free.app/';
+  // static const String baseUrl = 'https://c1293182cb06.ngrok-free.app/api/';
+  // static const String fileBaseUrl = 'https://c1293182cb06.ngrok-free.app/';
 
   // ngrok
-  // static const String baseUrl = 'https://cfefe7d20356.ngrok-free.app/api/';
-  // static const String fileBaseUrl = 'https://cfefe7d20356.ngrok-free.app/';
+  static const String baseUrl = 'https://c1293182cb06.ngrok-free.app/api/';
+  static const String fileBaseUrl = 'https://c1293182cb06.ngrok-free.app/';
 
   /* ******************************************************************************** */
   // Student

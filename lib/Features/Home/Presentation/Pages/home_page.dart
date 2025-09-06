@@ -145,16 +145,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late int _currentIndex;
-  late bool _isVisitor;
+  int _currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
     _currentIndex = widget.initialIndex;
-
-    _isVisitor = !getit<TokenHandler>().hasToken(TokenHandler.studentTokenKey);
   }
+
+  bool get _isVisitor =>
+      !getit<TokenHandler>().hasToken(TokenHandler.studentTokenKey);
 
   late final List<Widget> _childrenForUser = [
     MultiBlocProvider(
@@ -225,32 +225,40 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // ✅ زائر -> فقط صفحة الإعلانات (بدون NavigationBar)
     if (_isVisitor) {
-      return MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create:
-                (context) =>
-                    CourseAdvCubit(AdvRepoImpl(DioConsumer(Dio())))
-                      ..getCourseAdv(),
-          ),
-          BlocProvider(
-            create:
-                (context) =>
-                    GeneralAdvCubit(AdvRepoImpl(DioConsumer(Dio())))
-                      ..getGeneralAdv(),
-          ),
-        ],
-        child: Scaffold(body: HomeAdvPage()),
+      return WillPopScope(
+        onWillPop: () async => false, // منع السهم/الرجوع
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create:
+                  (context) =>
+                      CourseAdvCubit(AdvRepoImpl(DioConsumer(Dio())))
+                        ..getCourseAdv(),
+            ),
+            BlocProvider(
+              create:
+                  (context) =>
+                      GeneralAdvCubit(AdvRepoImpl(DioConsumer(Dio())))
+                        ..getGeneralAdv(),
+            ),
+          ],
+          child: const Scaffold(body: HomeAdvPage()),
+        ),
       );
     }
 
-    return Scaffold(
-      bottomNavigationBar: CustomNavigationBar(
-        onTap: (index) => setState(() => _currentIndex = index),
-        currentIndex: _currentIndex,
+    // ✅ مستخدم مسجل -> يظهر NavigationBar و الصفحات
+    return WillPopScope(
+      onWillPop: () async => false, // منع الرجوع و ظهور السهم
+      child: Scaffold(
+        bottomNavigationBar: CustomNavigationBar(
+          onTap: (index) => setState(() => _currentIndex = index),
+          currentIndex: _currentIndex,
+        ),
+        body: _childrenForUser[_currentIndex],
       ),
-      body: _childrenForUser[_currentIndex],
     );
   }
 }
