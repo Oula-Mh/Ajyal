@@ -12,8 +12,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CourseDetailsPage extends StatelessWidget {
   final bool showEnrollButton; // باراميتر جديد
-
-  CourseDetailsPage({super.key, this.showEnrollButton = true});
+  final int idCourse;
+  CourseDetailsPage({
+    super.key,
+    required this.idCourse,
+    this.showEnrollButton = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +86,8 @@ class CourseDetailsPage extends StatelessWidget {
                       ),
                       SizedBox(height: 70),
 
-                      if (showEnrollButton && hasToken) EnrollBttn(),
+                      if (showEnrollButton && hasToken)
+                        EnrollBttn(idCourse: idCourse),
                     ],
                   )
                   : Center(child: CircularProgressIndicator());

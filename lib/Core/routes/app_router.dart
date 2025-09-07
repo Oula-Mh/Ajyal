@@ -157,8 +157,8 @@ abstract class Routing {
                     CourseCubit(CourseRepoimp(DioConsumer(Dio())))
                       ..getCourseDetails(courseId),
             child: CourseDetailsPage(
-              // images: images,
               showEnrollButton: showButton,
+              idCourse: courseId,
             ),
           );
         },
