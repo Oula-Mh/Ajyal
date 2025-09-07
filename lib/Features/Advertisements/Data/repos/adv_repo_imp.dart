@@ -25,11 +25,19 @@ class AdvRepoImpl implements AdvRepo {
   }
 
   @override
-  Future<Either<Failure, AdvPaginationModel>> getAllGeneralAdv() async {
+  Future<Either<Failure, AdvPaginationModel>> getAllGeneralAdv({
+    int page = 1,
+  }) async {
     try {
-      final response = await api.get(EndPoints.allGeneralAdv);
-      final advResoponse = AdvPaginationModel.fromJson(response['data']);
-      return Right(advResoponse);
+      final response = await api.get(
+        EndPoints.allGeneralAdv,
+        queryParameters: {
+          "page": page, // 🔹 نمرر رقم الصفحة للسيرفر
+        },
+      );
+
+      final advResponse = AdvPaginationModel.fromJson(response['data']);
+      return Right(advResponse);
     } on Exception catch (e) {
       if (e is DioException) {
         return left(ServerFailure.fromDioError(e));

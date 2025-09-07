@@ -1,7 +1,8 @@
 import 'dart:math';
+
 import 'package:ajyal/Core/styles/app_color.dart';
-import 'package:flutter/material.dart';
 import 'package:ajyal/Features/Advertisements/Data/model/ad_pagination_model.dart';
+import 'package:flutter/material.dart';
 
 class ResponsivePaginationBar extends StatefulWidget {
   final AdvPaginationModel paginationModel;
@@ -25,25 +26,23 @@ class _ResponsivePaginationBarState extends State<ResponsivePaginationBar> {
   void didUpdateWidget(covariant ResponsivePaginationBar oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // تحديث startPage تلقائيًا حسب الصفحة الحالية
+    // إعادة حساب startPage عندما تتغير currentPage
     int totalPages = widget.paginationModel.lastPage ?? 1;
     int maxButtons = _maxVisibleButtons();
 
     int newStart = max(
       0,
-      widget.paginationModel.currentPage! - (maxButtons ~/ 2),
+      (widget.paginationModel.currentPage ?? 1) - (maxButtons ~/ 2),
     );
     newStart = min(newStart, max(0, totalPages - maxButtons));
 
-    setState(() {
-      startPage = newStart;
-    });
+    startPage = newStart;
   }
 
   int _maxVisibleButtons() {
     return min(
       ((MediaQuery.of(context).size.width - 120) / 36).floor(),
-      widget.paginationModel.lastPage!,
+      widget.paginationModel.lastPage ?? 1,
     );
   }
 
@@ -53,83 +52,52 @@ class _ResponsivePaginationBarState extends State<ResponsivePaginationBar> {
     int totalPages = widget.paginationModel.lastPage ?? 1;
     int maxVisibleButtons = _maxVisibleButtons();
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // if (widget.paginationModel.data!.isNotEmpty)
-        //   Text("الصفحة $currentPage من $totalPages"),
-        // const SizedBox(height: 5),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _navButton(
-              icon: Icons.first_page,
-              enabled: startPage > 0,
-              onTap: () {
-                setState(() => startPage = 0);
-                widget.onPageChanged(1); // الذهاب للصفحة الأولى
-              },
-            ),
-            _navButton(
-              icon: Icons.navigate_before,
-              enabled: startPage > 0,
-              onTap: () {
-                setState(() => startPage = max(0, startPage - 1));
-                widget.onPageChanged(widget.paginationModel.currentPage! - 1);
-              },
-            ),
-            ...List.generate(min(maxVisibleButtons, totalPages - startPage), (
-              index,
-            ) {
-              int page = startPage + index + 1;
-              bool isCurrent = page == currentPage;
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: InkWell(
-                  onTap: () {
-                    widget.onPageChanged(page);
-                  },
-                  child: CircleAvatar(
-                    radius: 18,
-                    backgroundColor:
-                        isCurrent
-                            ? AppColor.primaryColor
-                            : Colors.grey.shade300,
-                    child: Text(
-                      '$page',
-                      style: TextStyle(
-                        color: isCurrent ? Colors.white : Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+        _navButton(
+          icon: Icons.first_page,
+          enabled: currentPage > 1,
+          onTap: () => widget.onPageChanged(1),
+        ),
+        _navButton(
+          icon: Icons.navigate_before,
+          enabled: currentPage > 1,
+          onTap: () => widget.onPageChanged(currentPage - 1),
+        ),
+        ...List.generate(min(maxVisibleButtons, totalPages - startPage), (
+          index,
+        ) {
+          int page = startPage + index + 1;
+          bool isCurrent = page == currentPage;
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: InkWell(
+              onTap: () => widget.onPageChanged(page),
+              child: CircleAvatar(
+                radius: 18,
+                backgroundColor:
+                    isCurrent ? AppColor.primaryColor : Colors.grey.shade300,
+                child: Text(
+                  '$page',
+                  style: TextStyle(
+                    color: isCurrent ? Colors.white : Colors.black,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              );
-            }),
-            _navButton(
-              icon: Icons.navigate_next,
-              enabled: (startPage + maxVisibleButtons) < totalPages,
-              onTap: () {
-                setState(() {
-                  startPage = min(
-                    startPage + 1,
-                    totalPages - maxVisibleButtons,
-                  );
-                });
-                widget.onPageChanged(widget.paginationModel.currentPage! + 1);
-              },
+              ),
             ),
-            _navButton(
-              icon: Icons.last_page,
-              enabled: (startPage + maxVisibleButtons) < totalPages,
-              onTap: () {
-                setState(() {
-                  startPage = totalPages - maxVisibleButtons;
-                });
-                widget.onPageChanged(totalPages);
-              },
-            ),
-          ],
+          );
+        }),
+        _navButton(
+          icon: Icons.navigate_next,
+          enabled: currentPage < totalPages,
+          onTap: () => widget.onPageChanged(currentPage + 1),
+        ),
+        _navButton(
+          icon: Icons.last_page,
+          enabled: currentPage < totalPages,
+          onTap: () => widget.onPageChanged(totalPages),
         ),
       ],
     );

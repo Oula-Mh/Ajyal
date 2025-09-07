@@ -227,8 +227,8 @@ abstract class Routing {
                     GeneralAdvCubit(AdvRepoImpl(DioConsumer(Dio())))
                       ..getGeneralAdv(),
             child: AllGeneraladvPage(
-              resultsList: resultsList,
-              paginationModel: paginationModel,
+              // resultsList: resultsList,
+              // paginationModel: paginationModel,
             ),
           );
         },

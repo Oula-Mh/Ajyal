@@ -63,8 +63,11 @@ class DioConsumer implements Api {
   }
 
   @override
-  Future<Map<String, dynamic>> get(String endPoint) async {
-    final response = await _dio.get(endPoint);
+  Future<Map<String, dynamic>> get(
+    String endPoint, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    final response = await _dio.get(endPoint, queryParameters: queryParameters);
     return response.data;
   }
 

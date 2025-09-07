@@ -7,5 +7,5 @@ abstract class AdvRepo {
 
   Future<Either<Failure, AdvPaginationModel>> getAllTeacherAdv();
 
-  Future<Either<Failure, AdvPaginationModel>> getAllGeneralAdv();
+  Future<Either<Failure, AdvPaginationModel>> getAllGeneralAdv({int page});
 }
