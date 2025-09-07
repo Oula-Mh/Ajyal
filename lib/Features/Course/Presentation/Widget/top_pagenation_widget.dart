@@ -60,13 +60,14 @@ class _ResponsivePaginationBarState extends State<ResponsivePaginationBar> {
         //   Text("الصفحة $currentPage من $totalPages"),
         // const SizedBox(height: 5),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _navButton(
               icon: Icons.first_page,
               enabled: startPage > 0,
               onTap: () {
                 setState(() => startPage = 0);
+                widget.onPageChanged(1); // الذهاب للصفحة الأولى
               },
             ),
             _navButton(
@@ -74,6 +75,7 @@ class _ResponsivePaginationBarState extends State<ResponsivePaginationBar> {
               enabled: startPage > 0,
               onTap: () {
                 setState(() => startPage = max(0, startPage - 1));
+                widget.onPageChanged(widget.paginationModel.currentPage! - 1);
               },
             ),
             ...List.generate(min(maxVisibleButtons, totalPages - startPage), (
@@ -114,6 +116,7 @@ class _ResponsivePaginationBarState extends State<ResponsivePaginationBar> {
                     totalPages - maxVisibleButtons,
                   );
                 });
+                widget.onPageChanged(widget.paginationModel.currentPage! + 1);
               },
             ),
             _navButton(
@@ -123,6 +126,7 @@ class _ResponsivePaginationBarState extends State<ResponsivePaginationBar> {
                 setState(() {
                   startPage = totalPages - maxVisibleButtons;
                 });
+                widget.onPageChanged(totalPages);
               },
             ),
           ],

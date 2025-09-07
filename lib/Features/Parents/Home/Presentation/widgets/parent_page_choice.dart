@@ -3,6 +3,7 @@ import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/utils/Function/functions.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
+import 'package:ajyal/Features/Student/Auth/Data/repos/student_auth_repoImp.dart';
 import 'package:ajyal/Features/Subjects/Data/global.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -127,7 +128,30 @@ class ParentPageChoice extends StatelessWidget {
                 Expanded(
                   child: InkWell(
                     onTap: () {
-                      showLogoutDialogParent(context);
+                      showLogoutDialogParent(
+                        context,
+                        //  () async {
+                        //   Navigator.of(context).pop();
+                        //   final repo = getit<StudentAuthRepoimp>();
+                        //   final result = await repo.logoutParent();
+                        //   await resetNotiCountInPrefs();
+                        //   result.fold(
+                        //     (failure) {
+                        //       ScaffoldMessenger.of(context).showSnackBar(
+                        //         SnackBar(
+                        //           content: Text("خطأ: ${failure.errorMessage}"),
+                        //         ),
+                        //       );
+                        //     },
+                        //     (successMessage) {
+                        //       GoRouter.of(context).pop();
+                        //       // GoRouter.of(
+                        //       //   context,
+                        //       // ).pushReplacement(AppRouter.parentLogin);
+                        //     },
+                        //  );
+                        // }
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 14),

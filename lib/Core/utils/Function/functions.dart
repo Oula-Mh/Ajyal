@@ -1,7 +1,10 @@
+import 'package:ajyal/Cache/cache_helper.dart';
 import 'package:ajyal/Core/Network/Errors/failure_handle.dart';
+import 'package:ajyal/Core/Network/token_handle.dart';
 import 'package:ajyal/Core/routes/route_constant.dart';
 import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
+import 'package:ajyal/Features/Home/Presentation/Pages/home_page.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Data/Model/attendence_model.dart';
 import 'package:ajyal/Features/Student/Auth/Data/repos/student_auth_repoImp.dart';
 import 'package:ajyal/Features/Subjects/Data/global.dart';
@@ -221,10 +224,10 @@ Map<int, List<int>> buildAbsenceDaysPerMonth(List<AbsenceDay> absenceDays) {
   return absenceDaysPerMonth;
 }
 
-void showLogoutDialogParent(BuildContext context) {
+void showLogoutDialogParent(BuildContext pageContext) {
   showDialog(
-    context: context,
-    builder: (context) {
+    context: pageContext,
+    builder: (dialogContext) {
       return AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: const Text("تسجيل الخروج", textAlign: TextAlign.center),
@@ -232,11 +235,10 @@ void showLogoutDialogParent(BuildContext context) {
           "هل أنت متأكد أنك تريد تسجيل الخروج؟",
           textAlign: TextAlign.center,
         ),
-        actionsAlignment: MainAxisAlignment.center, // تم التعديل هنا
+        actionsAlignment: MainAxisAlignment.center,
         actions: [
           Row(
-            // إضافة Row لتجميع الأزرار
-            mainAxisAlignment: MainAxisAlignment.spaceAround, // توزيع متساوي
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -244,7 +246,7 @@ void showLogoutDialogParent(BuildContext context) {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () => Navigator.of(dialogContext).pop(),
                 child: Text("إلغاء", style: TextStyle(color: AppColor.black1)),
               ),
               ElevatedButton(
@@ -255,23 +257,29 @@ void showLogoutDialogParent(BuildContext context) {
                   ),
                 ),
                 onPressed: () async {
-                  Navigator.of(context).pop();
+                  Navigator.of(dialogContext).pop(); // تسكر الديالوج
                   final repo = getit<StudentAuthRepoimp>();
                   final result = await repo.logoutParent();
                   await resetNotiCountInPrefs();
                   result.fold(
                     (failure) {
-                      ScaffoldMessenger.of(context).showSnackBar(
+                      // نستعمل pageContext مش dialogContext
+                      ScaffoldMessenger.of(pageContext).showSnackBar(
                         SnackBar(content: Text("خطأ: ${failure.errorMessage}")),
                       );
                     },
                     (successMessage) {
-                      ScaffoldMessenger.of(
-                        context,
-                      ).showSnackBar(SnackBar(content: Text(successMessage)));
+                      Navigator.push(
+                        pageContext,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
+                      // GoRouter.of(pageContext).pop();
+                      getit<CacheHelper>().removeData(
+                        key: TokenHandler.parentTokenKey,
+                      );
                       GoRouter.of(
-                        context,
-                      ).pushReplacement(AppRouter.parentLogin);
+                        pageContext,
+                      ).pushReplacement(AppRouter.homePage);
                     },
                   );
                 },
