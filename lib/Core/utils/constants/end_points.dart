@@ -8,8 +8,8 @@ class EndPoints {
   // static const String fileBaseUrl = 'http://192.168.1.104:8000/';
 
   // with mobile oula
-  static const String baseUrl = 'http://192.168.1.104:8000/api/';
-  static const String fileBaseUrl = 'http://192.168.1.104:8000/';
+  static const String baseUrl = 'https://fac07acfe2d9.ngrok-free.app/api/';
+  static const String fileBaseUrl = 'https://fac07acfe2d9.ngrok-free.app/';
 
   // ngrok
   // static const String baseUrl = 'https://c183bd10b4db.ngrok-free.app/api/';
