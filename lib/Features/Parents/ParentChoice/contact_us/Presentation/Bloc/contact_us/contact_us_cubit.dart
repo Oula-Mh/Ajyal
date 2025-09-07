@@ -32,7 +32,10 @@ class ContactUsCubit extends Cubit<ContactUsState> {
     });
     result.fold(
       (fail) => emit(ContactUsMessageFail(errMessage: fail.errorMessage)),
-      (success) => emit(ContactUsMessageSuccess()),
+      (success) {
+        messageController.clear();
+        emit(ContactUsMessageSuccess());
+      },
     );
   }
 }

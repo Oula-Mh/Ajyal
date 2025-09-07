@@ -4,6 +4,7 @@ import 'package:ajyal/Core/styles/app_color.dart';
 import 'package:ajyal/Core/utils/app_service_locator.dart';
 import 'package:ajyal/Features/Parents/ParentChoice/Attendance/Data/Model/attendence_model.dart';
 import 'package:ajyal/Features/Student/Auth/Data/repos/student_auth_repoImp.dart';
+import 'package:ajyal/Features/Subjects/Data/global.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -256,7 +257,8 @@ void showLogoutDialogParent(BuildContext context) {
                 onPressed: () async {
                   Navigator.of(context).pop();
                   final repo = getit<StudentAuthRepoimp>();
-                  final result = await repo.logout();
+                  final result = await repo.logoutParent();
+                  await resetNotiCountInPrefs();
                   result.fold(
                     (failure) {
                       ScaffoldMessenger.of(context).showSnackBar(

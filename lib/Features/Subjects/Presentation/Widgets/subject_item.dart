@@ -42,10 +42,10 @@ class SubjectCard extends StatelessWidget {
               subject.name!,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
-            Text(
-              subject.description ?? "...",
-              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-            ),
+            // Text(
+            //   subject.description ?? "...",
+            //   style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+            // ),
             ElevatedButton(
               onPressed: () {
                 GoRouter.of(context).push(AppRouter.pdfPage, extra: subject.id);

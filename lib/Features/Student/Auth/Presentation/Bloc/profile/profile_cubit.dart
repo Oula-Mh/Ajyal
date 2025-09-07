@@ -1,6 +1,7 @@
 import 'package:ajyal/Features/Student/Auth/Data/models/student_profile_model.dart';
 import 'package:ajyal/Features/Student/Auth/Data/models/teacher_profile_model.dart';
 import 'package:ajyal/Features/Student/Auth/Data/repos/student_auth_repo.dart';
+import 'package:ajyal/Features/Subjects/Data/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 part 'profile_state.dart';
@@ -37,6 +38,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> logout() async {
     var response = await studentRepo.logout();
+    await resetNotiCountInPrefs();
     if (isClosed) {
       return;
     }

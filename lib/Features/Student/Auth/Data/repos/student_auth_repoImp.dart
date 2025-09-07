@@ -107,6 +107,24 @@ class StudentAuthRepoimp implements StudentAuthRepo {
   }
 
   @override
+  Future<Either<Failure, String>> logoutParent() async {
+    try {
+      final response = await api.post(
+        "${EndPoints.baseUrl}parent/parent-logout",
+        {},
+      );
+      final mssg = response["message"];
+      print(mssg);
+      return Right(mssg);
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, TeacherProfileModel>> getTeacherProfile(int id) async {
     try {
       var response = await api.get(EndPoints.teacherProfile + id.toString());

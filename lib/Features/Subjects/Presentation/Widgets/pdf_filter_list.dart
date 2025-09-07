@@ -13,64 +13,67 @@ class PdfFilteredList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      child: ListView.builder(
-        itemCount: filteredList.length,
-        itemBuilder: (context, index) {
-          final file = filteredList[index];
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 14),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(12),
-              ),
+      child:
+          filteredList.isEmpty
+              ? Center(child: Text("لا يوجد ملفات للعرض "))
+              : ListView.builder(
+                itemCount: filteredList.length,
+                itemBuilder: (context, index) {
+                  final file = filteredList[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 14),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.grey.shade400),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
 
-              child: ListTile(
-                trailing: Icon(
-                  Iconsax.arrow_left_24,
-                  color: AppColor.primaryColor,
-                ),
-                title: Text(
-                  file.title!,
-                  style: TextStyle(
-                    fontSize: 16.5,
-                    fontWeight: FontWeight.w500,
-                    color: AppColor.primaryColor,
-                  ),
-                ),
-                //subtitle: Text("34 MB", style: TextStyle(color: Colors.grey)),
-                leading: Container(
-                  padding: EdgeInsets.only(left: 10),
-                  height: double.maxFinite,
-                  decoration: BoxDecoration(
-                    border: Border(
-                      left: BorderSide(color: Colors.grey.shade400),
-                    ),
-                  ),
-                  child: Icon(
-                    Icons.picture_as_pdf,
-                    color: Colors.red.shade300,
-                    size: 30,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (_) => PdfViewerPage(
-                            url: EndPoints.fileBaseUrl + file.filePath!,
-                            title: file.title!,
+                      child: ListTile(
+                        trailing: Icon(
+                          Iconsax.arrow_left_24,
+                          color: AppColor.primaryColor,
+                        ),
+                        title: Text(
+                          file.title!,
+                          style: TextStyle(
+                            fontSize: 16.5,
+                            fontWeight: FontWeight.w500,
+                            color: AppColor.primaryColor,
                           ),
+                        ),
+                        //subtitle: Text("34 MB", style: TextStyle(color: Colors.grey)),
+                        leading: Container(
+                          padding: EdgeInsets.only(left: 10),
+                          height: double.maxFinite,
+                          decoration: BoxDecoration(
+                            border: Border(
+                              left: BorderSide(color: Colors.grey.shade400),
+                            ),
+                          ),
+                          child: Icon(
+                            Icons.picture_as_pdf,
+                            color: Colors.red.shade300,
+                            size: 30,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (_) => PdfViewerPage(
+                                    url: EndPoints.fileBaseUrl + file.filePath!,
+                                    title: file.title!,
+                                  ),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   );
                 },
               ),
-            ),
-          );
-        },
-      ),
     );
   }
 }
